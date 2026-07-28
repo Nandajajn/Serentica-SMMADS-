@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+
+Serentica Renewables | Welcome
+
+</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+
+<style>
+
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+font-family:'Poppins',sans-serif;
+
+}
+
+body{
+
+background:#F4F7F9;
+
+min-height:100vh;
+
+overflow-x:hidden;
+
+}
+
+:root{
+
+--primary:#33A7B5;
+
+--secondary:#0D4F63;
+
+--light:#F4F7F9;
+
+--white:#ffffff;
+
+--shadow:0 10px 35px rgba(0,0,0,.12);
+
+}
+
+.navbar{
+
+height:80px;
+
+background:var(--white);
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 40px;
+
+box-shadow:var(--shadow);
+
+position:sticky;
+
+top:0;
+
+z-index:100;
+
+}
+
+.logo-section{
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+}
+
+.logo-section img{
+
+height:52px;
+
+}
+
+.logo-text h2{
+
+font-size:24px;
+
+color:var(--primary);
+
+font-weight:700;
+
+}
+
+.logo-text p{
+
+font-size:13px;
+
+color:#666;
+
+margin-top:2px;
+
+}
+
+.nav-right{
+
+display:flex;
+
+align-items:center;
+
+gap:25px;
+
+}
+
+.datetime{
+
+text-align:right;
+
+}
+
+.datetime h4{
+
+font-size:15px;
+
+font-weight:600;
+
+color:#444;
+
+}
+
+.datetime p{
+
+font-size:13px;
+
+color:#777;
+
+}
+
+.logout-btn{
+
+background:#E53935;
+
+color:white;
+
+padding:11px 22px;
+
+border-radius:10px;
+
+text-decoration:none;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.logout-btn:hover{
+
+background:#C62828;
+
+}
+
+.main{
+
+padding:40px;
+
+}
+
+.welcome-card{
+
+background:linear-gradient(135deg,#33A7B5,#0D4F63);
+
+border-radius:22px;
+
+padding:35px;
+
+color:white;
+
+box-shadow:var(--shadow);
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:35px;
+
+}
+
+.welcome-left h1{
+
+font-size:34px;
+
+margin-bottom:10px;
+
+font-weight:700;
+
+}
+
+.welcome-left h3{
+
+font-size:22px;
+
+font-weight:500;
+
+margin-bottom:10px;
+
+}
+
+.welcome-left p{
+
+font-size:16px;
+
+opacity:.95;
+
+}
+
+.welcome-icon{
+
+font-size:90px;
+
+opacity:.25;
+
+}
+
+.summary{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:25px;
+
+margin-bottom:40px;
+
+}
+
+.summary-card{
+
+background:white;
+
+padding:28px;
+
+border-radius:18px;
+
+box-shadow:var(--shadow);
+
+transition:.35s;
+
+cursor:pointer;
+
+}
+
+.summary-card:hover{
+
+transform:translateY(-8px);
+
+}
+
+.summary-card i{
+
+font-size:38px;
+
+color:var(--primary);
+
+margin-bottom:18px;
+
+}
+
+.summary-card h2{
+
+font-size:34px;
+
+color:#333;
+
+margin-bottom:5px;
+
+}
+
+.summary-card p{
+
+font-size:15px;
+
+color:#666;
+
+}
+
+.dashboard-title{
+
+font-size:28px;
+
+font-weight:700;
+
+color:#333;
+
+margin-bottom:30px;
+
+}
+
+.dashboard-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+gap:30px;
+
+}
+.dashboard-card{
+
+background:white;
+
+border-radius:20px;
+
+padding:35px;
+
+box-shadow:var(--shadow);
+
+transition:.35s;
+
+cursor:pointer;
+
+text-align:center;
+
+border-top:5px solid var(--primary);
+
+}
+
+.dashboard-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 20px 40px rgba(0,0,0,.18);
+
+}
+
+.dashboard-card i{
+
+font-size:55px;
+
+color:var(--primary);
+
+margin-bottom:20px;
+
+}
+
+.dashboard-card h3{
+
+font-size:22px;
+
+color:#333;
+
+margin-bottom:10px;
+
+font-weight:600;
+
+}
+
+.dashboard-card p{
+
+font-size:15px;
+
+color:#666;
+
+line-height:24px;
+
+}
+
+.return-home{
+
+position:fixed;
+
+right:30px;
+
+bottom:25px;
+
+background:var(--primary);
+
+color:white;
+
+padding:15px 22px;
+
+border-radius:12px;
+
+text-decoration:none;
+
+font-weight:600;
+
+box-shadow:0 10px 25px rgba(0,0,0,.18);
+
+transition:.3s;
+
+z-index:1000;
+
+}
+
+.return-home:hover{
+
+background:#238997;
+
+transform:translateY(-3px);
+
+}
+
+.footer{
+
+margin-top:60px;
+
+background:white;
+
+padding:18px;
+
+text-align:center;
+
+font-size:14px;
+
+color:#777;
+
+box-shadow:0 -5px 20px rgba(0,0,0,.06);
+
+}
+
+.hidden{
+
+display:none;
+
+}
+
+@media(max-width:1200px){
+
+.summary{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.navbar{
+
+flex-direction:column;
+
+height:auto;
+
+padding:20px;
+
+gap:20px;
+
+}
+
+.welcome-card{
+
+flex-direction:column;
+
+text-align:center;
+
+gap:20px;
+
+}
+
+.summary{
+
+grid-template-columns:1fr;
+
+}
+
+.dashboard-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.main{
+
+padding:20px;
+
+}
+
+.logo-text h2{
+
+font-size:20px;
+
+}
+
+.welcome-left h1{
+
+font-size:28px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= NAVIGATION BAR ================= -->
+
+<div class="navbar">
+
+<div class="logo-section">
+
+<img src="images/logo.png" alt="Serentica Logo">
+
+<div class="logo-text">
+
+<h2>Serentica Site Manpower Management System</h2>
+
+<p>Serentica Renewables Private Limited</p>
+
+</div>
+
+</div>
+
+<div class="nav-right">
+
+<div class="datetime">
+
+<h4 id="currentDate"></h4>
+
+<p id="currentTime"></p>
+
+</div>
+
+<a href="index.html" class="logout-btn">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Logout
+
+</a>
+
+</div>
+
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main">
+
+<div class="welcome-card">
+
+<div class="welcome-left">
+
+<h1 id="welcomeUser">
+
+Welcome
+
+</h1>
+
+<h3 id="welcomeRole">
+
+Loading...
+
+</h3>
+
+<p id="welcomeSite">
+
+Loading Site...
+
+</p>
+
+</div>
+
+<div class="welcome-icon">
+
+<i class="fa-solid fa-users"></i>
+
+</div>
+
+</div>
+
+<!-- ================= KPI CARDS ================= -->
+
+<div class="summary">
+
+<div class="summary-card">
+
+<i class="fa-solid fa-users"></i>
+
+<h2>245</h2>
+
+<p>Total Employees</p>
+
+</div>
+
+<div class="summary-card">
+
+<i class="fa-solid fa-user-check"></i>
+
+<h2>31</h2>
+
+<p>Ready for Deployment</p>
+
+</div>
+
+<div class="summary-card">
+
+<i class="fa-solid fa-truck-fast"></i>
+
+<h2>18</h2>
+
+<p>Employees Deployed</p>
+
+</div>
+
+<div class="summary-card">
+
+<i class="fa-solid fa-list-check"></i>
+
+<h2>42</h2>
+
+<p>Open Tasks</p>
+
+</div>
+
+</div>
+
+<h2 class="dashboard-title">
+
+Dashboard
+
+</h2>
+<!-- ================= ADMIN DASHBOARD ================= -->
+
+<div id="adminDashboard" class="dashboard-grid hidden">
+
+<a href="forward.html" class="dashboard-card" style="text-decoration:none;color:inherit;">
+
+<i class="fa-solid fa-share-nodes"></i>
+
+<h3>Forward Deployment</h3>
+
+<p>
+Forward deployment requests received from Project Managers to other Serentica sites across Karnataka.
+</p>
+
+</a>
+
+<a href="receive.html" class="dashboard-card" style="text-decoration:none;color:inherit;">
+
+<i class="fa-solid fa-inbox"></i>
+
+<h3>Receive Deployment</h3>
+
+<p>
+View manpower deployment requests received from other site administrators.
+</p>
+
+</a>
+
+<a href="employee.html" class="dashboard-card" style="text-decoration:none;color:inherit;">
+
+<i class="fa-solid fa-users"></i>
+
+<h3>Employee Details</h3>
+
+<p>
+View employee deployment information, remarks, and manpower availability.
+</p>
+
+</a>
+
+<a href="orgchart.html" class="dashboard-card" style="text-decoration:none;color:inherit;">
+
+<i class="fa-solid fa-sitemap"></i>
+
+<h3>Organisation Chart</h3>
+
+<p>
+View the latest organisation structure for the selected project site.
+</p>
+
+</a>
+
+</div>
+
+
+
+<!-- ================= PROJECT MANAGER DASHBOARD ================= -->
+
+<div id="pmDashboard" class="dashboard-grid hidden">
+
+<a href="employee.html" class="dashboard-card" style="text-decoration:none;color:inherit;">
+
+<i class="fa-solid fa-user-group"></i>
+
+<h3>View Team Details</h3>
+
+<p>
+
+View employee profiles, task allocation, remarks and deployment readiness.
+
+</p>
+
+</a>
+
+<a href="deploy.html" class="dashboard-card" style="text-decoration:none;color:inherit;">
+
+<i class="fa-solid fa-truck-fast"></i>
+
+<h3>Deploy Manpower</h3>
+
+<p>
+
+Deploy manpower to another project site based on requirement.
+
+</p>
+
+</a>
+
+<a href="recall.html" class="dashboard-card" style="text-decoration:none;color:inherit;">
+
+<i class="fa-solid fa-arrow-rotate-left"></i>
+
+<h3>Recall Manpower</h3>
+
+<p>
+
+Recall manpower currently deployed to another project site.
+
+</p>
+
+</a>
+
+<a href="monitor.html" class="dashboard-card" style="text-decoration:none;color:inherit;">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<h3>Monitor Tasks</h3>
+
+<p>
+
+Track employee progress, task completion and efficiency.
+
+</p>
+
+</a>
+
+<a href="orgchart.html" class="dashboard-card" style="text-decoration:none;color:inherit;">
+
+<i class="fa-solid fa-sitemap"></i>
+
+<h3>Organisation Chart</h3>
+
+<p>
+
+View complete organisation hierarchy of your project site.
+
+</p>
+
+</a>
+
+</div>
+
+
+
+<!-- ================= TEAM LEAD DASHBOARD ================= -->
+
+<div id="leadDashboard" class="dashboard-grid hidden">
+
+<a href="employee.html" class="dashboard-card" style="text-decoration:none;color:inherit;">
+
+<i class="fa-solid fa-address-book"></i>
+
+<h3>View Team Details</h3>
+
+<p>
+
+Manage employee details, remarks and deployment status.
+
+</p>
+
+</a>
+
+<a href="monitor.html" class="dashboard-card" style="text-decoration:none;color:inherit;">
+
+<i class="fa-solid fa-list-check"></i>
+
+<h3>Monitor Tasks</h3>
+
+<p>
+
+Allocate tasks and monitor employee efficiency.
+
+</p>
+
+</a>
+
+</div>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<div class="footer">
+
+© 2026 Serentica Renewables Private Limited
+
+<br>
+
+Serentica Site Manpower Management System
+
+</div>
+
+
+
+<a href="index.html" class="return-home">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Return to Home
+
+</a>
+
+
+
+<script>
+// =====================================================
+// READ USER DETAILS FROM LOCAL STORAGE
+// =====================================================
+
+const username = localStorage.getItem("username") || "User";
+const role = localStorage.getItem("role") || "";
+const site = localStorage.getItem("site") || "Project Site";
+const department = localStorage.getItem("department") || "";
+
+
+// =====================================================
+// DISPLAY USER INFORMATION
+// =====================================================
+
+document.getElementById("welcomeUser").innerHTML =
+"Welcome, " + username;
+
+document.getElementById("welcomeSite").innerHTML =
+site;
+
+
+// =====================================================
+// SHOW ROLE NAME
+// =====================================================
+
+if(role==="admin"){
+
+document.getElementById("welcomeRole").innerHTML =
+"Administrator";
+
+document.getElementById("adminDashboard").classList.remove("hidden");
+
+}
+
+else if(role==="pm"){
+
+document.getElementById("welcomeRole").innerHTML =
+"Project Manager";
+
+document.getElementById("pmDashboard").classList.remove("hidden");
+
+}
+
+else if(role==="lead"){
+
+document.getElementById("welcomeRole").innerHTML =
+"Team Lead - " + department;
+
+document.getElementById("leadDashboard").classList.remove("hidden");
+
+}
+
+
+// =====================================================
+// LIVE DATE & TIME
+// =====================================================
+
+function updateDateTime(){
+
+const today = new Date();
+
+const options = {
+
+weekday:'long',
+
+year:'numeric',
+
+month:'long',
+
+day:'numeric'
+
+};
+
+document.getElementById("currentDate").innerHTML =
+today.toLocaleDateString('en-IN',options);
+
+document.getElementById("currentTime").innerHTML =
+today.toLocaleTimeString('en-IN');
+
+}
+
+updateDateTime();
+
+setInterval(updateDateTime,1000);
+
+
+// =====================================================
+// LOGOUT
+// =====================================================
+
+document.querySelector(".logout-btn").addEventListener("click",function(){
+
+localStorage.clear();
+
+});
+
+
+// =====================================================
+// RETURN HOME BUTTON
+// =====================================================
+
+document.querySelector(".return-home").addEventListener("click",function(){
+
+history.back();
+
+});
+
+</script>
+
+</body>
+
+</html>
