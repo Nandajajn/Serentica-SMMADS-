@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+Employee Management | Serentica Site Manpower Management System
+
+</title>
+
+<!-- Google Fonts -->
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<!-- Font Awesome -->
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+font-family:'Poppins',sans-serif;
+
+}
+
+:root{
+
+--primary:#33A7B5;
+
+--primary-dark:#1F7E8A;
+
+--sidebar:#0F5E68;
+
+--background:#F4F8FA;
+
+--white:#FFFFFF;
+
+--border:#E2E8F0;
+
+--text:#2D3748;
+
+--shadow:0 10px 30px rgba(0,0,0,.08);
+
+--radius:18px;
+
+}
+
+body{
+
+background:var(--background);
+
+color:var(--text);
+
+overflow:hidden;
+
+}
+
+.wrapper{
+
+display:flex;
+
+height:100vh;
+
+}
+
+/*====================================
+
+SIDEBAR
+
+====================================*/
+
+.sidebar{
+
+width:270px;
+
+background:linear-gradient(180deg,#0F5E68,#33A7B5);
+
+color:white;
+
+padding:30px 20px;
+
+display:flex;
+
+flex-direction:column;
+
+position:fixed;
+
+left:0;
+
+top:0;
+
+bottom:0;
+
+}
+
+.logo{
+
+text-align:center;
+
+margin-bottom:35px;
+
+}
+
+.logo img{
+
+width:110px;
+
+margin-bottom:15px;
+
+}
+
+.logo h2{
+
+font-size:20px;
+
+line-height:30px;
+
+}
+
+.logo p{
+
+font-size:13px;
+
+opacity:.9;
+
+margin-top:10px;
+
+}
+
+.menu{
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+.menu a{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+padding:14px 18px;
+
+border-radius:12px;
+
+text-decoration:none;
+
+color:white;
+
+transition:.3s;
+
+font-weight:500;
+
+}
+
+.menu a:hover{
+
+background:rgba(255,255,255,.15);
+
+}
+
+.menu a.active{
+
+background:rgba(255,255,255,.22);
+
+}
+
+.menu i{
+
+width:22px;
+
+text-align:center;
+
+}
+
+/*====================================
+
+MAIN CONTENT
+
+====================================*/
+
+.main{
+
+margin-left:270px;
+
+width:calc(100% - 270px);
+
+padding:30px;
+
+display:flex;
+
+flex-direction:column;
+
+height:100vh;
+
+}
+
+/*====================================
+
+PAGE HEADER
+
+====================================*/
+
+.header{
+
+background:white;
+
+border-radius:18px;
+
+padding:22px 28px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+box-shadow:var(--shadow);
+
+margin-bottom:25px;
+
+}
+
+.header h1{
+
+font-size:28px;
+
+color:var(--primary);
+
+margin-bottom:6px;
+
+}
+
+.header p{
+
+color:#666;
+
+font-size:15px;
+
+}
+
+.header-right{
+
+text-align:right;
+
+}
+
+.header-right h4{
+
+margin-bottom:6px;
+
+}
+
+/*====================================
+
+THREE PANEL LAYOUT
+
+====================================*/
+
+.content{
+
+display:grid;
+
+grid-template-columns:
+
+260px
+
+1fr
+
+360px;
+
+gap:20px;
+
+height:100%;
+
+}
+<!-- =====================================
+
+DEPARTMENT PANEL
+
+===================================== -->
+
+<div class="content">
+
+<!-- ===========================
+LEFT PANEL
+Departments
+=========================== -->
+
+<div class="department-panel">
+
+<h3>
+
+Departments
+
+</h3>
+
+<p class="panel-subtitle">
+
+Select a department to view employees
+
+</p>
+
+<div class="department-list">
+
+<div class="department-card active"
+
+data-department="All">
+
+<div class="dept-left">
+
+<i class="fa-solid fa-building"></i>
+
+<span>
+
+All Departments
+
+</span>
+
+</div>
+
+<span class="dept-count"
+
+id="countAll">
+
+--
+
+</span>
+
+</div>
+
+
+<div class="department-card"
+
+data-department="PMO">
+
+<div class="dept-left">
+
+<i class="fa-solid fa-clipboard-list"></i>
+
+<span>
+
+PMO
+
+</span>
+
+</div>
+
+<span class="dept-count"
+
+id="countPMO">
+
+--
+
+</span>
+
+</div>
+
+
+<div class="department-card"
+
+data-department="Civil">
+
+<div class="dept-left">
+
+<i class="fa-solid fa-road"></i>
+
+<span>
+
+Civil
+
+</span>
+
+</div>
+
+<span class="dept-count"
+
+id="countCivil">
+
+--
+
+</span>
+
+</div>
+
+
+<div class="department-card"
+
+data-department="Mechanical">
+
+<div class="dept-left">
+
+<i class="fa-solid fa-gears"></i>
+
+<span>
+
+Mechanical
+
+</span>
+
+</div>
+
+<span class="dept-count"
+
+id="countMechanical">
+
+--
+
+</span>
+
+</div>
+
+
+<div class="department-card"
+
+data-department="Electrical">
+
+<div class="dept-left">
+
+<i class="fa-solid fa-bolt"></i>
+
+<span>
+
+Electrical
+
+</span>
+
+</div>
+
+<span class="dept-count"
+
+id="countElectrical">
+
+--
+
+</span>
+
+</div>
+
+
+<div class="department-card"
+
+data-department="QHSE">
+
+<div class="dept-left">
+
+<i class="fa-solid fa-shield-heart"></i>
+
+<span>
+
+QHSE
+
+</span>
+
+</div>
+
+<span class="dept-count"
+
+id="countQHSE">
+
+--
+
+</span>
+
+</div>
+
+
+<div class="department-card"
+
+data-department="Stores">
+
+<div class="dept-left">
+
+<i class="fa-solid fa-warehouse"></i>
+
+<span>
+
+Stores
+
+</span>
+
+</div>
+
+<span class="dept-count"
+
+id="countStores">
+
+--
+
+</span>
+
+</div>
+
+
+<div class="department-card"
+
+data-department="Land Acquisition">
+
+<div class="dept-left">
+
+<i class="fa-solid fa-map-location-dot"></i>
+
+<span>
+
+Land Acquisition
+
+</span>
+
+</div>
+
+<span class="dept-count"
+
+id="countLand">
+
+--
+
+</span>
+
+</div>
+
+
+<div class="department-card"
+
+data-department="ROW">
+
+<div class="dept-left">
+
+<i class="fa-solid fa-route"></i>
+
+<span>
+
+ROW
+
+</span>
+
+</div>
+
+<span class="dept-count"
+
+id="countROW">
+
+--
+
+</span>
+
+</div>
+
+
+<div class="department-card"
+
+data-department="Administration">
+
+<div class="dept-left">
+
+<i class="fa-solid fa-user-tie"></i>
+
+<span>
+
+Administration
+
+</span>
+
+</div>
+
+<span class="dept-count"
+
+id="countAdmin">
+
+--
+
+</span>
+
+</div>
+
+
+<div class="department-card"
+
+data-department="OEM">
+
+<div class="dept-left">
+
+<i class="fa-solid fa-industry"></i>
+
+<span>
+
+OEM
+
+</span>
+
+</div>
+
+<span class="dept-count"
+
+id="countOEM">
+
+--
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ===========================
+CENTRE PANEL
+Employee List
+=========================== -->
+
+<div class="employee-panel">
+
+<div class="panel-header">
+
+<div>
+
+<h2>
+
+Employee Directory
+
+</h2>
+
+<p>
+
+Search, filter and manage employees
+
+</p>
+
+</div>
+
+<div class="panel-actions">
+
+<input
+
+type="text"
+
+id="searchEmployee"
+
+placeholder="Search employee...">
+
+<select id="statusFilter">
+
+<option value="All">
+
+All Status
+
+</option>
+
+<option value="Available">
+
+Available
+
+</option>
+
+<option value="Ready">
+
+Ready for Deployment
+
+</option>
+
+<option value="Deployed">
+
+Deployed
+
+</option>
+
+</select>
+
+</div>
+
+</div>
+<!-- =====================================
+
+EMPLOYEE DIRECTORY TABLE
+
+===================================== -->
+
+<div class="employee-table-container">
+
+<table class="employee-table">
+
+<thead>
+
+<tr>
+
+<th>Photo</th>
+
+<th>Employee ID</th>
+
+<th>Employee Name</th>
+
+<th>Designation</th>
+
+<th>Department</th>
+
+<th>Current Task</th>
+
+<th>Efficiency</th>
+
+<th>Deployment Status</th>
+
+<th>Ready for Deployment</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="employeeTableBody">
+
+<!-- ===============================
+Sample Employee
+(To be replaced by JSON/database)
+=============================== -->
+
+<tr>
+
+<td>
+
+<img src="assets/profile.png"
+class="table-photo"
+alt="Employee">
+
+</td>
+
+<td>EMP001</td>
+
+<td>Sample Employee</td>
+
+<td>Site Engineer</td>
+
+<td>Civil</td>
+
+<td>Foundation Inspection</td>
+
+<td>
+
+<div class="progress-bar">
+
+<div class="progress-fill"
+
+style="width:85%;">
+
+85%
+
+</div>
+
+</div>
+
+</td>
+
+<td>
+
+<span class="status available">
+
+Available
+
+</span>
+
+</td>
+
+<td>
+
+<span class="ready-badge">
+
+Yes
+
+</span>
+
+</td>
+
+<td>
+
+<button
+
+class="view-btn"
+
+onclick="viewEmployee('EMP001')">
+
+<i class="fa-solid fa-eye"></i>
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ===============================
+
+RIGHT PANEL
+
+Employee Details
+
+=============================== -->
+
+<div class="profile-panel">
+
+<div class="profile-header">
+
+<img
+
+src="assets/profile.png"
+
+id="profilePhoto"
+
+class="profile-large"
+
+alt="Employee">
+
+<h2 id="profileName">
+
+Select an Employee
+
+</h2>
+
+<p id="profileDesignation">
+
+Employee details will appear here.
+
+</p>
+
+</div>
+
+<div class="profile-body">
+
+<div class="profile-item">
+
+<label>Employee ID</label>
+
+<span id="empID">--</span>
+
+</div>
+
+<div class="profile-item">
+
+<label>Department</label>
+
+<span id="empDepartment">--</span>
+
+</div>
+
+<div class="profile-item">
+
+<label>Reporting Manager</label>
+
+<span id="empManager">--</span>
+
+</div>
+
+<div class="profile-item">
+
+<label>Current Task</label>
+
+<span id="empTask">--</span>
+
+</div>
+
+<div class="profile-item">
+
+<label>Efficiency</label>
+
+<span id="empEfficiency">--</span>
+
+</div>
+
+<div class="profile-item">
+
+<label>Deployment Status</label>
+
+<span id="empDeployment">--</span>
+
+</div>
+
+<div class="profile-item">
+
+<label>Ready for Deployment</label>
+
+<span id="empReady">--</span>
+
+</div>
+
+<div class="profile-item">
+
+<label>Remarks</label>
+
+<span id="empRemarks">--</span>
+
+</div>
+
+<div class="profile-actions">
+
+<button
+
+class="primary-btn"
+
+id="recommendDeployment">
+
+Recommend Deployment
+
+</button>
+
+<button
+
+class="secondary-btn"
+
+id="editEmployee">
+
+Edit Details
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+/*====================================
+
+DEPARTMENT PANEL
+
+====================================*/
+
+.department-panel{
+
+background:#FFFFFF;
+
+border-radius:18px;
+
+padding:20px;
+
+box-shadow:var(--shadow);
+
+overflow-y:auto;
+
+}
+
+.department-panel h3{
+
+font-size:22px;
+
+margin-bottom:8px;
+
+color:var(--primary);
+
+}
+
+.panel-subtitle{
+
+font-size:13px;
+
+color:#666;
+
+margin-bottom:20px;
+
+}
+
+.department-list{
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+.department-card{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:14px 16px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+transition:.3s;
+
+background:#F8FAFC;
+
+border:1px solid var(--border);
+
+}
+
+.department-card:hover{
+
+background:#EAF8FA;
+
+}
+
+.department-card.active{
+
+background:var(--primary);
+
+color:white;
+
+}
+
+.dept-left{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+font-weight:500;
+
+}
+
+.dept-count{
+
+font-weight:700;
+
+}
+
+
+/*====================================
+
+EMPLOYEE TABLE
+
+====================================*/
+
+.employee-panel{
+
+background:#FFFFFF;
+
+border-radius:18px;
+
+padding:20px;
+
+box-shadow:var(--shadow);
+
+display:flex;
+
+flex-direction:column;
+
+overflow:hidden;
+
+}
+
+.panel-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
+
+}
+
+.panel-actions{
+
+display:flex;
+
+gap:10px;
+
+}
+
+.panel-actions input,
+
+.panel-actions select{
+
+padding:10px 12px;
+
+border:1px solid var(--border);
+
+border-radius:10px;
+
+font-size:14px;
+
+outline:none;
+
+}
+
+.employee-table-container{
+
+overflow:auto;
+
+border-radius:12px;
+
+}
+
+.employee-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+min-width:1100px;
+
+}
+
+.employee-table th{
+
+background:var(--primary);
+
+color:#FFFFFF;
+
+padding:14px;
+
+text-align:left;
+
+font-size:14px;
+
+position:sticky;
+
+top:0;
+
+}
+
+.employee-table td{
+
+padding:14px;
+
+border-bottom:1px solid #EDF2F7;
+
+font-size:14px;
+
+}
+
+.employee-table tbody tr:hover{
+
+background:#F8FCFD;
+
+}
+
+
+/*====================================
+
+PROFILE PANEL
+
+====================================*/
+
+.profile-panel{
+
+background:#FFFFFF;
+
+border-radius:18px;
+
+padding:20px;
+
+box-shadow:var(--shadow);
+
+display:flex;
+
+flex-direction:column;
+
+overflow-y:auto;
+
+}
+
+.profile-header{
+
+text-align:center;
+
+margin-bottom:25px;
+
+}
+
+.profile-large{
+
+width:110px;
+
+height:110px;
+
+border-radius:50%;
+
+border:4px solid var(--primary);
+
+object-fit:cover;
+
+margin-bottom:15px;
+
+}
+
+.profile-header h2{
+
+margin-bottom:8px;
+
+font-size:24px;
+
+}
+
+.profile-header p{
+
+color:#666;
+
+font-size:14px;
+
+}
+
+.profile-item{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:12px 0;
+
+border-bottom:1px solid #EDF2F7;
+
+}
+
+.profile-item label{
+
+font-weight:600;
+
+color:#555;
+
+}
+
+.profile-item span{
+
+color:#222;
+
+text-align:right;
+
+max-width:55%;
+
+}
+
+
+/*====================================
+
+STATUS BADGES
+
+====================================*/
+
+.status{
+
+padding:6px 12px;
+
+border-radius:20px;
+
+font-size:12px;
+
+font-weight:600;
+
+display:inline-block;
+
+}
+
+.available{
+
+background:#E8F8EF;
+
+color:#198754;
+
+}
+
+.deployed{
+
+background:#FFF4DE;
+
+color:#E67E22;
+
+}
+
+.not-ready{
+
+background:#FDECEC;
+
+color:#D63031;
+
+}
+
+.ready-badge{
+
+background:#D6F5E8;
+
+color:#0F8A5F;
+
+padding:6px 12px;
+
+border-radius:18px;
+
+font-size:12px;
+
+font-weight:600;
+
+}
+
+
+/*====================================
+
+PROGRESS BAR
+
+====================================*/
+
+.progress-bar{
+
+width:120px;
+
+height:10px;
+
+background:#E5E7EB;
+
+border-radius:10px;
+
+overflow:hidden;
+
+}
+
+.progress-fill{
+
+height:100%;
+
+background:var(--primary);
+
+color:transparent;
+
+}
+
+
+/*====================================
+
+BUTTONS
+
+====================================*/
+
+.profile-actions{
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+margin-top:25px;
+
+}
+
+.primary-btn,
+
+.secondary-btn{
+
+padding:13px;
+
+border:none;
+
+border-radius:10px;
+
+font-size:15px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.primary-btn{
+
+background:var(--primary);
+
+color:#FFFFFF;
+
+}
+
+.primary-btn:hover{
+
+background:var(--primary-dark);
+
+}
+
+.secondary-btn{
+
+background:#EEF6F8;
+
+color:var(--primary);
+
+}
+
+.secondary-btn:hover{
+
+background:#DCEFF3;
+
+}
+
+.view-btn{
+
+background:var(--primary);
+
+color:white;
+
+border:none;
+
+padding:8px 14px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-size:13px;
+
+}
+
+.view-btn:hover{
+
+background:var(--primary-dark);
+
+}
+<script>
+
+/*====================================================
+
+LOGGED IN USER
+
+====================================================*/
+
+const loggedUser =
+JSON.parse(localStorage.getItem("loggedUser"));
+
+if(!loggedUser){
+
+window.location.href="index.html";
+
+}
+
+/*====================================================
+
+DISPLAY USER DETAILS
+
+====================================================*/
+
+document.querySelector(".header h1").innerHTML =
+"Employee Management";
+
+document.querySelector(".header p").innerHTML =
+"Manage workforce, deployment readiness and employee records";
+
+document.querySelector(".header-right h4").innerHTML =
+loggedUser.name;
+
+document.querySelector(".header-right p").innerHTML =
+loggedUser.role;
+
+
+/*====================================================
+
+SAMPLE EMPLOYEE DATABASE
+
+(To be replaced later with employees.json
+or database)
+
+====================================================*/
+
+const employees=[
+
+{
+id:"EMP001",
+name:"Employee 1",
+designation:"Site Engineer",
+department:"Civil",
+manager:"Civil Manager",
+task:"Foundation Inspection",
+efficiency:92,
+deployment:"Available",
+ready:"Yes",
+remarks:"Ready for deployment",
+photo:"assets/profile.png"
+},
+
+{
+id:"EMP002",
+name:"Employee 2",
+designation:"Mechanical Engineer",
+department:"Mechanical",
+manager:"Mechanical Manager",
+task:"WTG Erection",
+efficiency:88,
+deployment:"Available",
+ready:"No",
+remarks:"Assigned to critical activity",
+photo:"assets/profile.png"
+},
+
+{
+id:"EMP003",
+name:"Employee 3",
+designation:"Electrical Engineer",
+department:"Electrical",
+manager:"Electrical Manager",
+task:"33kV Cable Testing",
+efficiency:95,
+deployment:"Deployed",
+ready:"No",
+remarks:"Currently deployed",
+photo:"assets/profile.png"
+}
+
+];
+
+
+/*====================================================
+
+LOAD EMPLOYEE TABLE
+
+====================================================*/
+
+function loadEmployees(employeeList){
+
+const table =
+document.getElementById("employeeTableBody");
+
+table.innerHTML="";
+
+employeeList.forEach(emp=>{
+
+table.innerHTML += `
+
+<tr>
+
+<td>
+
+<img src="${emp.photo}"
+
+class="table-photo">
+
+</td>
+
+<td>${emp.id}</td>
+
+<td>${emp.name}</td>
+
+<td>${emp.designation}</td>
+
+<td>${emp.department}</td>
+
+<td>${emp.task}</td>
+
+<td>
+
+<div class="progress-bar">
+
+<div class="progress-fill"
+
+style="width:${emp.efficiency}%">
+
+</div>
+
+</div>
+
+${emp.efficiency}%
+
+</td>
+
+<td>
+
+<span class="status
+${emp.deployment==="Available"?"available":"deployed"}">
+
+${emp.deployment}
+
+</span>
+
+</td>
+
+<td>
+
+<span class="ready-badge">
+
+${emp.ready}
+
+</span>
+
+</td>
+
+<td>
+
+<button
+class="view-btn"
+onclick="viewEmployee('${emp.id}')">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+loadEmployees(employees);
+
+
+/*====================================================
+
+VIEW EMPLOYEE
+
+====================================================*/
+
+function viewEmployee(id){
+
+const emp =
+employees.find(e=>e.id===id);
+
+document.getElementById("profilePhoto").src =
+emp.photo;
+
+document.getElementById("profileName").innerHTML =
+emp.name;
+
+document.getElementById("profileDesignation").innerHTML =
+emp.designation;
+
+document.getElementById("empID").innerHTML =
+emp.id;
+
+document.getElementById("empDepartment").innerHTML =
+emp.department;
+
+document.getElementById("empManager").innerHTML =
+emp.manager;
+
+document.getElementById("empTask").innerHTML =
+emp.task;
+
+document.getElementById("empEfficiency").innerHTML =
+emp.efficiency+"%";
+
+document.getElementById("empDeployment").innerHTML =
+emp.deployment;
+
+document.getElementById("empReady").innerHTML =
+emp.ready;
+
+document.getElementById("empRemarks").innerHTML =
+emp.remarks;
+
+}
+/*====================================================
+
+DEPARTMENT FILTER
+
+====================================================*/
+
+const departmentCards =
+document.querySelectorAll(".department-card");
+
+departmentCards.forEach(card=>{
+
+card.addEventListener("click",function(){
+
+departmentCards.forEach(c=>c.classList.remove("active"));
+
+this.classList.add("active");
+
+const department =
+this.dataset.department;
+
+if(department==="All"){
+
+loadEmployees(employees);
+
+}
+
+else{
+
+const filteredEmployees =
+
+employees.filter(emp=>
+
+emp.department===department
+
+);
+
+loadEmployees(filteredEmployees);
+
+}
+
+});
+
+});
+
+
+/*====================================================
+
+SEARCH EMPLOYEE
+
+====================================================*/
+
+document
+
+.getElementById("searchEmployee")
+
+.addEventListener("keyup",function(){
+
+const keyword =
+this.value.toLowerCase();
+
+const filteredEmployees =
+
+employees.filter(emp=>
+
+emp.name.toLowerCase().includes(keyword) ||
+
+emp.id.toLowerCase().includes(keyword) ||
+
+emp.designation.toLowerCase().includes(keyword)
+
+);
+
+loadEmployees(filteredEmployees);
+
+});
+
+
+/*====================================================
+
+STATUS FILTER
+
+====================================================*/
+
+document
+
+.getElementById("statusFilter")
+
+.addEventListener("change",function(){
+
+const status=this.value;
+
+if(status==="All"){
+
+loadEmployees(employees);
+
+return;
+
+}
+
+const filteredEmployees=
+
+employees.filter(emp=>{
+
+if(status==="Available")
+
+return emp.deployment==="Available";
+
+if(status==="Ready")
+
+return emp.ready==="Yes";
+
+if(status==="Deployed")
+
+return emp.deployment==="Deployed";
+
+});
+
+loadEmployees(filteredEmployees);
+
+});
+
+
+/*====================================================
+
+DEPARTMENT COUNTS
+
+====================================================*/
+
+function updateDepartmentCounts(){
+
+document.getElementById("countAll").innerHTML=
+employees.length;
+
+const departments=[
+
+"PMO",
+
+"Civil",
+
+"Mechanical",
+
+"Electrical",
+
+"QHSE",
+
+"Stores",
+
+"Land Acquisition",
+
+"ROW",
+
+"Administration",
+
+"OEM"
+
+];
+
+departments.forEach(dept=>{
+
+const total=
+
+employees.filter(emp=>
+
+emp.department===dept
+
+).length;
+
+const idMap={
+
+"PMO":"countPMO",
+
+"Civil":"countCivil",
+
+"Mechanical":"countMechanical",
+
+"Electrical":"countElectrical",
+
+"QHSE":"countQHSE",
+
+"Stores":"countStores",
+
+"Land Acquisition":"countLand",
+
+"ROW":"countROW",
+
+"Administration":"countAdmin",
+
+"OEM":"countOEM"
+
+};
+
+document.getElementById(idMap[dept]).innerHTML=total;
+
+});
+
+}
+
+updateDepartmentCounts();
+
+
+/*====================================================
+
+UPDATE DASHBOARD KPIs
+
+====================================================*/
+
+function updateDashboardKPIs(){
+
+const totalEmployees=employees.length;
+
+const readyEmployees=
+
+employees.filter(emp=>emp.ready==="Yes").length;
+
+const deployedEmployees=
+
+employees.filter(emp=>emp.deployment==="Deployed").length;
+
+const openTasks=
+
+employees.filter(emp=>
+
+emp.deployment==="Available"
+
+).length;
+
+localStorage.setItem(
+
+"dashboardKPIs",
+
+JSON.stringify({
+
+totalEmployees,
+
+readyEmployees,
+
+deployedEmployees,
+
+openTasks
+
+})
+
+);
+
+}
+
+updateDashboardKPIs();
+
+
+/*====================================================
+
+ROLE PERMISSIONS
+
+====================================================*/
+
+if(loggedUser.role==="Admin"){
+
+document.getElementById("editEmployee").style.display="none";
+
+document.getElementById("recommendDeployment").style.display="none";
+
+}
+
+if(loggedUser.role==="Project Manager"){
+
+document.getElementById("recommendDeployment").innerHTML=
+
+"Approve Deployment";
+
+}
+
+if(loggedUser.role==="Team Lead"){
+
+document.getElementById("recommendDeployment").innerHTML=
+
+"Recommend Deployment";
+
+}
+
+
+/*====================================================
+
+LOGOUT
+
+====================================================*/
+
+document
+
+.getElementById("logoutBtn")
+
+.addEventListener("click",function(){
+
+localStorage.removeItem("loggedUser");
+
+});
+
+
+/*====================================================
+
+CURRENT DATE & TIME
+
+====================================================*/
+
+function updateDateTime(){
+
+const now=new Date();
+
+document.querySelector(".header-right h4").innerHTML=
+
+loggedUser.name;
+
+document.querySelector(".header-right p").innerHTML=
+
+loggedUser.role+" | "+now.toLocaleString("en-IN");
+
+}
+
+updateDateTime();
+
+setInterval(updateDateTime,1000);
+
+
+/*====================================================
+
+SYSTEM READY
+
+====================================================*/
+
+console.clear();
+
+console.log("======================================");
+console.log("Employee Management Module Loaded");
+console.log("Serentica Site Manpower Management");
+console.log("Version 1.0");
+console.log("======================================");
+
+</script>
+
+</body>
+
+</html>
