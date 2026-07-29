@@ -9,12 +9,10 @@
 content="width=device-width, initial-scale=1.0">
 
 <title>
-
 Serentica Site Manpower Management System
-
 </title>
 
-<!-- Google Fonts -->
+<!-- Google Font -->
 
 <link rel="preconnect"
 href="https://fonts.googleapis.com">
@@ -43,178 +41,134 @@ font-family:'Poppins',sans-serif;
 :root{
 
 --primary:#33A7B5;
-
 --primary-dark:#1F7E8A;
-
---secondary:#EAF8FA;
-
+--background:#F4F8FA;
 --white:#FFFFFF;
-
---background:#F5F8FA;
-
 --text:#2D3748;
-
---border:#DDE7EC;
-
---shadow:0 12px 35px rgba(0,0,0,0.08);
-
---radius:20px;
+--border:#DDE5EA;
+--shadow:0 15px 40px rgba(0,0,0,0.08);
 
 }
 
 body{
 
-background:linear-gradient(135deg,#F5F8FA,#EAF8FA);
+background:linear-gradient(135deg,#F8FBFC,#EEF6F8);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
 
 min-height:100vh;
 
-display:flex;
+overflow:hidden;
 
-justify-content:center;
-
-align-items:center;
-
-padding:40px;
+position:relative;
 
 }
 
+/* Decorative Background */
 
-/*==================================
+body::before{
 
-LOGIN CONTAINER
+content:"";
 
-==================================*/
+position:absolute;
 
-.login-container{
+width:500px;
 
-width:1120px;
+height:500px;
 
-min-height:640px;
+background:rgba(51,167,181,0.06);
+
+border-radius:50%;
+
+top:-220px;
+
+left:-180px;
+
+}
+
+body::after{
+
+content:"";
+
+position:absolute;
+
+width:420px;
+
+height:420px;
+
+background:rgba(51,167,181,0.05);
+
+border-radius:50%;
+
+bottom:-180px;
+
+right:-150px;
+
+}
+
+/* Login Card */
+
+.login-card{
+
+position:relative;
+
+z-index:10;
 
 background:var(--white);
 
-border-radius:25px;
+width:460px;
 
-overflow:hidden;
+padding:45px;
 
-display:flex;
+border-radius:24px;
 
 box-shadow:var(--shadow);
-
-}
-
-
-/*==================================
-
-LEFT BRANDING PANEL
-
-==================================*/
-
-.left-panel{
-
-width:45%;
-
-background:linear-gradient(145deg,#33A7B5,#1F7E8A);
-
-color:white;
-
-padding:60px 45px;
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:center;
-
-align-items:center;
 
 text-align:center;
 
 }
 
-.left-panel img{
+/* Logo */
 
-width:170px;
+.logo{
 
-margin-bottom:35px;
-
-}
-
-.left-panel h1{
-
-font-size:34px;
-
-font-weight:700;
-
-line-height:46px;
+width:120px;
 
 margin-bottom:20px;
 
 }
 
-.left-panel p{
+h1{
 
-font-size:16px;
-
-line-height:30px;
-
-opacity:.95;
-
-max-width:380px;
-
-}
-
-
-/*==================================
-
-RIGHT LOGIN PANEL
-
-==================================*/
-
-.right-panel{
-
-width:55%;
-
-padding:70px 60px;
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:center;
-
-}
-
-.right-panel h2{
-
-font-size:34px;
+font-size:28px;
 
 color:var(--primary);
 
 margin-bottom:10px;
 
-font-weight:700;
-
 }
 
-.right-panel .subtitle{
+.subtitle{
 
 font-size:15px;
 
-color:#6B7280;
-
-margin-bottom:40px;
+color:#666;
 
 line-height:26px;
 
+margin-bottom:35px;
+
 }
-/*==================================
 
-LOGIN FORM
-
-==================================*/
+/* Form */
 
 .form-group{
+
+text-align:left;
 
 margin-bottom:22px;
 
@@ -224,90 +178,100 @@ margin-bottom:22px;
 
 display:block;
 
-font-size:15px;
-
-font-weight:600;
-
-color:var(--text);
-
 margin-bottom:8px;
-
-}
-
-.form-group input{
-
-width:100%;
-
-padding:16px 18px;
-
-border:2px solid var(--border);
-
-border-radius:12px;
-
-font-size:15px;
-
-transition:.3s;
-
-outline:none;
-
-background:#FAFCFD;
-
-}
-
-.form-group input:focus{
-
-border-color:var(--primary);
-
-box-shadow:0 0 0 4px rgba(51,167,181,.15);
-
-background:white;
-
-}
-
-.form-options{
-
-display:flex;
-
-justify-content:flex-end;
-
-margin-bottom:28px;
-
-}
-
-.form-options a{
-
-text-decoration:none;
-
-color:var(--primary);
 
 font-size:14px;
 
 font-weight:600;
 
+color:#444;
+
+}
+
+.input-box{
+
+position:relative;
+
+}
+
+.input-box i{
+
+position:absolute;
+
+left:16px;
+
+top:50%;
+
+transform:translateY(-50%);
+
+color:#999;
+
+}
+
+.input-box input{
+
+width:100%;
+
+padding:14px 16px 14px 48px;
+
+border:1px solid var(--border);
+
+border-radius:12px;
+
+font-size:15px;
+
+outline:none;
+
 transition:.3s;
 
 }
 
-.form-options a:hover{
+.input-box input:focus{
 
-color:var(--primary-dark);
+border-color:var(--primary);
+
+box-shadow:0 0 0 3px rgba(51,167,181,0.12);
+
+}
+
+/* Forgot Password */
+
+.forgot{
+
+text-align:right;
+
+margin-bottom:28px;
+
+}
+
+.forgot a{
+
+text-decoration:none;
+
+font-size:14px;
+
+color:var(--primary);
+
+font-weight:500;
+
+}
+
+.forgot a:hover{
 
 text-decoration:underline;
 
 }
-
-
-/*==================================
+/*====================================
 
 LOGIN BUTTON
 
-==================================*/
+====================================*/
 
 .login-btn{
 
 width:100%;
 
-padding:16px;
+padding:15px;
 
 border:none;
 
@@ -317,13 +281,15 @@ background:var(--primary);
 
 color:white;
 
-font-size:17px;
+font-size:16px;
 
 font-weight:600;
 
 cursor:pointer;
 
-transition:.3s;
+transition:0.3s;
+
+letter-spacing:0.5px;
 
 }
 
@@ -333,100 +299,63 @@ background:var(--primary-dark);
 
 transform:translateY(-2px);
 
-box-shadow:0 8px 20px rgba(51,167,181,.25);
+box-shadow:0 8px 18px rgba(51,167,181,0.25);
 
 }
 
-.login-btn i{
-
-margin-right:8px;
-
-}
-
-
-/*==================================
+/*====================================
 
 FOOTER
 
-==================================*/
+====================================*/
 
-.login-footer{
+.footer{
 
 margin-top:35px;
 
-text-align:center;
-
 font-size:13px;
 
-color:#6B7280;
+color:#888;
 
-line-height:24px;
+line-height:22px;
 
 }
 
+.footer span{
 
-/*==================================
+display:block;
+
+margin-top:4px;
+
+font-weight:500;
+
+}
+
+/*====================================
 
 RESPONSIVE DESIGN
 
-==================================*/
+====================================*/
 
-@media(max-width:992px){
+@media(max-width:600px){
 
-.login-container{
+.login-card{
 
-flex-direction:column;
+width:92%;
 
-width:100%;
-
-}
-
-.left-panel,
-.right-panel{
-
-width:100%;
+padding:30px;
 
 }
 
-.left-panel{
+h1{
 
-padding:50px 35px;
-
-}
-
-.right-panel{
-
-padding:45px 35px;
+font-size:23px;
 
 }
 
-.left-panel img{
+.subtitle{
 
-width:140px;
-
-}
-
-.left-panel h1{
-
-font-size:28px;
-
-line-height:40px;
-
-}
-
-}
-
-@media(max-width:576px){
-
-body{
-
-padding:20px;
-
-}
-
-.right-panel h2{
-
-font-size:28px;
+font-size:14px;
 
 }
 
@@ -438,15 +367,12 @@ font-size:28px;
 
 <body>
 
-<div class="login-container">
+<div class="login-card">
 
-<!-- ==========================
-LEFT PANEL
-========================== -->
-
-<div class="left-panel">
-
-<img src="assets/logo.png" alt="Serentica Logo">
+<img
+src="assets/images/logo.png"
+alt="Serentica Logo"
+class="logo">
 
 <h1>
 
@@ -454,72 +380,72 @@ Serentica Site Manpower Management System
 
 </h1>
 
-<p>
-
-A centralized workforce management platform for
-employee deployment, recall, department coordination,
-and organisational visibility across Serentica
-Renewables project sites.
-
-</p>
-
-</div>
-
-<!-- ==========================
-RIGHT PANEL
-========================== -->
-
-<div class="right-panel">
-
-<h2>
-
-Sign In
-
-</h2>
-
 <p class="subtitle">
 
-Please sign in using your authorised credentials.
+Workforce Deployment & Operations Portal
 
 </p>
 
-<form id="loginForm">
+<form
+id="loginForm">
 
 <div class="form-group">
 
-<label for="username">
+<label>
 
 Login ID
 
 </label>
 
+<div class="input-box">
+
+<i class="fa-solid fa-user"></i>
+
 <input
+
 type="text"
+
 id="username"
-placeholder="Enter your Login ID"
+
+placeholder="Enter Login ID"
+
 required>
+
+</div>
 
 </div>
 
 <div class="form-group">
 
-<label for="password">
+<label>
 
 Password
 
 </label>
 
+<div class="input-box">
+
+<i class="fa-solid fa-lock"></i>
+
 <input
+
 type="password"
+
 id="password"
-placeholder="Enter your Password"
+
+placeholder="Enter Password"
+
 required>
 
 </div>
 
-<div class="form-options">
+</div>
 
-<a href="#" id="forgotPassword">
+<div class="forgot">
+
+<a
+href="#"
+id="forgotPassword">
 
 Forgot Password?
 
@@ -528,11 +454,14 @@ Forgot Password?
 </div>
 
 <button
-type="button"
-class="login-btn"
-onclick="login()">
+
+type="submit"
+
+class="login-btn">
 
 <i class="fa-solid fa-right-to-bracket"></i>
+
+&nbsp;
 
 Login
 
@@ -540,52 +469,65 @@ Login
 
 </form>
 
-<div class="login-footer">
+<div class="footer">
 
 © 2026 Serentica Renewables Private Limited
 
-<br>
+<span>
 
-All Rights Reserved.
+Version 1.0
 
-</div>
-
-</div>
+</span>
 
 </div>
 
+</div>
 <script>
+
 /*====================================================
 
-SERENTICA USER DATABASE
-(Temporary - Will be replaced by HRMS Database)
+USER DATABASE
 
-=====================================================*/
+(To be replaced later with users.json/database)
+
+====================================================*/
 
 const users = [
 
 {
-    username: "admin@123",
-    password: "admin@123",
-    name: "Admin",
-    role: "Admin",
-    site: ""
+
+username:"admin",
+
+password:"admin123",
+
+name:"System Administrator",
+
+role:"Admin"
+
 },
 
 {
-    username: "pm@123",
-    password: "pm@123",
-    name: "Project Manager",
-    role: "Project Manager",
-    site: ""
+
+username:"pm",
+
+password:"pm123",
+
+name:"Project Manager",
+
+role:"Project Manager"
+
 },
 
 {
-    username: "lead@123",
-    password: "lead@123",
-    name: "Team Lead",
-    role: "Team Lead",
-    site: ""
+
+username:"lead",
+
+password:"lead123",
+
+name:"Team Lead",
+
+role:"Team Lead"
+
 }
 
 ];
@@ -593,31 +535,37 @@ const users = [
 
 /*====================================================
 
-LOGIN FUNCTION
+LOGIN AUTHENTICATION
 
-=====================================================*/
+====================================================*/
 
-function login(){
+document
+
+.getElementById("loginForm")
+
+.addEventListener("submit",function(e){
+
+e.preventDefault();
 
 const username =
+
 document.getElementById("username")
-.value
-.trim()
-.toLowerCase();
+
+.value.trim();
 
 const password =
-document.getElementById("password")
-.value
-.trim();
 
+document.getElementById("password")
+
+.value;
 
 const user = users.find(u =>
 
 u.username === username &&
+
 u.password === password
 
 );
-
 
 if(user){
 
@@ -625,15 +573,7 @@ localStorage.setItem(
 
 "loggedUser",
 
-JSON.stringify({
-
-name:user.name,
-
-role:user.role,
-
-site:user.site
-
-})
+JSON.stringify(user)
 
 );
 
@@ -645,7 +585,7 @@ else{
 
 alert(
 
-"Invalid Login ID or Password.\n\nPlease try again."
+"Invalid Login ID or Password."
 
 );
 
@@ -655,76 +595,14 @@ document.getElementById("password").focus();
 
 }
 
-}
-
-
-/*====================================================
-
-PRESS ENTER TO LOGIN
-
-=====================================================*/
-
-document
-
-.getElementById("loginForm")
-
-.addEventListener("submit",function(e){
-
-e.preventDefault();
-
-login();
-
 });
-
-
-document
-
-.getElementById("password")
-
-.addEventListener("keypress",function(e){
-
-if(e.key==="Enter"){
-
-login();
-
-}
-
-});
-
-
-/*====================================================
-
-CLEAR PREVIOUS SESSION
-
-=====================================================*/
-
-localStorage.removeItem("loggedUser");
-/*====================================================
-
-PAGE INITIALIZATION
-
-=====================================================*/
-
-window.onload = function(){
-
-// Clear any previous values
-
-document.getElementById("username").value = "";
-
-document.getElementById("password").value = "";
-
-// Set cursor to Login ID
-
-document.getElementById("username").focus();
-
-};
 
 
 /*====================================================
 
 FORGOT PASSWORD
 
-=====================================================*/
+====================================================*/
 
 document
 
@@ -736,7 +614,7 @@ e.preventDefault();
 
 alert(
 
-"Please contact your Site HR Administrator or the Corporate HR Team to reset your password."
+"Please contact the Site HR Administrator or Corporate HR Team to reset your password."
 
 );
 
@@ -745,9 +623,54 @@ alert(
 
 /*====================================================
 
-PREVENT BACK NAVIGATION AFTER LOGOUT
+ENTER KEY SUPPORT
 
-=====================================================*/
+====================================================*/
+
+document
+
+.addEventListener("keypress",function(e){
+
+if(e.key==="Enter"){
+
+document
+
+.getElementById("loginForm")
+
+.requestSubmit();
+
+}
+
+});
+
+
+/*====================================================
+
+CLEAR FORM ON PAGE LOAD
+
+====================================================*/
+
+window.onload=function(){
+
+document.getElementById("username").value="";
+
+document.getElementById("password").value="";
+
+document.getElementById("username").focus();
+
+};
+/*====================================================
+
+SESSION MANAGEMENT
+
+====================================================*/
+
+// Prevent access to login page using browser back
+// button after successful login.
+
+window.addEventListener("pageshow",function(event){
+
+if(localStorage.getItem("loggedUser")){
 
 history.pushState(null,null,location.href);
 
@@ -757,47 +680,73 @@ history.go(1);
 
 };
 
+}
+
+});
+
 
 /*====================================================
 
-SYSTEM INITIALIZED
+LOGOUT COMPATIBILITY
 
-=====================================================*/
+====================================================*/
+
+// When user logs out from welcome.html,
+// the "loggedUser" session will be removed.
+// Therefore reopening index.html will always
+// display a fresh login screen.
+
+if(!localStorage.getItem("loggedUser")){
+
+document.getElementById("username").focus();
+
+}
+
+
+/*====================================================
+
+INITIAL PAGE ANIMATION
+
+====================================================*/
+
+window.addEventListener("load",()=>{
+
+const loginCard=document.querySelector(".login-card");
+
+loginCard.style.opacity="0";
+
+loginCard.style.transform="translateY(25px)";
+
+setTimeout(()=>{
+
+loginCard.style.transition="all .6s ease";
+
+loginCard.style.opacity="1";
+
+loginCard.style.transform="translateY(0px)";
+
+},100);
+
+});
+
+
+/*====================================================
+
+SYSTEM INFORMATION
+
+====================================================*/
 
 console.clear();
 
-console.log(
-
-"============================================"
-
-);
-
-console.log(
-
-"Serentica Site Manpower Management System"
-
-);
-
-console.log(
-
-"Login Module Initialized Successfully"
-
-);
-
-console.log(
-
-"Version : 2.0"
-
-);
-
-console.log(
-
-"============================================"
-
-);
+console.log("========================================");
+console.log("Serentica Site Manpower Management");
+console.log("Login Module Initialised Successfully");
+console.log("Version 2.0");
+console.log("========================================");
 
 </script>
 
 </body>
 
 </html>
+
