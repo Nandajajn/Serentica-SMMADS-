@@ -5,13 +5,26 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<title>Serentica Site Manpower Management System</title>
+<title>
 
-<!-- Google Font -->
+Serentica Site Manpower Management System
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</title>
+
+<!-- Google Fonts -->
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
 
 <!-- Font Awesome -->
 
@@ -31,23 +44,27 @@ font-family:'Poppins',sans-serif;
 
 --primary:#33A7B5;
 
---secondary:#0E6672;
+--primary-dark:#1F7E8A;
+
+--secondary:#EAF8FA;
 
 --white:#FFFFFF;
 
---background:#F4F7FA;
+--background:#F5F8FA;
 
---text:#303030;
+--text:#2D3748;
 
---shadow:0 15px 35px rgba(0,0,0,.10);
+--border:#DDE7EC;
 
---radius:18px;
+--shadow:0 12px 35px rgba(0,0,0,0.08);
+
+--radius:20px;
 
 }
 
 body{
 
-background:linear-gradient(135deg,#EAF7F8,#F5F8FA);
+background:linear-gradient(135deg,#F5F8FA,#EAF8FA);
 
 min-height:100vh;
 
@@ -57,7 +74,7 @@ justify-content:center;
 
 align-items:center;
 
-overflow:hidden;
+padding:40px;
 
 }
 
@@ -70,17 +87,17 @@ LOGIN CONTAINER
 
 .login-container{
 
-width:950px;
+width:1120px;
 
-height:580px;
+min-height:640px;
 
-background:white;
+background:var(--white);
 
-display:flex;
-
-border-radius:22px;
+border-radius:25px;
 
 overflow:hidden;
+
+display:flex;
 
 box-shadow:var(--shadow);
 
@@ -89,7 +106,7 @@ box-shadow:var(--shadow);
 
 /*==================================
 
-LEFT PANEL
+LEFT BRANDING PANEL
 
 ==================================*/
 
@@ -97,7 +114,11 @@ LEFT PANEL
 
 width:45%;
 
-background:linear-gradient(160deg,#33A7B5,#0E6672);
+background:linear-gradient(145deg,#33A7B5,#1F7E8A);
+
+color:white;
+
+padding:60px 45px;
 
 display:flex;
 
@@ -107,46 +128,46 @@ justify-content:center;
 
 align-items:center;
 
-padding:40px;
-
-color:white;
-
 text-align:center;
 
 }
 
 .left-panel img{
 
-width:140px;
+width:170px;
 
-margin-bottom:30px;
+margin-bottom:35px;
 
 }
 
 .left-panel h1{
 
-font-size:32px;
+font-size:34px;
 
 font-weight:700;
 
-margin-bottom:18px;
+line-height:46px;
+
+margin-bottom:20px;
 
 }
 
 .left-panel p{
 
-font-size:15px;
+font-size:16px;
 
-line-height:28px;
+line-height:30px;
 
 opacity:.95;
+
+max-width:380px;
 
 }
 
 
 /*==================================
 
-RIGHT PANEL
+RIGHT LOGIN PANEL
 
 ==================================*/
 
@@ -154,7 +175,7 @@ RIGHT PANEL
 
 width:55%;
 
-padding:55px;
+padding:70px 60px;
 
 display:flex;
 
@@ -166,23 +187,25 @@ justify-content:center;
 
 .right-panel h2{
 
-font-size:32px;
-
-font-weight:700;
+font-size:34px;
 
 color:var(--primary);
 
 margin-bottom:10px;
 
+font-weight:700;
+
 }
 
-.right-panel p{
+.right-panel .subtitle{
 
 font-size:15px;
 
-color:#666;
+color:#6B7280;
 
-margin-bottom:30px;
+margin-bottom:40px;
+
+line-height:26px;
 
 }
 /*==================================
@@ -191,13 +214,13 @@ LOGIN FORM
 
 ==================================*/
 
-.input-group{
+.form-group{
 
 margin-bottom:22px;
 
 }
 
-.input-group label{
+.form-group label{
 
 display:block;
 
@@ -205,39 +228,43 @@ font-size:15px;
 
 font-weight:600;
 
-margin-bottom:8px;
+color:var(--text);
 
-color:#444;
+margin-bottom:8px;
 
 }
 
-.input-group input{
+.form-group input{
 
 width:100%;
 
-padding:15px 18px;
+padding:16px 18px;
 
-border:2px solid #E0E0E0;
+border:2px solid var(--border);
 
 border-radius:12px;
 
 font-size:15px;
 
+transition:.3s;
+
 outline:none;
 
-transition:.3s;
+background:#FAFCFD;
 
 }
 
-.input-group input:focus{
+.form-group input:focus{
 
 border-color:var(--primary);
 
-box-shadow:0 0 10px rgba(51,167,181,.15);
+box-shadow:0 0 0 4px rgba(51,167,181,.15);
+
+background:white;
 
 }
 
-.password-row{
+.form-options{
 
 display:flex;
 
@@ -247,13 +274,13 @@ margin-bottom:28px;
 
 }
 
-.password-row a{
+.form-options a{
 
 text-decoration:none;
 
-font-size:14px;
-
 color:var(--primary);
+
+font-size:14px;
 
 font-weight:600;
 
@@ -261,11 +288,20 @@ transition:.3s;
 
 }
 
-.password-row a:hover{
+.form-options a:hover{
+
+color:var(--primary-dark);
 
 text-decoration:underline;
 
 }
+
+
+/*==================================
+
+LOGIN BUTTON
+
+==================================*/
 
 .login-btn{
 
@@ -273,13 +309,13 @@ width:100%;
 
 padding:16px;
 
-background:var(--primary);
-
-color:white;
-
 border:none;
 
 border-radius:12px;
+
+background:var(--primary);
+
+color:white;
 
 font-size:17px;
 
@@ -293,23 +329,38 @@ transition:.3s;
 
 .login-btn:hover{
 
-background:var(--secondary);
+background:var(--primary-dark);
 
 transform:translateY(-2px);
 
+box-shadow:0 8px 20px rgba(51,167,181,.25);
+
 }
 
-.footer{
+.login-btn i{
 
-margin-top:25px;
+margin-right:8px;
+
+}
+
+
+/*==================================
+
+FOOTER
+
+==================================*/
+
+.login-footer{
+
+margin-top:35px;
 
 text-align:center;
 
 font-size:13px;
 
-color:#777;
+color:#6B7280;
 
-line-height:22px;
+line-height:24px;
 
 }
 
@@ -320,43 +371,56 @@ RESPONSIVE DESIGN
 
 ==================================*/
 
-@media(max-width:900px){
+@media(max-width:992px){
 
 .login-container{
 
-width:95%;
-
-height:auto;
-
 flex-direction:column;
+
+width:100%;
+
+}
+
+.left-panel,
+.right-panel{
+
+width:100%;
 
 }
 
 .left-panel{
 
-width:100%;
-
-padding:35px;
+padding:50px 35px;
 
 }
 
 .right-panel{
 
-width:100%;
-
-padding:35px;
+padding:45px 35px;
 
 }
 
 .left-panel img{
 
-width:110px;
+width:140px;
 
 }
 
 .left-panel h1{
 
-font-size:26px;
+font-size:28px;
+
+line-height:40px;
+
+}
+
+}
+
+@media(max-width:576px){
+
+body{
+
+padding:20px;
 
 }
 
@@ -376,71 +440,86 @@ font-size:28px;
 
 <div class="login-container">
 
+<!-- ==========================
+LEFT PANEL
+========================== -->
+
 <div class="left-panel">
 
 <img src="assets/logo.png" alt="Serentica Logo">
 
-<h1>Serentica Site Manpower Management System</h1>
+<h1>
+
+Serentica Site Manpower Management System
+
+</h1>
 
 <p>
 
-Welcome to the official Site Manpower Management Portal.
-
-This platform enables secure manpower deployment,
-
-recall management, organisational visibility,
-
-and workforce coordination across Serentica
-
+A centralized workforce management platform for
+employee deployment, recall, department coordination,
+and organisational visibility across Serentica
 Renewables project sites.
 
 </p>
 
 </div>
 
+<!-- ==========================
+RIGHT PANEL
+========================== -->
+
 <div class="right-panel">
 
-<h2>Login</h2>
+<h2>
 
-<p>
+Sign In
 
-Please enter your Login ID and Password to continue.
+</h2>
+
+<p class="subtitle">
+
+Please sign in using your authorised credentials.
 
 </p>
 
-<div class="input-group">
+<form id="loginForm">
 
-<label>Login ID</label>
+<div class="form-group">
+
+<label for="username">
+
+Login ID
+
+</label>
 
 <input
-
 type="text"
-
 id="username"
-
-placeholder="Enter Login ID"
-
-autocomplete="off">
+placeholder="Enter your Login ID"
+required>
 
 </div>
 
-<div class="input-group">
+<div class="form-group">
 
-<label>Password</label>
+<label for="password">
+
+Password
+
+</label>
 
 <input
-
 type="password"
-
 id="password"
-
-placeholder="Enter Password">
+placeholder="Enter your Password"
+required>
 
 </div>
 
-<div class="password-row">
+<div class="form-options">
 
-<a href="#">
+<a href="#" id="forgotPassword">
 
 Forgot Password?
 
@@ -449,9 +528,8 @@ Forgot Password?
 </div>
 
 <button
-
+type="button"
 class="login-btn"
-
 onclick="login()">
 
 <i class="fa-solid fa-right-to-bracket"></i>
@@ -460,13 +538,15 @@ Login
 
 </button>
 
-<div class="footer">
+</form>
+
+<div class="login-footer">
 
 © 2026 Serentica Renewables Private Limited
 
 <br>
 
-All Rights Reserved
+All Rights Reserved.
 
 </div>
 
@@ -475,144 +555,180 @@ All Rights Reserved
 </div>
 
 <script>
-/*==================================
+/*====================================================
 
-LOGIN AUTHENTICATION
+SERENTICA USER DATABASE
+(Temporary - Will be replaced by HRMS Database)
 
-==================================*/
+=====================================================*/
+
+const users = [
+
+{
+    username: "admin@123",
+    password: "admin@123",
+    name: "Admin",
+    role: "Admin",
+    site: ""
+},
+
+{
+    username: "pm@123",
+    password: "pm@123",
+    name: "Project Manager",
+    role: "Project Manager",
+    site: ""
+},
+
+{
+    username: "lead@123",
+    password: "lead@123",
+    name: "Team Lead",
+    role: "Team Lead",
+    site: ""
+}
+
+];
+
+
+/*====================================================
+
+LOGIN FUNCTION
+
+=====================================================*/
 
 function login(){
 
-const username=document.getElementById("username").value.trim();
+const username =
+document.getElementById("username")
+.value
+.trim()
+.toLowerCase();
 
-const password=document.getElementById("password").value.trim();
-
-
-/*==================================
-
-ADMIN LOGIN
-
-==================================*/
-
-if(username==="admin@123" && password==="admin@123"){
-
-localStorage.setItem("loggedUser",JSON.stringify({
-
-name:"Admin",
-
-role:"Admin",
-
-site:"Corporate Office"
-
-}));
-
-window.location.href="welcome.html";
-
-}
+const password =
+document.getElementById("password")
+.value
+.trim();
 
 
-/*==================================
+const user = users.find(u =>
 
-TEAM LEAD LOGIN
+u.username === username &&
+u.password === password
 
-==================================*/
+);
 
-else if(username==="lead@123" && password==="lead@123"){
 
-localStorage.setItem("loggedUser",JSON.stringify({
+if(user){
 
-name:"Team Lead",
+localStorage.setItem(
 
-role:"Team Lead",
+"loggedUser",
 
-site:"Koppal Site"
+JSON.stringify({
 
-}));
+name:user.name,
+
+role:user.role,
+
+site:user.site
+
+})
+
+);
 
 window.location.href="welcome.html";
 
 }
-
-
-/*==================================
-
-PROJECT MANAGER LOGIN
-
-==================================*/
-
-else if(username==="PM@123" && password==="PM@123"){
-
-localStorage.setItem("loggedUser",JSON.stringify({
-
-name:"Project Manager",
-
-role:"Project Manager",
-
-site:"Pokhar Site"
-
-}));
-
-window.location.href="welcome.html";
-
-}
-
-
-/*==================================
-
-INVALID LOGIN
-
-==================================*/
 
 else{
 
-alert("Invalid Login ID or Password.");
+alert(
+
+"Invalid Login ID or Password.\n\nPlease try again."
+
+);
+
+document.getElementById("password").value="";
+
+document.getElementById("password").focus();
 
 }
 
 }
 
 
-/*==================================
+/*====================================================
 
 PRESS ENTER TO LOGIN
 
-==================================*/
+=====================================================*/
 
-document.getElementById("password")
+document
 
-.addEventListener("keypress",function(event){
+.getElementById("loginForm")
 
-if(event.key==="Enter"){
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+login();
+
+});
+
+
+document
+
+.getElementById("password")
+
+.addEventListener("keypress",function(e){
+
+if(e.key==="Enter"){
 
 login();
 
 }
 
 });
-/*==================================
 
-CLEAR INPUTS ON PAGE LOAD
 
-==================================*/
+/*====================================================
+
+CLEAR PREVIOUS SESSION
+
+=====================================================*/
+
+localStorage.removeItem("loggedUser");
+/*====================================================
+
+PAGE INITIALIZATION
+
+=====================================================*/
 
 window.onload = function(){
 
-document.getElementById("username").value="";
+// Clear any previous values
 
-document.getElementById("password").value="";
+document.getElementById("username").value = "";
+
+document.getElementById("password").value = "";
+
+// Set cursor to Login ID
 
 document.getElementById("username").focus();
 
 };
 
 
-/*==================================
+/*====================================================
 
 FORGOT PASSWORD
 
-==================================*/
+=====================================================*/
 
-document.querySelector(".password-row a")
+document
+
+.getElementById("forgotPassword")
 
 .addEventListener("click",function(e){
 
@@ -627,11 +743,11 @@ alert(
 });
 
 
-/*==================================
+/*====================================================
 
-PREVENT BACK BUTTON AFTER LOGOUT
+PREVENT BACK NAVIGATION AFTER LOGOUT
 
-==================================*/
+=====================================================*/
 
 history.pushState(null,null,location.href);
 
@@ -642,13 +758,43 @@ history.go(1);
 };
 
 
-/*==================================
+/*====================================================
 
-APPLICATION LOADED
+SYSTEM INITIALIZED
 
-==================================*/
+=====================================================*/
 
-console.log("Serentica Site Manpower Management System Loaded Successfully.");
+console.clear();
+
+console.log(
+
+"============================================"
+
+);
+
+console.log(
+
+"Serentica Site Manpower Management System"
+
+);
+
+console.log(
+
+"Login Module Initialized Successfully"
+
+);
+
+console.log(
+
+"Version : 2.0"
+
+);
+
+console.log(
+
+"============================================"
+
+);
 
 </script>
 
