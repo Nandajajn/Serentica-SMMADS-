@@ -5,13 +5,19 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<title>Serentica Site Manpower Management System | Dashboard</title>
+<title>
+
+Serentica Site Manpower Management System
+
+</title>
 
 <!-- Google Font -->
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
 
 <!-- Font Awesome -->
 
@@ -21,10 +27,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 <style>
 
 *{
+
 margin:0;
+
 padding:0;
+
 box-sizing:border-box;
+
 font-family:'Poppins',sans-serif;
+
 }
 
 :root{
@@ -33,11 +44,15 @@ font-family:'Poppins',sans-serif;
 
 --secondary:#0E6672;
 
---white:#FFFFFF;
+--background:#F4F8FA;
 
---light:#F5F8FA;
+--card:#FFFFFF;
 
---text:#2E2E2E;
+--text:#2D3748;
+
+--light:#F8FCFD;
+
+--border:#E2E8F0;
 
 --shadow:0 10px 30px rgba(0,0,0,.08);
 
@@ -47,27 +62,24 @@ font-family:'Poppins',sans-serif;
 
 body{
 
-background:var(--light);
-
-color:var(--text);
+background:var(--background);
 
 overflow-x:hidden;
 
-min-height:100vh;
+color:var(--text);
 
 }
 
-/*================================
 
-NAVIGATION BAR
+/*====================================
 
-================================*/
+TOP NAVBAR
+
+====================================*/
 
 .navbar{
 
-width:100%;
-
-height:85px;
+height:82px;
 
 background:white;
 
@@ -89,7 +101,7 @@ z-index:999;
 
 }
 
-.logo-area{
+.logo{
 
 display:flex;
 
@@ -99,33 +111,33 @@ gap:18px;
 
 }
 
-.logo-area img{
+.logo img{
 
-height:55px;
-
-width:auto;
+height:58px;
 
 }
 
-.logo-text h2{
+.logo h2{
+
+color:var(--primary);
 
 font-size:25px;
 
 font-weight:700;
 
-color:var(--primary);
-
 }
 
-.logo-text p{
+.logo p{
 
 font-size:13px;
 
 color:#777;
 
+margin-top:2px;
+
 }
 
-.right-nav{
+.nav-right{
 
 display:flex;
 
@@ -135,21 +147,19 @@ gap:25px;
 
 }
 
-.date-box{
+.datetime{
 
 text-align:right;
 
 }
 
-.date-box h4{
+.datetime h4{
 
 font-size:15px;
 
-font-weight:600;
-
 }
 
-.date-box p{
+.datetime p{
 
 font-size:13px;
 
@@ -157,17 +167,17 @@ color:#666;
 
 }
 
-.logout-btn{
+.logout{
 
 background:#D62828;
 
-padding:12px 24px;
-
 color:white;
 
-text-decoration:none;
+padding:12px 22px;
 
 border-radius:10px;
+
+text-decoration:none;
 
 font-weight:600;
 
@@ -175,31 +185,39 @@ transition:.3s;
 
 }
 
-.logout-btn:hover{
+.logout:hover{
 
-background:#b51e1e;
+background:#b71c1c;
 
 }
 
-/*================================
 
-MAIN SECTION
+/*====================================
 
-================================*/
+PAGE CONTAINER
 
-.main-container{
+====================================*/
+
+.container{
 
 padding:35px;
 
 }
 
+
+/*====================================
+
+WELCOME PANEL
+
+====================================*/
+
 .hero{
 
 background:linear-gradient(135deg,#33A7B5,#0E6672);
 
-border-radius:22px;
-
 padding:40px;
+
+border-radius:22px;
 
 display:flex;
 
@@ -215,19 +233,19 @@ margin-bottom:35px;
 
 }
 
-.hero-left h1{
+.hero h1{
 
-font-size:36px;
+font-size:38px;
+
+margin-bottom:10px;
 
 font-weight:700;
 
-margin-bottom:12px;
-
 }
 
-.hero-left h2{
+.hero h3{
 
-font-size:23px;
+font-size:22px;
 
 font-weight:500;
 
@@ -235,28 +253,30 @@ margin-bottom:10px;
 
 }
 
-.hero-left p{
+.hero p{
 
 font-size:15px;
 
 opacity:.95;
 
+line-height:26px;
+
 }
 
-.hero-right{
+.hero i{
 
-font-size:90px;
+font-size:95px;
 
 opacity:.18;
 
 }
-/*================================
+/*====================================
 
-KPI SUMMARY CARDS
+EXECUTIVE SUMMARY
 
-================================*/
+====================================*/
 
-.kpi-container{
+.summary-grid{
 
 display:grid;
 
@@ -268,43 +288,95 @@ margin-bottom:35px;
 
 }
 
-.kpi-card{
+.summary-card{
 
-background:var(--white);
-
-padding:28px;
+background:var(--card);
 
 border-radius:18px;
 
+padding:28px;
+
 box-shadow:var(--shadow);
 
-border-left:5px solid var(--primary);
+transition:.3s;
 
-transition:.35s;
+border-top:5px solid var(--primary);
 
-cursor:default;
+position:relative;
 
-}
-
-.kpi-card:hover{
-
-transform:translateY(-6px);
+overflow:hidden;
 
 }
 
-.kpi-card i{
+.summary-card:hover{
 
-font-size:34px;
+transform:translateY(-8px);
 
-color:var(--primary);
+}
+
+.summary-card::after{
+
+content:"";
+
+position:absolute;
+
+right:-30px;
+
+top:-30px;
+
+width:100px;
+
+height:100px;
+
+background:rgba(51,167,181,.08);
+
+border-radius:50%;
+
+}
+
+.summary-icon{
+
+width:62px;
+
+height:62px;
+
+border-radius:15px;
+
+background:#EAF8FA;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
 
 margin-bottom:18px;
 
 }
 
-.kpi-card h2{
+.summary-icon i{
 
-font-size:32px;
+font-size:28px;
+
+color:var(--primary);
+
+}
+
+.summary-title{
+
+font-size:15px;
+
+font-weight:600;
+
+color:#666;
+
+margin-bottom:10px;
+
+}
+
+.summary-value{
+
+font-size:36px;
 
 font-weight:700;
 
@@ -314,34 +386,132 @@ margin-bottom:8px;
 
 }
 
-.kpi-card p{
+.summary-status{
 
-font-size:15px;
+font-size:13px;
 
-color:#666;
-
-font-weight:500;
+color:#888;
 
 }
 
 
-/*================================
+/*====================================
 
-ROLE DASHBOARD
+USER INFORMATION CARD
 
-================================*/
+====================================*/
 
-.dashboard-title{
+.user-card{
+
+background:white;
+
+border-radius:20px;
+
+padding:30px;
+
+box-shadow:var(--shadow);
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:40px;
+
+}
+
+.user-left{
+
+display:flex;
+
+align-items:center;
+
+gap:22px;
+
+}
+
+.user-photo{
+
+width:78px;
+
+height:78px;
+
+border-radius:50%;
+
+border:4px solid var(--primary);
+
+object-fit:cover;
+
+}
+
+.user-details h2{
+
+font-size:24px;
+
+margin-bottom:8px;
+
+}
+
+.user-details p{
+
+font-size:15px;
+
+line-height:28px;
+
+color:#666;
+
+}
+
+.user-right{
+
+text-align:right;
+
+}
+
+.status{
+
+display:inline-block;
+
+padding:10px 20px;
+
+background:#E9F8F3;
+
+color:#15803D;
+
+border-radius:30px;
+
+font-size:14px;
+
+font-weight:600;
+
+}
+
+
+/*====================================
+
+SECTION TITLE
+
+====================================*/
+
+.section-title{
 
 font-size:30px;
 
 font-weight:700;
 
-margin-bottom:28px;
+margin-bottom:25px;
 
-color:var(--text);
+color:#2D3748;
 
 }
+
+
+/*====================================
+
+ROLE DASHBOARD
+
+====================================*/
 
 .dashboard-grid{
 
@@ -349,55 +519,51 @@ display:grid;
 
 grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 
-gap:28px;
+gap:30px;
+
+margin-bottom:50px;
 
 }
 
 .dashboard-card{
 
-background:var(--white);
+background:white;
 
-border-radius:20px;
+border-radius:22px;
 
 padding:35px;
-
-box-shadow:var(--shadow);
-
-text-align:center;
 
 text-decoration:none;
 
 color:inherit;
 
+box-shadow:var(--shadow);
+
 transition:.35s;
 
-border-top:5px solid var(--primary);
+border-left:6px solid var(--primary);
 
 }
 
 .dashboard-card:hover{
 
-transform:translateY(-8px);
-
-box-shadow:0 15px 35px rgba(0,0,0,.15);
+transform:translateY(-10px);
 
 }
 
 .dashboard-card i{
 
-font-size:55px;
+font-size:48px;
 
 color:var(--primary);
 
-margin-bottom:18px;
+margin-bottom:20px;
 
 }
 
 .dashboard-card h3{
 
-font-size:23px;
-
-font-weight:600;
+font-size:24px;
 
 margin-bottom:12px;
 
@@ -407,7 +573,7 @@ margin-bottom:12px;
 
 font-size:15px;
 
-line-height:25px;
+line-height:28px;
 
 color:#666;
 
@@ -420,17 +586,15 @@ display:none;
 }
 
 
-/*================================
+/*====================================
 
-PROFILE CARD
+SYSTEM OVERVIEW
 
-================================*/
+====================================*/
 
-.profile-card{
+.system-panel{
 
 background:white;
-
-margin-top:35px;
 
 padding:30px;
 
@@ -438,154 +602,142 @@ border-radius:20px;
 
 box-shadow:var(--shadow);
 
+margin-bottom:40px;
+
+}
+
+.system-panel h2{
+
+margin-bottom:20px;
+
+font-size:25px;
+
+}
+
+.system-grid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:20px;
+
+}
+
+.system-box{
+
+background:#F8FCFD;
+
+padding:22px;
+
+border-radius:16px;
+
+border-left:4px solid var(--primary);
+
+}
+
+.system-box h4{
+
+margin-bottom:10px;
+
+font-size:18px;
+
+}
+
+.system-box p{
+
+font-size:14px;
+
+line-height:24px;
+
+color:#666;
+
+}
+/*====================================
+
+FOOTER
+
+====================================*/
+
+.footer{
+
+margin-top:40px;
+
+background:#FFFFFF;
+
+padding:20px 35px;
+
 display:flex;
 
 justify-content:space-between;
 
 align-items:center;
 
-}
-
-.profile-left{
-
-display:flex;
-
-align-items:center;
-
-gap:20px;
-
-}
-
-.profile-left img{
-
-width:75px;
-
-height:75px;
-
-border-radius:50%;
-
-border:4px solid var(--primary);
-
-}
-
-.profile-details h3{
-
-font-size:22px;
-
-margin-bottom:6px;
-
-}
-
-.profile-details p{
-
-font-size:15px;
-
-color:#666;
-
-line-height:24px;
-
-}
-
-.profile-right{
-
-text-align:right;
-
-}
-
-.profile-right h4{
-
-color:var(--primary);
-
-margin-bottom:8px;
-
-}
-
-.profile-right span{
-
-font-weight:600;
-
-}
-
-
-/*================================
-
-FOOTER
-
-================================*/
-
-.footer{
-
-margin-top:60px;
-
-padding:20px;
-
-background:white;
-
-text-align:center;
+border-top:1px solid #E2E8F0;
 
 font-size:14px;
 
-color:#777;
-
-box-shadow:0 -5px 20px rgba(0,0,0,.05);
+color:#666;
 
 }
 
+.footer-left{
 
-/*================================
+font-weight:500;
 
-RETURN BUTTON
+}
 
-================================*/
+.footer-right{
+
+display:flex;
+
+gap:15px;
+
+}
 
 .return-btn{
 
-position:fixed;
-
-bottom:25px;
-
-right:25px;
-
-background:var(--primary);
+background:#33A7B5;
 
 color:white;
 
+padding:12px 22px;
+
+border-radius:10px;
+
 text-decoration:none;
-
-padding:14px 24px;
-
-border-radius:12px;
 
 font-weight:600;
 
-box-shadow:var(--shadow);
-
 transition:.3s;
-
-z-index:999;
 
 }
 
 .return-btn:hover{
 
-background:var(--secondary);
+background:#0E6672;
 
-transform:translateY(-3px);
+transform:translateY(-2px);
 
 }
 
+/*====================================
 
-/*================================
+RESPONSIVE
 
-RESPONSIVE DESIGN
-
-================================*/
+====================================*/
 
 @media(max-width:1200px){
 
-.kpi-container{
+.summary-grid{
 
 grid-template-columns:repeat(2,1fr);
+
+}
+
+.system-grid{
+
+grid-template-columns:1fr;
 
 }
 
@@ -605,41 +757,15 @@ gap:20px;
 
 }
 
-.main-container{
-
-padding:20px;
-
-}
-
 .hero{
 
 flex-direction:column;
 
 text-align:center;
 
-gap:20px;
-
 }
 
-.hero-left h1{
-
-font-size:28px;
-
-}
-
-.hero-left h2{
-
-font-size:20px;
-
-}
-
-.hero-right{
-
-font-size:60px;
-
-}
-
-.kpi-container{
+.summary-grid{
 
 grid-template-columns:1fr;
 
@@ -651,7 +777,7 @@ grid-template-columns:1fr;
 
 }
 
-.profile-card{
+.user-card{
 
 flex-direction:column;
 
@@ -661,9 +787,11 @@ gap:20px;
 
 }
 
-.profile-right{
+.footer{
 
-text-align:center;
+flex-direction:column;
+
+gap:15px;
 
 }
 
@@ -672,183 +800,289 @@ text-align:center;
 </style>
 
 </head>
+
 <body>
 
-<!-- ==============================
-        NAVIGATION BAR
-================================ -->
+<!-- =====================================
 
-<nav class="navbar">
+NAVBAR
 
-    <div class="logo-area">
+===================================== -->
 
-        <!-- Replace with your Serentica logo -->
-        <img src="assets/logo.png" alt="Serentica Logo">
+<div class="navbar">
 
-        <div class="logo-text">
+<div class="logo">
 
-            <h2>Serentica Site Manpower Management System</h2>
+<img src="assets/logo.png" alt="Serentica Logo">
 
-            <p>Renewable Energy | Site Workforce Management</p>
+<div>
 
-        </div>
+<h2>
 
-    </div>
+Serentica Site Manpower Management System
 
-    <div class="right-nav">
+</h2>
 
-        <div class="date-box">
+<p>
 
-            <h4 id="currentDate">Loading...</h4>
+Renewable Energy | Site Workforce Management
 
-            <p id="currentTime">Loading...</p>
+</p>
 
-        </div>
+</div>
 
-        <a href="index.html" class="logout-btn">
+</div>
 
-            <i class="fa-solid fa-right-from-bracket"></i>
+<div class="nav-right">
 
-            Logout
+<div class="datetime">
 
-        </a>
+<h4 id="currentDate">
 
-    </div>
+Loading...
 
-</nav>
+</h4>
 
+<p id="currentTime">
 
+Loading...
 
-<!-- ==============================
-        MAIN CONTAINER
-================================ -->
+</p>
 
-<div class="main-container">
+</div>
 
+<a href="index.html" class="logout">
 
+<i class="fa-solid fa-right-from-bracket"></i>
 
+Logout
 
-<!-- ==============================
-        WELCOME BANNER
-================================ -->
+</a>
+
+</div>
+
+</div>
+
+<div class="container">
+
+<!-- =====================================
+
+WELCOME PANEL
+
+===================================== -->
 
 <div class="hero">
 
-    <div class="hero-left">
+<div>
 
-        <h1 id="welcomeText">
+<h1 id="welcomeMessage">
 
-            Welcome
+Welcome
 
-        </h1>
+</h1>
 
-        <h2 id="roleText">
+<h3 id="roleHeading">
 
-            Site Workforce Dashboard
+Loading Role...
 
-        </h2>
+</h3>
 
-        <p id="siteText">
+<p id="siteHeading">
 
-            Karnataka Site Operations
+Loading Site...
 
-        </p>
-
-    </div>
-
-    <div class="hero-right">
-
-        <i class="fa-solid fa-users-gear"></i>
-
-    </div>
+</p>
 
 </div>
 
+<div>
 
-
-
-<!-- ==============================
-        KPI SUMMARY
-================================ -->
-
-<div class="kpi-container">
-
-    <div class="kpi-card">
-
-        <i class="fa-solid fa-users"></i>
-
-        <h2 id="totalEmployees">--</h2>
-
-        <p>Total Employees</p>
-
-    </div>
-
-    <div class="kpi-card">
-
-        <i class="fa-solid fa-user-check"></i>
-
-        <h2 id="readyDeployment">--</h2>
-
-        <p>Ready for Deployment</p>
-
-    </div>
-
-    <div class="kpi-card">
-
-        <i class="fa-solid fa-truck-fast"></i>
-
-        <h2 id="employeesDeployed">--</h2>
-
-        <p>Employees Deployed</p>
-
-    </div>
-
-    <div class="kpi-card">
-
-        <i class="fa-solid fa-list-check"></i>
-
-        <h2 id="openTasks">--</h2>
-
-        <p>Open Tasks</p>
-
-    </div>
+<i class="fa-solid fa-users-gear"></i>
 
 </div>
 
+</div>
 
+<!-- =====================================
 
+EXECUTIVE SUMMARY
 
-<!-- ==============================
-        USER PROFILE
-================================ -->
+===================================== -->
 
-<div class="profile-card">
+<div class="summary-grid">
 
-    <div class="profile-left">
+<div class="summary-card">
 
-        <img src="assets/profile.png" alt="User Profile">
+<div class="summary-icon">
 
-        <div class="profile-details">
+<i class="fa-solid fa-users"></i>
 
-            <h3 id="userName">
+</div>
+
+<div class="summary-title">
+
+Total Employees
+
+</div>
+
+<div class="summary-value"
+
+id="totalEmployees">
+
+--
+
+</div>
+
+<div class="summary-status">
+
+Auto Updated
+
+</div>
+
+</div>
+
+<div class="summary-card">
+
+<div class="summary-icon">
+
+<i class="fa-solid fa-user-check"></i>
+
+</div>
+
+<div class="summary-title">
+
+Ready for Deployment
+
+</div>
+
+<div class="summary-value"
+
+id="readyEmployees">
+
+--
+
+</div>
+
+<div class="summary-status">
+
+Auto Updated
+
+</div>
+
+</div>
+
+<div class="summary-card">
+
+<div class="summary-icon">
+
+<i class="fa-solid fa-truck-fast"></i>
+
+</div>
+
+<div class="summary-title">
+
+Employees Deployed
+
+</div>
+
+<div class="summary-value"
+
+id="deployedEmployees">
+
+--
+
+</div>
+
+<div class="summary-status">
+
+Auto Updated
+
+</div>
+
+</div>
+
+<div class="summary-card">
+
+<div class="summary-icon">
+
+<i class="fa-solid fa-list-check"></i>
+
+</div>
+
+<div class="summary-title">
+
+Open Tasks
+
+</div>
+
+<div class="summary-value"
+
+id="openTasks">
+
+--
+
+</div>
+
+<div class="summary-status">
+
+Auto Updated
+
+</div>
+
+</div>
+
+</div>
+<!-- =====================================
+
+USER PROFILE CARD
+
+===================================== -->
+
+<div class="user-card">
+
+    <div class="user-left">
+
+        <img src="assets/profile.png"
+             alt="Profile"
+             class="user-photo">
+
+        <div class="user-details">
+
+            <h2 id="loggedUserName">
 
                 Loading...
 
-            </h3>
+            </h2>
 
             <p>
 
                 <strong>Role :</strong>
 
-                <span id="userRole">Loading...</span>
+                <span id="loggedUserRole">
+
+                    Loading...
+
+                </span>
 
             </p>
 
             <p>
 
-                <strong>Site :</strong>
+                <strong>Current Site :</strong>
 
-                <span id="userSite">Loading...</span>
+                <span id="loggedUserSite">
+
+                    Loading...
+
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Employee Status :</strong>
+
+                Logged In
 
             </p>
 
@@ -856,250 +1090,572 @@ text-align:center;
 
     </div>
 
-    <div class="profile-right">
+    <div class="user-right">
 
-        <h4>Current Status</h4>
+        <span class="status">
 
-        <span>Logged In</span>
+            ● Active Session
 
-    </div>
-
-</div>
-
-
-
-<!-- ==============================
-        DASHBOARD
-================================ -->
-
-<h2 class="dashboard-title">
-
-    Dashboard
-
-</h2>
-
-<div class="dashboard-grid">
-    <!-- ==============================
-             ADMIN DASHBOARD
-    ============================== -->
-
-    <a href="deploy.html" class="dashboard-card admin-card">
-
-        <i class="fa-solid fa-person-circle-plus"></i>
-
-        <h3>Deploy Manpower</h3>
-
-        <p>
-            View all departments and deploy employees
-            across Karnataka sites.
-        </p>
-
-    </a>
-
-
-
-    <a href="recall.html" class="dashboard-card admin-card">
-
-        <i class="fa-solid fa-arrow-rotate-left"></i>
-
-        <h3>Recall Manpower</h3>
-
-        <p>
-            Recall employees deployed to other
-            Serentica project sites.
-        </p>
-
-    </a>
-
-
-
-    <a href="orgchart.html" class="dashboard-card admin-card">
-
-        <i class="fa-solid fa-sitemap"></i>
-
-        <h3>Organisation Chart</h3>
-
-        <p>
-            View the latest organisational
-            hierarchy and reporting structure.
-        </p>
-
-    </a>
-
-
-
-    <!-- ==============================
-             PROJECT MANAGER DASHBOARD
-    ============================== -->
-
-    <a href="employee.html"
-       class="dashboard-card pm-card hidden"
-       id="pmViewTeam">
-
-        <i class="fa-solid fa-users-viewfinder"></i>
-
-        <h3>View Team Details</h3>
-
-        <p>
-            Access complete employee details,
-            deployment readiness and remarks.
-        </p>
-
-    </a>
-
-
-
-    <a href="employee.html"
-       class="dashboard-card pm-card hidden"
-       id="pmMonitorTasks">
-
-        <i class="fa-solid fa-chart-line"></i>
-
-        <h3>Monitor Tasks</h3>
-
-        <p>
-            Monitor employee performance,
-            task allocation and KPI efficiency.
-        </p>
-
-    </a>
-
-
-
-    <!-- ==============================
-             TEAM LEAD DASHBOARD
-    ============================== -->
-
-    <a href="employee.html"
-       class="dashboard-card lead-card hidden"
-       id="leadViewTeam">
-
-        <i class="fa-solid fa-users"></i>
-
-        <h3>View Team Details</h3>
-
-        <p>
-            View and edit team information,
-            remarks and deployment status.
-        </p>
-
-    </a>
-
-
-
-    <a href="employee.html"
-       class="dashboard-card lead-card hidden"
-       id="leadMonitorTasks">
-
-        <i class="fa-solid fa-list-check"></i>
-
-        <h3>Monitor Tasks</h3>
-
-        <p>
-            Update employee tasks,
-            efficiency score and deployment readiness.
-        </p>
-
-    </a>
-
-</div>
-
-<!-- ==============================
-        SYSTEM INFORMATION
-================================ -->
-
-<div class="profile-card">
-
-    <div class="profile-left">
-
-        <i class="fa-solid fa-circle-info"
-           style="font-size:60px;color:#33A7B5;"></i>
-
-        <div class="profile-details">
-
-            <h3>System Information</h3>
-
-            <p>
-                This dashboard displays real-time manpower
-                information for Serentica Renewable Energy
-                project sites across Karnataka.
-            </p>
-
-            <p>
-                KPI values will automatically update based on
-                employee deployment and recall records.
-            </p>
-
-        </div>
-
-    </div>
-
-    <div class="profile-right">
-
-        <h4>System Status</h4>
-
-        <span style="color:green;">
-            ● Online
         </span>
 
     </div>
 
 </div>
-<!-- ==========================================
-                FOOTER
-=========================================== -->
-
-<footer class="footer">
-
-    © 2026 Serentica Renewables Private Limited |
-    Serentica Site Manpower Management System
-
-</footer>
 
 
-<!-- ==========================================
-          RETURN TO HOME BUTTON
-=========================================== -->
+<!-- =====================================
 
-<a href="index.html" class="return-btn">
+ROLE BASED DASHBOARD
 
-    <i class="fa-solid fa-house"></i>
+===================================== -->
 
-    Return to Home
+<h2 class="section-title">
+
+Dashboard
+
+</h2>
+
+<div class="dashboard-grid">
+
+
+<!-- ===============================
+
+PROJECT MANAGER
+
+(MAIN CONTROLLER)
+
+================================ -->
+
+<div class="dashboard-card pm-card hidden">
+
+<i class="fa-solid fa-users"></i>
+
+<h3>
+
+View Team Details
+
+</h3>
+
+<p>
+
+Access every department,
+
+view employees,
+
+deployment readiness,
+
+and employee information.
+
+</p>
+
+<a href="employee.html">
+
+Open Module →
 
 </a>
-
 
 </div>
 
 
-<!-- ==========================================
-            JAVASCRIPT STARTS
-=========================================== -->
+<div class="dashboard-card pm-card hidden">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<h3>
+
+Monitor Tasks
+
+</h3>
+
+<p>
+
+Monitor tasks,
+
+employee workload,
+
+and KPI performance
+
+across all departments.
+
+</p>
+
+<a href="employee.html">
+
+Open Module →
+
+</a>
+
+</div>
+
+
+<div class="dashboard-card pm-card hidden">
+
+<i class="fa-solid fa-circle-check"></i>
+
+<h3>
+
+Approve Deployment
+
+</h3>
+
+<p>
+
+Review Team Lead recommendations
+
+and approve manpower deployment.
+
+</p>
+
+<a href="deploy.html">
+
+Open Module →
+
+</a>
+
+</div>
+
+
+<div class="dashboard-card pm-card hidden">
+
+<i class="fa-solid fa-rotate-left"></i>
+
+<h3>
+
+Approve Recall
+
+</h3>
+
+<p>
+
+Approve employee recall requests
+
+from other project locations.
+
+</p>
+
+<a href="recall.html">
+
+Open Module →
+
+</a>
+
+</div>
+
+
+<div class="dashboard-card pm-card hidden">
+
+<i class="fa-solid fa-sitemap"></i>
+
+<h3>
+
+Organisation Chart
+
+</h3>
+
+<p>
+
+View reporting hierarchy
+
+and department structure.
+
+</p>
+
+<a href="orgchart.html">
+
+Open Module →
+
+</a>
+
+</div>
+
+
+<div class="dashboard-card pm-card hidden">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+<h3>
+
+Deployment History
+
+</h3>
+
+<p>
+
+Track previous deployment
+
+and recall activities.
+
+</p>
+
+<a href="history.html">
+
+Open Module →
+
+</a>
+
+</div>
+
+
+<!-- ===============================
+
+ADMIN
+
+================================ -->
+
+<div class="dashboard-card admin-card hidden">
+
+<i class="fa-solid fa-paper-plane"></i>
+
+<h3>
+
+Forward Deployment
+
+</h3>
+
+<p>
+
+Forward Project Manager
+
+approved deployment requests
+
+to another Serentica site.
+
+</p>
+
+<a href="forward.html">
+
+Open Module →
+
+</a>
+
+</div>
+
+
+<div class="dashboard-card admin-card hidden">
+
+<i class="fa-solid fa-arrow-right-arrow-left"></i>
+
+<h3>
+
+Forward Recall
+
+</h3>
+
+<p>
+
+Coordinate recall requests
+
+between project locations.
+
+</p>
+
+<a href="forward.html">
+
+Open Module →
+
+</a>
+
+</div>
+
+
+<div class="dashboard-card admin-card hidden">
+
+<i class="fa-solid fa-sitemap"></i>
+
+<h3>
+
+Organisation Chart
+
+</h3>
+
+<p>
+
+View organisation hierarchy
+
+for all departments.
+
+</p>
+
+<a href="orgchart.html">
+
+Open Module →
+
+</a>
+
+</div>
+
+
+<!-- ===============================
+
+TEAM LEAD
+
+================================ -->
+
+<div class="dashboard-card lead-card hidden">
+
+<i class="fa-solid fa-users"></i>
+
+<h3>
+
+View Team Details
+
+</h3>
+
+<p>
+
+View employees
+
+within your department only.
+
+</p>
+
+<a href="employee.html">
+
+Open Module →
+
+</a>
+
+</div>
+
+
+<div class="dashboard-card lead-card hidden">
+
+<i class="fa-solid fa-list-check"></i>
+
+<h3>
+
+Monitor Tasks
+
+</h3>
+
+<p>
+
+Update employee tasks,
+
+remarks,
+
+and efficiency.
+
+</p>
+
+<a href="employee.html">
+
+Open Module →
+
+</a>
+
+</div>
+
+
+<div class="dashboard-card lead-card hidden">
+
+<i class="fa-solid fa-user-plus"></i>
+
+<h3>
+
+Recommend Deployment
+
+</h3>
+
+<p>
+
+Recommend employees
+
+ready for deployment
+
+to the Project Manager.
+
+</p>
+
+<a href="deploy.html">
+
+Open Module →
+
+</a>
+
+</div>
+
+
+<div class="dashboard-card lead-card hidden">
+
+<i class="fa-solid fa-user-minus"></i>
+
+<h3>
+
+Recommend Recall
+
+</h3>
+
+<p>
+
+Recommend recall requests
+
+to the Project Manager.
+
+</p>
+
+<a href="recall.html">
+
+Open Module →
+
+</a>
+
+</div>
+
+
+<div class="dashboard-card lead-card hidden">
+
+<i class="fa-solid fa-sitemap"></i>
+
+<h3>
+
+Organisation Chart
+
+</h3>
+
+<p>
+
+View reporting hierarchy
+
+and department structure.
+
+</p>
+
+<a href="orgchart.html">
+
+Open Module →
+
+</a>
+
+</div>
+
+</div>
+<!-- =====================================
+
+SYSTEM OVERVIEW
+
+===================================== -->
+
+<div class="system-panel">
+
+    <h2>
+
+        System Overview
+
+    </h2>
+
+    <div class="system-grid">
+
+        <div class="system-box">
+
+            <h4>
+
+                Workforce Management
+
+            </h4>
+
+            <p>
+
+                Monitor employee availability,
+                deployment readiness,
+                manpower movement and workforce allocation
+                across Serentica project sites.
+
+            </p>
+
+        </div>
+
+        <div class="system-box">
+
+            <h4>
+
+                Deployment Workflow
+
+            </h4>
+
+            <p>
+
+                Team Leads recommend employees,
+                Project Managers approve requests,
+                and Admin coordinates deployment
+                with other project sites.
+
+            </p>
+
+        </div>
+
+        <div class="system-box">
+
+            <h4>
+
+                Organisational Visibility
+
+            </h4>
+
+            <p>
+
+                Access organisation hierarchy,
+                department structure,
+                manpower status
+                and deployment history
+                from one dashboard.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer class="footer">
+
+<div class="footer-left">
+
+© 2026 Serentica Renewables Private Limited
+
+</div>
+
+<div class="footer-right">
+
+<a href="index.html" class="return-btn">
+
+<i class="fa-solid fa-house"></i>
+
+Return to Login
+
+</a>
+
+</div>
+
+</footer>
+
+</div>
 
 <script>
 
-/*============================================
+/*=====================================
 
-        LIVE DATE & TIME
+LIVE DATE & TIME
 
-============================================*/
+=====================================*/
 
 function updateDateTime(){
 
-const now = new Date();
+const now=new Date();
 
-document.getElementById("currentDate").innerHTML =
-now.toLocaleDateString('en-IN',
+document.getElementById("currentDate").innerHTML=
+now.toLocaleDateString("en-IN",
 {
-weekday:'long',
-day:'numeric',
-month:'long',
-year:'numeric'
+weekday:"long",
+day:"numeric",
+month:"long",
+year:"numeric"
 });
 
-document.getElementById("currentTime").innerHTML =
-now.toLocaleTimeString('en-IN');
+document.getElementById("currentTime").innerHTML=
+now.toLocaleTimeString("en-IN");
 
 }
 
@@ -1108,159 +1664,110 @@ updateDateTime();
 setInterval(updateDateTime,1000);
 
 
-/*============================================
+/*=====================================
 
-        USER LOGIN DETAILS
+GET LOGGED USER
 
-============================================*/
+=====================================*/
 
-const loggedUser =
+const user=
 JSON.parse(localStorage.getItem("loggedUser"));
 
-let role="";
-let name="";
-let site="";
-
-
-if(loggedUser){
-
-role=loggedUser.role;
-
-name=loggedUser.name;
-
-site=loggedUser.site;
-
-}
-else{
+if(!user){
 
 window.location.href="index.html";
 
 }
 
 
-/*============================================
+/*=====================================
 
-      DISPLAY USER DETAILS
+DISPLAY USER DETAILS
 
-============================================*/
+=====================================*/
 
-document.getElementById("userName").innerHTML=name;
+document.getElementById("welcomeMessage").innerHTML=
+"Welcome, "+user.name;
 
-document.getElementById("userRole").innerHTML=role;
+document.getElementById("roleHeading").innerHTML=
+user.role;
 
-document.getElementById("userSite").innerHTML=site;
+document.getElementById("siteHeading").innerHTML=
+user.site;
 
-document.getElementById("siteText").innerHTML=site;
+document.getElementById("loggedUserName").innerHTML=
+user.name;
 
-document.getElementById("welcomeText").innerHTML=
-"Welcome, "+name;
+document.getElementById("loggedUserRole").innerHTML=
+user.role;
 
-document.getElementById("roleText").innerHTML=
-role+" Dashboard";
+document.getElementById("loggedUserSite").innerHTML=
+user.site;
 
 
-/*============================================
+/*=====================================
 
-        KPI PLACE HOLDERS
+ROLE BASED ACCESS
 
-============================================*/
+=====================================*/
 
-/* These values will automatically update later
-   from employee.html */
+document.querySelectorAll(".admin-card")
+.forEach(card=>card.classList.add("hidden"));
+
+document.querySelectorAll(".pm-card")
+.forEach(card=>card.classList.add("hidden"));
+
+document.querySelectorAll(".lead-card")
+.forEach(card=>card.classList.add("hidden"));
+
+if(user.role==="Admin"){
+
+document.querySelectorAll(".admin-card")
+.forEach(card=>card.classList.remove("hidden"));
+
+}
+
+if(user.role==="Project Manager"){
+
+document.querySelectorAll(".pm-card")
+.forEach(card=>card.classList.remove("hidden"));
+
+}
+
+if(user.role==="Team Lead"){
+
+document.querySelectorAll(".lead-card")
+.forEach(card=>card.classList.remove("hidden"));
+
+}
+
+
+/*=====================================
+
+KPI PLACEHOLDERS
+
+These values will automatically
+update after employee.html
+is connected.
+
+=====================================*/
 
 document.getElementById("totalEmployees").innerHTML="--";
 
-document.getElementById("readyDeployment").innerHTML="--";
+document.getElementById("readyEmployees").innerHTML="--";
 
-document.getElementById("employeesDeployed").innerHTML="--";
+document.getElementById("deployedEmployees").innerHTML="--";
 
 document.getElementById("openTasks").innerHTML="--";
-/*============================================
-
-        ROLE BASED DASHBOARD
-
-============================================*/
-
-const adminCards = document.querySelectorAll(".admin-card");
-const pmCards = document.querySelectorAll(".pm-card");
-const leadCards = document.querySelectorAll(".lead-card");
-
-adminCards.forEach(card => card.classList.add("hidden"));
-pmCards.forEach(card => card.classList.add("hidden"));
-leadCards.forEach(card => card.classList.add("hidden"));
 
 
-/*============================================
+/*=====================================
 
-        SHOW DASHBOARD
+LOGOUT
 
-============================================*/
+=====================================*/
 
-if(role==="Admin"){
-
-    adminCards.forEach(card=>{
-
-        card.classList.remove("hidden");
-
-    });
-
-}
-
-else if(role==="Project Manager"){
-
-    pmCards.forEach(card=>{
-
-        card.classList.remove("hidden");
-
-    });
-
-}
-
-else if(role==="Team Lead"){
-
-    leadCards.forEach(card=>{
-
-        card.classList.remove("hidden");
-
-    });
-
-}
-
-
-/*============================================
-
-      FUTURE DATA INTEGRATION
-
-============================================*/
-
-/*
-
-These KPI cards will automatically update
-after employee.html is connected.
-
-Example:
-
-Total Employees
-
-Ready for Deployment
-
-Employees Deployed
-
-Open Tasks
-
-The values will be fetched from Local Storage
-or a backend database in the future.
-
-*/
-
-
-/*============================================
-
-      LOGOUT FUNCTION
-
-============================================*/
-
-document.querySelector(".logout-btn")
+document.querySelector(".logout")
 .addEventListener("click",function(){
 
 localStorage.removeItem("loggedUser");
@@ -1268,31 +1775,18 @@ localStorage.removeItem("loggedUser");
 });
 
 
-/*============================================
+/*=====================================
 
-      RETURN BUTTON
+PAGE LOADED
 
-============================================*/
+=====================================*/
 
-document.querySelector(".return-btn")
-.addEventListener("click",function(){
-
-localStorage.removeItem("loggedUser");
-
-});
-
-
-/*============================================
-
-      PAGE LOADED
-
-============================================*/
-
-console.log("Serentica Site Manpower Management System Loaded Successfully.");
+console.log("Welcome Dashboard Loaded Successfully");
 
 </script>
 
 </body>
 
 </html>
+
  
