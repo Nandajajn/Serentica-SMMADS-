@@ -1400,81 +1400,98 @@ LIVE OPERATIONS DASHBOARD
 
 <section class="dashboard-panels">
 
-    <!-- Pending Actions -->
+<!--=====================================================
 
-    <div class="panel">
+PENDING ACTIONS
 
-        <h2>
+======================================================-->
 
-            Pending Actions
+<div class="panel">
 
-        </h2>
+    <h2>
 
-        <div
-        class="activity-list"
-        id="pendingActions">
+        Pending Actions
 
-            <div class="empty-state">
+    </h2>
 
-                <i class="fa-solid fa-clipboard-check"></i>
+    <div
+    class="activity-list"
+    id="pendingActions">
 
-                <h3>
+        <div class="empty-state">
 
-                    No Pending Actions
+            <i class="fa-solid fa-spinner"></i>
 
-                </h3>
+            <h3>
 
-                <p>
+                Waiting for Operational Data
 
-                    Deployment approvals, recall requests and manpower shortages will automatically appear here once the system is connected to the database.
+            </h3>
 
-                </p>
+            <p>
 
-            </div>
+                Pending deployment approvals, manpower shortages,
+                recall requests, deployment requests and other
+                operational activities will automatically appear
+                here as updates are made from the Employee,
+                Deploy, Recall and History modules.
+
+            </p>
 
         </div>
 
     </div>
 
+</div>
 
     <!-- Recent Activity -->
 
     <div class="panel">
 
         <h2>
+<!--=====================================================
 
-            Recent Activity
+RECENT ACTIVITY
 
-        </h2>
+======================================================-->
 
-        <div
-        class="activity-list"
-        id="recentActivity">
+<div class="panel">
 
-            <div class="empty-state">
+    <h2>
 
-                <i class="fa-solid fa-clock-rotate-left"></i>
+        Recent Activity
 
-                <h3>
+    </h2>
 
-                    No Recent Activity
+    <div
+    class="activity-list"
+    id="recentActivity">
 
-                </h3>
+        <div class="empty-state">
 
-                <p>
+            <i class="fa-solid fa-database"></i>
 
-                    Employee deployment history, manpower movements and profile updates will appear here automatically.
+            <h3>
 
-                </p>
+                No Activity Available
 
-            </div>
+            </h3>
+
+            <p>
+
+                Employee deployment history, manpower movement,
+                profile updates, approval activities, deployment
+                requests and recall records will automatically
+                appear here as users perform operations in the
+                system.
+
+            </p>
 
         </div>
 
     </div>
 
-</section>
-
+</div>
 
 <!--=====================================================
 
@@ -1574,22 +1591,23 @@ setInterval(updateClock,1000);
 
 /*=====================================================
 
-DEFAULT KPI VALUES
+LIVE DASHBOARD
 
-(To be replaced by database later)
+These values will automatically
+come from employee.html,
+deploy.html,
+recall.html,
+history.html
 
 =====================================================*/
 
-document.getElementById("totalEmployees").textContent = "248";
+document.getElementById("totalEmployees").textContent = "--";
 
-document.getElementById("readyEmployees").textContent = "36";
+document.getElementById("readyEmployees").textContent = "--";
 
-document.getElementById("deployedEmployees").textContent = "198";
+document.getElementById("deployedEmployees").textContent = "--";
 
-document.getElementById("openTasks").textContent = "14";
-
-/*=====================================================
-
+document.getElementById("openTasks").textContent = "--";
 ROLE BASED ACCESS
 
 =====================================================*/
