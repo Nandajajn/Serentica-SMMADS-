@@ -3,76 +3,82 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
 
-    <title>
-        Manpower Management | Serentica Site Manpower Management System
-    </title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+<title>
 
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
+Employee Management | Serentica Site Manpower Management System
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
+</title>
 
-    <!-- Font Awesome -->
+<!-- Google Font -->
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<!-- Font Awesome -->
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <style>
 
-/*=====================================================
+/*====================================================
 
-RESET
+GLOBAL RESET
 
-=====================================================*/
+====================================================*/
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
 
-body{
+margin:0;
 
-    font-family:'Poppins',sans-serif;
-    background:#F5F7FA;
-    color:#2D3748;
+padding:0;
+
+box-sizing:border-box;
+
+font-family:'Poppins',sans-serif;
 
 }
 
 
-/*=====================================================
+/*====================================================
 
 ROOT VARIABLES
 
-=====================================================*/
+====================================================*/
 
 :root{
 
 --primary:#33A7B5;
 
---primary-dark:#278B98;
+--primary-dark:#248895;
+
+--background:#F4F7F9;
 
 --white:#FFFFFF;
 
---background:#F5F7FA;
+--border:#E4EBEF;
 
---border:#E5E7EB;
+--text:#27343C;
 
---text:#2D3748;
-
---text-light:#718096;
+--text-light:#6F7C84;
 
 --success:#2ECC71;
 
---warning:#F4B400;
+--warning:#F39C12;
 
 --danger:#E74C3C;
 
@@ -83,339 +89,304 @@ ROOT VARIABLES
 }
 
 
-/*=====================================================
+/*====================================================
 
-LAYOUT
+BODY
 
-=====================================================*/
+====================================================*/
+
+body{
+
+background:var(--background);
+
+color:var(--text);
+
+padding:30px;
+
+}
+
+
+/*====================================================
+
+MAIN CONTAINER
+
+====================================================*/
 
 .container{
-
-width:95%;
 
 max-width:1600px;
 
 margin:auto;
 
-padding:30px 0;
-
 }
 
 
-/*=====================================================
+/*====================================================
 
-HEADER
+COMMON SECTION TITLE
 
-=====================================================*/
+====================================================*/
 
-.header{
+.section-title{
 
-background:var(--white);
-
-border-radius:20px;
-
-padding:20px 30px;
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-box-shadow:var(--shadow);
-
-margin-bottom:30px;
-
-}
-
-
-/*=====================================================
-
-LEFT HEADER
-
-=====================================================*/
-
-.logo-section{
-
-display:flex;
-
-align-items:center;
-
-gap:20px;
-
-}
-
-.logo-section img{
-
-height:70px;
-
-width:auto;
-
-}
-
-.logo-text h1{
-
-font-size:28px;
-
-color:var(--primary);
-
-font-weight:700;
-
-margin-bottom:4px;
-
-}
-
-.logo-text p{
-
-font-size:14px;
-
-color:var(--text-light);
-
-}
-
-
-/*=====================================================
-
-RIGHT HEADER
-
-=====================================================*/
-
-.user-section{
-
-display:flex;
-
-align-items:center;
-
-gap:18px;
-
-}
-
-.user-photo{
-
-width:70px;
-
-height:70px;
-
-border-radius:50%;
-
-overflow:hidden;
-
-border:3px solid var(--primary);
-
-}
-
-.user-photo img{
-
-width:100%;
-
-height:100%;
-
-object-fit:cover;
-
-}
-
-.user-details{
-
-text-align:right;
-
-}
-
-.user-details h3{
-
-font-size:18px;
-
-margin-bottom:4px;
-
-}
-
-.user-details p{
-
-font-size:13px;
-
-color:var(--text-light);
-
-margin-bottom:6px;
-
-}
-
-.role-badge{
-
-display:inline-block;
-
-padding:6px 14px;
-
-border-radius:30px;
-
-background:#EAF8FA;
-
-color:var(--primary);
-
-font-size:12px;
+font-size:24px;
 
 font-weight:600;
 
+color:var(--primary);
+
+margin-bottom:20px;
+
 }
 
 
-/*=====================================================
+/*====================================================
 
-PAGE BANNER
+COMMON CARD
 
-=====================================================*/
+====================================================*/
 
-.banner{
+.card{
 
 background:var(--white);
-
-padding:30px;
 
 border-radius:20px;
 
 box-shadow:var(--shadow);
 
-display:flex;
+padding:25px;
 
-justify-content:space-between;
+margin-bottom:25px;
+
+}
+
+
+/*====================================================
+
+BUTTONS
+
+====================================================*/
+
+.btn{
+
+display:inline-flex;
 
 align-items:center;
 
-margin-bottom:30px;
+justify-content:center;
 
-}
+gap:8px;
 
-.banner-left{
+padding:12px 22px;
 
-max-width:850px;
+border:none;
 
-}
+border-radius:12px;
 
-.banner-left h2{
-
-font-size:34px;
-
-color:var(--primary);
-
-margin-bottom:10px;
-
-}
-
-.banner-left p{
-
-font-size:15px;
-
-line-height:28px;
-
-color:var(--text-light);
-
-}
-
-.banner-right{
-
-text-align:right;
-
-}
-
-.banner-right h3{
-
-font-size:18px;
-
-color:var(--primary);
-
-margin-bottom:10px;
-
-}
-
-.banner-right p{
+cursor:pointer;
 
 font-size:14px;
 
-color:var(--text-light);
+font-weight:600;
 
-line-height:24px;
+transition:.30s;
+
+text-decoration:none;
+
+}
+
+.btn-primary{
+
+background:var(--primary);
+
+color:white;
+
+}
+
+.btn-primary:hover{
+
+background:var(--primary-dark);
+
+}
+
+.btn-success{
+
+background:var(--success);
+
+color:white;
+
+}
+
+.btn-warning{
+
+background:var(--warning);
+
+color:white;
+
+}
+
+.btn-danger{
+
+background:var(--danger);
+
+color:white;
+
+}
+
+
+/*====================================================
+
+INPUTS
+
+====================================================*/
+
+input,
+select{
+
+width:100%;
+
+padding:12px 15px;
+
+border:1px solid var(--border);
+
+border-radius:12px;
+
+font-size:14px;
+
+outline:none;
+
+transition:.3s;
+
+background:white;
+
+}
+
+input:focus,
+select:focus{
+
+border-color:var(--primary);
+
+box-shadow:0 0 0 3px rgba(51,167,181,.12);
+
+}
+
+
+/*====================================================
+
+RESPONSIVE
+
+====================================================*/
+
+@media(max-width:900px){
+
+body{
+
+padding:15px;
+
+}
+
+.card{
+
+padding:20px;
+
+}
 
 }
 
 </style>
 
 </head>
-
 <body>
 
 <div class="container">
 
-<!-- =====================================================
+<!--=====================================================
 
 HEADER
 
-===================================================== -->
+======================================================-->
 
-<header class="header">
+<header class="card">
 
-<div class="logo-section">
+<div class="header-container">
 
-<img src="assets/images/logo.png"
+    <!-- Left Side -->
 
-alt="Serentica Logo">
+    <div class="company-section">
 
-<div class="logo-text">
+        <img
+        src="assets/images/logo.png"
+        alt="Serentica Logo"
+        class="company-logo">
 
-<h1>
+        <div>
 
-Serentica Site Manpower Management System
+            <h1>
 
-</h1>
+                Serentica Site Manpower Management System
 
-<p>
+            </h1>
 
-Enterprise Site Operations Platform
+            <p>
 
-</p>
+                Employee Management & Deployment Centre
 
-</div>
+            </p>
 
-</div>
+        </div>
+
+    </div>
 
 
+    <!-- Right Side -->
 
-<div class="user-section">
+    <div class="user-section">
 
-<div class="user-photo">
+        <img
 
-<img
+        src="assets/images/default-profile.png"
 
-src="assets/images/default-profile.png"
+        alt="Profile"
 
-id="profileImage"
+        id="userPhoto"
 
-alt="Profile">
+        class="profile-photo">
 
-</div>
+        <div class="user-details">
 
-<div class="user-details">
+            <h3 id="userName">
 
-<h3 id="userName">
+                Loading...
 
-Loading...
+            </h3>
 
-</h3>
+            <p id="userRole">
 
-<p id="employeeId">
+                Loading...
 
-Employee ID : --
+            </p>
 
-</p>
+            <p id="employeeID">
 
-<div
+                Employee ID
 
-class="role-badge"
+            </p>
 
-id="userRole">
+        </div>
 
-Loading...
+        <button
 
-</div>
+        class="btn btn-danger"
 
-</div>
+        id="logoutBtn">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </div>
 
 </div>
 
@@ -423,70 +394,113 @@ Loading...
 
 
 
-<!-- =====================================================
+<!--=====================================================
+
+BREADCRUMB
+
+======================================================-->
+
+<div class="card">
+
+<div class="breadcrumb">
+
+<i class="fa-solid fa-house"></i>
+
+<span>
+
+Dashboard
+
+</span>
+
+<i class="fa-solid fa-angle-right"></i>
+
+<span class="active">
+
+Employee Management
+
+</span>
+
+</div>
+
+</div>
+
+
+
+<!--=====================================================
 
 PAGE INTRODUCTION
 
-===================================================== -->
+======================================================-->
 
-<section class="banner">
+<div class="card">
 
-<div class="banner-left">
+<div class="page-title">
+
+<div>
 
 <h2>
 
-Manpower Management
+Employee Management
 
 </h2>
 
 <p>
 
-Manage manpower records, deployment readiness, department allocation, reporting hierarchy and manpower availability across the project site through a unified operational platform.
+Manage manpower records, monitor role-specific KPIs,
+evaluate employee efficiency, maintain deployment
+readiness and support manpower planning across all
+site departments.
 
 </p>
 
 </div>
 
-<div class="banner-right">
-
-<h3>
-
-Site Manpower Overview
-
-</h3>
-
-<p>
-
-Real-time manpower information will automatically update as operational data becomes available.
-
-</p>
-
 </div>
 
-</section>
+</div>
 <style>
 
-/*=====================================================
+/*====================================================
 
-OPERATIONS CONTROL CENTRE
+GLOBAL RESET
 
-=====================================================*/
+====================================================*/
 
-.control-centre{
+...
 
-background:var(--white);
+/*====================================================
 
-border-radius:20px;
+RESPONSIVE
 
-padding:25px;
+====================================================*/
 
-box-shadow:var(--shadow);
+@media(max-width:900px){
 
-margin-bottom:30px;
+body{
+
+padding:15px;
 
 }
 
-.control-title{
+.card{
+
+padding:20px;
+
+}
+
+}
+
+/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+/* PASTE THE PART 2 CSS HERE */
+/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+
+/*====================================================
+
+HEADER
+
+====================================================*/
+
+.header-container{
 
 display:flex;
 
@@ -494,193 +508,13 @@ justify-content:space-between;
 
 align-items:center;
 
-margin-bottom:22px;
-
-}
-
-.control-title h3{
-
-font-size:22px;
-
-color:var(--primary);
-
-font-weight:600;
-
-}
-
-.control-title p{
-
-font-size:14px;
-
-color:var(--text-light);
-
-}
-
-/*=====================================================
-
-FILTER TOOLBAR
-
-=====================================================*/
-
-.toolbar{
-
-display:grid;
-
-grid-template-columns:2fr repeat(3,1fr) auto auto;
-
-gap:18px;
-
-align-items:end;
-
-margin-bottom:28px;
-
-}
-
-.form-group{
-
-display:flex;
-
-flex-direction:column;
-
-gap:8px;
-
-}
-
-.form-group label{
-
-font-size:13px;
-
-font-weight:600;
-
-color:var(--text);
-
-}
-
-.form-group input,
-
-.form-group select{
-
-height:48px;
-
-padding:0 15px;
-
-border:1px solid var(--border);
-
-border-radius:12px;
-
-font-size:14px;
-
-background:#fff;
-
-transition:.3s;
-
-}
-
-.form-group input:focus,
-
-.form-group select:focus{
-
-outline:none;
-
-border-color:var(--primary);
-
-box-shadow:0 0 0 3px rgba(51,167,181,.15);
-
-}
-
-.view-toggle{
-
-display:flex;
-
-height:48px;
-
-border-radius:12px;
-
-overflow:hidden;
-
-border:1px solid var(--border);
-
-}
-
-.view-toggle button{
-
-flex:1;
-
-border:none;
-
-background:white;
-
-cursor:pointer;
-
-font-size:14px;
-
-font-weight:600;
-
-transition:.25s;
-
-}
-
-.view-toggle button.active{
-
-background:var(--primary);
-
-color:white;
-
-}
-
-.export-btn{
-
-height:48px;
-
-padding:0 22px;
-
-border:none;
-
-border-radius:12px;
-
-background:var(--primary);
-
-color:white;
-
-font-size:14px;
-
-font-weight:600;
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-.export-btn:hover{
-
-background:var(--primary-dark);
-
-}
-
-/*=====================================================
-
-KPI CARDS
-
-=====================================================*/
-
-.kpi-grid{
-
-display:grid;
-
-grid-template-columns:repeat(4,1fr);
+flex-wrap:wrap;
 
 gap:20px;
 
 }
 
-.kpi-card{
-
-background:#F8FBFC;
-
-border-radius:18px;
-
-padding:22px;
+.company-section{
 
 display:flex;
 
@@ -688,101 +522,41 @@ align-items:center;
 
 gap:18px;
 
-border:1px solid #EAF2F4;
+}
 
-transition:.3s;
+/* Continue pasting ALL the CSS I gave you... */
+
+/*====================================================
+
+RESPONSIVE HEADER
+
+====================================================*/
+
+@media(max-width:950px){
+
+.header-container{
+
+flex-direction:column;
+
+align-items:flex-start;
 
 }
 
-.kpi-card:hover{
+.user-section{
 
-transform:translateY(-4px);
+width:100%;
 
-box-shadow:var(--shadow);
-
-}
-
-.kpi-icon{
-
-width:65px;
-
-height:65px;
-
-border-radius:16px;
-
-background:#EAF8FA;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
+justify-content:space-between;
 
 }
 
-.kpi-icon i{
+.page-title{
 
-font-size:28px;
+flex-direction:column;
 
-color:var(--primary);
+align-items:flex-start;
 
-}
-
-.kpi-info h4{
-
-font-size:13px;
-
-color:var(--text-light);
-
-font-weight:500;
-
-margin-bottom:8px;
-
-}
-
-.kpi-info h2{
-
-font-size:32px;
-
-font-weight:700;
-
-color:var(--text);
-
-}
-
-/*=====================================================
-
-RESPONSIVE
-
-=====================================================*/
-
-@media(max-width:1200px){
-
-.toolbar{
-
-grid-template-columns:1fr 1fr;
-
-}
-
-.kpi-grid{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
-}
-
-@media(max-width:700px){
-
-.toolbar{
-
-grid-template-columns:1fr;
-
-}
-
-.kpi-grid{
-
-grid-template-columns:1fr;
+gap:15px;
 
 }
 
@@ -791,25 +565,28 @@ grid-template-columns:1fr;
 </style>
 <!--=====================================================
 
-OPERATIONS CONTROL CENTRE
+EMPLOYEE MANAGEMENT CONTROL CENTRE
 
 ======================================================-->
 
-<section class="control-centre">
+<div class="card">
 
-<div class="control-title">
+<div class="control-header">
 
 <div>
 
-<h3>
+<h2 class="section-title">
 
-Operations Control Centre
+Employee Control Centre
 
-</h3>
+</h2>
 
-<p>
+<p class="section-description">
 
-Search, filter and analyse manpower across the project site.
+Search, filter, manage and analyse manpower across all
+departments. Every employee profile, KPI, deployment
+status, efficiency score and reporting structure will
+be managed from this module.
 
 </p>
 
@@ -817,24 +594,45 @@ Search, filter and analyse manpower across the project site.
 
 </div>
 
-<div class="toolbar">
 
-<div class="form-group">
+<!--========================
+
+SEARCH & FILTERS
+
+=========================-->
+
+<div class="filter-grid">
+
+<!-- Search -->
+
+<div class="filter-item">
 
 <label>
 
-Search Manpower
+Search Employee
 
 </label>
 
+<div class="search-box">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
 <input
+
 type="text"
+
 id="searchEmployee"
-placeholder="Search by name, employee ID or designation">
+
+placeholder="Search by Employee Name or Employee ID">
 
 </div>
 
-<div class="form-group">
+</div>
+
+
+<!-- Department -->
+
+<div class="filter-item">
 
 <label>
 
@@ -844,35 +642,84 @@ Department
 
 <select id="departmentFilter">
 
-<option>All Departments</option>
+<option value="">
 
-<option>Project Management</option>
+All Departments
 
-<option>PMO</option>
-
-<option>Civil</option>
-
-<option>Mechanical</option>
-
-<option>Electrical</option>
-
-<option>Quality</option>
-
-<option>QHSE</option>
-
-<option>Stores</option>
-
-<option>Land</option>
-
-<option>ROW</option>
-
-<option>Administration</option>
+</option>
 
 </select>
 
 </div>
 
-<div class="form-group">
+
+<!-- Role -->
+
+<div class="filter-item">
+
+<label>
+
+Role
+
+</label>
+
+<select id="roleFilter">
+
+<option value="">
+
+All Roles
+
+</option>
+
+</select>
+
+</div>
+
+
+<!-- Site -->
+
+<div class="filter-item">
+
+<label>
+
+Current Site
+
+</label>
+
+<select id="siteFilter">
+
+<option>
+
+All Sites
+
+</option>
+
+<option>
+
+Koppal
+
+</option>
+
+<option>
+
+Fatehgarh
+
+</option>
+
+<option>
+
+Bikaner
+
+</option>
+
+</select>
+
+</div>
+
+
+<!-- Deployment -->
+
+<div class="filter-item">
 
 <label>
 
@@ -880,272 +727,1051 @@ Deployment Status
 
 </label>
 
-<select id="statusFilter">
+<select id="deploymentFilter">
 
-<option>All Status</option>
+<option>
 
-<option>Ready for Deployment</option>
+All Status
 
-<option>Currently Deployed</option>
+</option>
 
-<option>On Leave</option>
-
-<option>Training</option>
-
-<option>Inactive</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Designation
-
-</label>
-
-<select id="designationFilter">
-
-<option>All Designations</option>
-
-</select>
-
-</div>
-
-<div class="view-toggle">
-
-<button
-class="active"
-id="cardView">
-
-Cards
-
-</button>
-
-<button
-id="tableView">
-
-Table
-
-</button>
-
-</div>
-
-<button
-class="export-btn"
-id="exportExcel">
-
-<i class="fa-solid fa-file-excel"></i>
-
-&nbsp; Export
-
-</button>
-
-</div>
-
-</section>
-
-<!--=====================================================
-
-MANPOWER OVERVIEW
-
-======================================================-->
-
-<section class="kpi-grid">
-
-<div class="kpi-card">
-
-<div class="kpi-icon">
-
-<i class="fa-solid fa-users"></i>
-
-</div>
-
-<div class="kpi-info">
-
-<h4>
-
-Total Manpower
-
-</h4>
-
-<h2 id="totalManpower">
-
---
-
-</h2>
-
-</div>
-
-</div>
-
-<div class="kpi-card">
-
-<div class="kpi-icon">
-
-<i class="fa-solid fa-user-check"></i>
-
-</div>
-
-<div class="kpi-info">
-
-<h4>
+<option>
 
 Ready for Deployment
 
-</h4>
+</option>
 
-<h2 id="readyManpower">
-
---
-
-</h2>
-
-</div>
-
-</div>
-
-<div class="kpi-card">
-
-<div class="kpi-icon">
-
-<i class="fa-solid fa-truck-fast"></i>
-
-</div>
-
-<div class="kpi-info">
-
-<h4>
+<option>
 
 Currently Deployed
 
-</h4>
+</option>
 
-<h2 id="deployedManpower">
+<option>
 
---
+Not Available
 
-</h2>
+</option>
+
+<option>
+
+Training
+
+</option>
+
+</select>
+
+</div>
+
+
+<!-- Efficiency -->
+
+<div class="filter-item">
+
+<label>
+
+Efficiency Score
+
+</label>
+
+<select id="efficiencyFilter">
+
+<option>
+
+All
+
+</option>
+
+<option>
+
+Above 90%
+
+</option>
+
+<option>
+
+80% - 90%
+
+</option>
+
+<option>
+
+70% - 80%
+
+</option>
+
+<option>
+
+Below 70%
+
+</option>
+
+</select>
 
 </div>
 
 </div>
 
-<div class="kpi-card">
 
-<div class="kpi-icon">
+<!--========================
 
-<i class="fa-solid fa-user-clock"></i>
+ACTION BUTTONS
+
+=========================-->
+
+<div class="action-buttons">
+
+<button
+
+class="btn btn-primary"
+
+id="addEmployeeBtn">
+
+<i class="fa-solid fa-user-plus"></i>
+
+Add Employee
+
+</button>
+
+
+<button
+
+class="btn btn-success"
+
+id="importEmployees">
+
+<i class="fa-solid fa-file-import"></i>
+
+Import Employee Data
+
+</button>
+
+
+<button
+
+class="btn btn-warning"
+
+id="exportEmployees">
+
+<i class="fa-solid fa-file-export"></i>
+
+Export Employee Data
+
+</button>
+
+
+<button
+
+class="btn btn-primary"
+
+id="refreshEmployeeData">
+
+<i class="fa-solid fa-rotate-right"></i>
+
+Refresh Database
+
+</button>
 
 </div>
 
-<div class="kpi-info">
-
-<h4>
-
-On Leave
-
-</h4>
-
-<h2 id="leaveManpower">
-
---
-
-</h2>
-
 </div>
+/*====================================================
 
-</div>
+CONTROL CENTRE
 
-</section>
-<style>
+====================================================*/
 
-/*=====================================================
+.control-header{
 
-MANPOWER DIRECTORY
-
-=====================================================*/
-
-.directory-section{
-
-margin-top:35px;
-margin-bottom:40px;
+margin-bottom:25px;
 
 }
 
-.directory-header{
+.section-description{
 
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:22px;
+color:var(--text-light);
 
-}
+line-height:28px;
 
-.directory-header h3{
+font-size:15px;
 
-font-size:24px;
-font-weight:600;
-color:var(--primary);
+max-width:900px;
+
+margin-top:10px;
 
 }
 
-.directory-header p{
+.filter-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+}
+
+.filter-item label{
+
+display:block;
+
+margin-bottom:8px;
 
 font-size:14px;
+
+font-weight:600;
+
+}
+
+.search-box{
+
+position:relative;
+
+}
+
+.search-box i{
+
+position:absolute;
+
+left:16px;
+
+top:50%;
+
+transform:translateY(-50%);
+
 color:var(--text-light);
 
 }
 
-.directory-actions{
+.search-box input{
 
-display:flex;
-align-items:center;
-gap:12px;
+padding-left:48px;
 
 }
 
-.directory-badge{
+.action-buttons{
 
-padding:8px 14px;
-border-radius:30px;
+margin-top:35px;
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+}
+<!--=====================================================
+
+DEPARTMENT DASHBOARD
+
+======================================================-->
+
+<div class="card">
+
+<h2 class="section-title">
+
+Departments
+
+</h2>
+
+<p class="section-description">
+
+Select a department to view its manpower, roles,
+employee profiles, deployment readiness, efficiency,
+role-specific KPIs and performance records.
+
+</p>
+
+
+<div class="department-grid">
+
+<!-- Mechanical -->
+
+<div class="department-card"
+
+data-department="Mechanical">
+
+<div class="department-top">
+
+<div class="department-icon">
+
+<i class="fa-solid fa-gears"></i>
+
+</div>
+
+<div class="department-status">
+
+Active
+
+</div>
+
+</div>
+
+<h3>
+
+Mechanical
+
+</h3>
+
+<p>
+
+Mechanical construction,
+WTG erection,
+mechanical execution
+and manpower management.
+
+</p>
+
+<div class="department-stats">
+
+<div>
+
+<span id="mechanicalTotal">
+
+--
+
+</span>
+
+<label>Total</label>
+
+</div>
+
+<div>
+
+<span id="mechanicalReady">
+
+--
+
+</span>
+
+<label>Ready</label>
+
+</div>
+
+<div>
+
+<span id="mechanicalEfficiency">
+
+--%
+
+</span>
+
+<label>Efficiency</label>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Civil -->
+
+<div class="department-card"
+
+data-department="Civil">
+
+<div class="department-top">
+
+<div class="department-icon">
+
+<i class="fa-solid fa-building"></i>
+
+</div>
+
+<div class="department-status">
+
+Active
+
+</div>
+
+</div>
+
+<h3>
+
+Civil
+
+</h3>
+
+<p>
+
+Civil execution,
+foundations,
+roads,
+drainage
+and structural works.
+
+</p>
+
+<div class="department-stats">
+
+<div>
+
+<span id="civilTotal">
+
+--
+
+</span>
+
+<label>Total</label>
+
+</div>
+
+<div>
+
+<span id="civilReady">
+
+--
+
+</span>
+
+<label>Ready</label>
+
+</div>
+
+<div>
+
+<span id="civilEfficiency">
+
+--%
+
+</span>
+
+<label>Efficiency</label>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Electrical -->
+
+<div class="department-card"
+
+data-department="Electrical">
+
+<div class="department-top">
+
+<div class="department-icon">
+
+<i class="fa-solid fa-bolt"></i>
+
+</div>
+
+<div class="department-status">
+
+Active
+
+</div>
+
+</div>
+
+<h3>
+
+Electrical
+
+</h3>
+
+<p>
+
+Electrical erection,
+33kV systems,
+substations,
+commissioning
+and testing.
+
+</p>
+
+<div class="department-stats">
+
+<div>
+
+<span id="electricalTotal">
+
+--
+
+</span>
+
+<label>Total</label>
+
+</div>
+
+<div>
+
+<span id="electricalReady">
+
+--
+
+</span>
+
+<label>Ready</label>
+
+</div>
+
+<div>
+
+<span id="electricalEfficiency">
+
+--%
+
+</span>
+
+<label>Efficiency</label>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Quality -->
+
+<div class="department-card"
+
+data-department="Quality">
+
+<div class="department-top">
+
+<div class="department-icon">
+
+<i class="fa-solid fa-award"></i>
+
+</div>
+
+<div class="department-status">
+
+Active
+
+</div>
+
+</div>
+
+<h3>
+
+Quality
+
+</h3>
+
+<p>
+
+Inspection,
+quality assurance,
+documentation
+and compliance.
+
+</p>
+
+<div class="department-stats">
+
+<div>
+
+<span id="qualityTotal">
+
+--
+
+</span>
+
+<label>Total</label>
+
+</div>
+
+<div>
+
+<span id="qualityReady">
+
+--
+
+</span>
+
+<label>Ready</label>
+
+</div>
+
+<div>
+
+<span id="qualityEfficiency">
+
+--%
+
+</span>
+
+<label>Efficiency</label>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+/*====================================================
+
+DEPARTMENT DASHBOARD
+
+====================================================*/
+
+.department-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+gap:25px;
+
+margin-top:30px;
+
+}
+
+.department-card{
+
+background:white;
+
+border-radius:18px;
+
+padding:25px;
+
+cursor:pointer;
+
+transition:.35s;
+
+box-shadow:var(--shadow);
+
+border:2px solid transparent;
+
+}
+
+.department-card:hover{
+
+transform:translateY(-8px);
+
+border-color:var(--primary);
+
+}
+
+.department-top{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
+
+}
+
+.department-icon{
+
+width:65px;
+
+height:65px;
+
+border-radius:15px;
+
 background:#EAF8FA;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.department-icon i{
+
+font-size:28px;
+
 color:var(--primary);
-font-size:13px;
+
+}
+
+.department-status{
+
+padding:6px 14px;
+
+border-radius:20px;
+
+background:#EAF9F1;
+
+color:var(--success);
+
+font-size:12px;
+
 font-weight:600;
 
 }
 
-.employee-grid{
+.department-card h3{
 
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
-gap:24px;
+font-size:24px;
+
+margin-bottom:12px;
 
 }
 
-/*=====================================================
+.department-card p{
 
-EMPLOYEE CARD
+font-size:14px;
 
-=====================================================*/
+line-height:24px;
+
+color:var(--text-light);
+
+margin-bottom:22px;
+
+}
+
+.department-stats{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-top:20px;
+
+}
+
+.department-stats div{
+
+text-align:center;
+
+}
+
+.department-stats span{
+
+display:block;
+
+font-size:24px;
+
+font-weight:700;
+
+color:var(--primary);
+
+margin-bottom:6px;
+
+}
+
+.department-stats label{
+
+font-size:13px;
+
+color:var(--text-light);
+
+}
+<!--=====================================================
+
+ROLE DASHBOARD
+
+======================================================-->
+
+<div class="card">
+
+<h2 class="section-title">
+
+Department Roles
+
+</h2>
+
+<p class="section-description">
+
+Select a role to view employees, role-specific job
+descriptions, KPIs, deployment readiness and
+performance records.
+
+</p>
+
+
+<div class="role-grid"
+
+id="roleGrid">
+
+<!-- Roles will automatically load here
+according to the selected department -->
+
+<div class="empty-role">
+
+<i class="fa-solid fa-users-viewfinder"></i>
+
+<h3>
+
+Select a Department
+
+</h3>
+
+<p>
+
+Choose a department above to display all
+available roles. Role information will
+automatically populate from the Role Library.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+/*====================================================
+
+ROLE DASHBOARD
+
+====================================================*/
+
+.role-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+gap:22px;
+
+margin-top:30px;
+
+}
+
+.role-card{
+
+background:white;
+
+border-radius:18px;
+
+padding:24px;
+
+box-shadow:var(--shadow);
+
+cursor:pointer;
+
+transition:.30s;
+
+border:2px solid transparent;
+
+}
+
+.role-card:hover{
+
+transform:translateY(-6px);
+
+border-color:var(--primary);
+
+}
+
+.role-icon{
+
+width:60px;
+
+height:60px;
+
+border-radius:15px;
+
+background:#EAF8FA;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+margin-bottom:18px;
+
+}
+
+.role-icon i{
+
+font-size:24px;
+
+color:var(--primary);
+
+}
+
+.role-card h3{
+
+font-size:20px;
+
+margin-bottom:10px;
+
+}
+
+.role-card p{
+
+font-size:14px;
+
+line-height:24px;
+
+color:var(--text-light);
+
+margin-bottom:18px;
+
+}
+
+.role-footer{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-top:15px;
+
+}
+
+.role-footer span{
+
+font-size:13px;
+
+color:var(--primary);
+
+font-weight:600;
+
+}
+
+.empty-role{
+
+text-align:center;
+
+padding:60px 20px;
+
+color:var(--text-light);
+
+grid-column:1/-1;
+
+}
+
+.empty-role i{
+
+font-size:55px;
+
+margin-bottom:20px;
+
+color:#B7C5CC;
+
+}
+
+.empty-role h3{
+
+margin-bottom:12px;
+
+font-size:24px;
+
+color:var(--text);
+
+}
+
+.empty-role p{
+
+max-width:500px;
+
+margin:auto;
+
+line-height:28px;
+
+}
+<!--=====================================================
+
+EMPLOYEE DIRECTORY
+
+======================================================-->
+
+<div class="card">
+
+<h2 class="section-title">
+
+Employee Directory
+
+</h2>
+
+<p class="section-description">
+
+View employee profiles, performance, role-specific KPIs,
+deployment readiness and efficiency score. Employee
+records displayed below will automatically update based
+on the selected department and role.
+
+</p>
+
+<div
+
+class="employee-grid"
+
+id="employeeGrid">
+
+
+<!-- Empty State -->
+
+<div class="empty-employees">
+
+<i class="fa-solid fa-user-group"></i>
+
+<h3>
+
+No Employees Selected
+
+</h3>
+
+<p>
+
+Select a department and role above.
+Employees belonging to that role will
+automatically appear here.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+/*====================================================
+
+EMPLOYEE DIRECTORY
+
+====================================================*/
+
+.employee-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+
+gap:25px;
+
+margin-top:30px;
+
+}
 
 .employee-card{
 
-background:var(--white);
-border-radius:20px;
-padding:24px;
+background:white;
+
+border-radius:18px;
+
+padding:22px;
+
 box-shadow:var(--shadow);
-border:1px solid transparent;
+
 transition:.30s;
+
+cursor:pointer;
+
+border:2px solid transparent;
 
 }
 
 .employee-card:hover{
 
-transform:translateY(-5px);
+transform:translateY(-8px);
+
 border-color:var(--primary);
 
 }
@@ -1153,265 +1779,365 @@ border-color:var(--primary);
 .employee-top{
 
 display:flex;
+
 align-items:center;
+
 gap:18px;
+
 margin-bottom:20px;
 
 }
 
 .employee-photo{
 
-width:80px;
-height:80px;
+width:85px;
+
+height:85px;
+
 border-radius:50%;
-overflow:hidden;
-border:3px solid #EAF8FA;
-flex-shrink:0;
 
-}
-
-.employee-photo img{
-
-width:100%;
-height:100%;
 object-fit:cover;
 
+border:3px solid var(--primary);
+
 }
 
-.employee-details h4{
+.employee-info h3{
 
 font-size:20px;
-margin-bottom:5px;
+
+margin-bottom:6px;
 
 }
 
-.employee-id{
+.employee-info p{
 
 font-size:13px;
+
 color:var(--text-light);
-margin-bottom:6px;
+
+line-height:22px;
 
 }
 
-.designation{
+.employee-status{
 
-font-size:14px;
-font-weight:600;
-color:var(--primary);
+display:flex;
 
-}
+justify-content:space-between;
 
-/*=====================================================
+margin-top:20px;
 
-DETAIL GRID
+padding-top:18px;
 
-=====================================================*/
-
-.info-grid{
-
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:15px;
-margin-bottom:20px;
+border-top:1px solid #EAEAEA;
 
 }
 
-.info-box{
+.status-box{
 
-background:#F8FBFC;
-border-radius:12px;
-padding:14px;
+text-align:center;
+
+flex:1;
 
 }
 
-.info-box label{
+.status-box span{
 
 display:block;
-font-size:11px;
-text-transform:uppercase;
-letter-spacing:.4px;
-color:var(--text-light);
+
+font-size:20px;
+
+font-weight:700;
+
+color:var(--primary);
+
 margin-bottom:6px;
 
 }
 
-.info-box span{
+.status-box label{
 
-font-size:14px;
-font-weight:600;
+font-size:12px;
+
+color:var(--text-light);
+
+}
+
+.empty-employees{
+
+grid-column:1/-1;
+
+text-align:center;
+
+padding:80px 20px;
+
+color:var(--text-light);
+
+}
+
+.empty-employees i{
+
+font-size:60px;
+
+margin-bottom:20px;
+
+color:#B7C5CC;
+
+}
+
+.empty-employees h3{
+
+font-size:26px;
+
+margin-bottom:12px;
+
 color:var(--text);
 
 }
 
-/*=====================================================
+.empty-employees p{
 
-STATUS BADGES
+max-width:520px;
 
-=====================================================*/
+margin:auto;
 
-.status{
-
-display:inline-flex;
-align-items:center;
-padding:8px 14px;
-border-radius:30px;
-font-size:13px;
-font-weight:600;
+line-height:28px;
 
 }
-
-.ready{
-
-background:#EAF9F1;
-color:#2ECC71;
-
-}
-
-.deployed{
-
-background:#EAF4FF;
-color:#1976D2;
-
-}
-
-.leave{
-
-background:#FFF4E5;
-color:#F39C12;
-
-}
-
-.inactive{
-
-background:#F2F4F5;
-color:#6B7280;
-
-}
-
-/*=====================================================
-
-FOOTER
-
-=====================================================*/
-
-.employee-footer{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-top:18px;
-
-}
-
-.last-update{
-
-font-size:12px;
-color:var(--text-light);
-
-}
-
-.profile-btn{
-
-border:none;
-background:var(--primary);
-color:white;
-padding:10px 18px;
-border-radius:10px;
-cursor:pointer;
-font-size:14px;
-font-weight:600;
-transition:.30s;
-
-}
-
-.profile-btn:hover{
-
-background:var(--primary-dark);
-
-}
-
-</style>
 <!--=====================================================
 
-MANPOWER DIRECTORY
+EMPLOYEE MASTER PROFILE
 
 ======================================================-->
 
-<section class="directory-section">
+<div class="card">
 
-<div class="directory-header">
+<h2 class="section-title">
 
-<div>
+Employee Master Profile
+
+</h2>
+
+<p class="section-description">
+
+Select an employee from the Employee Directory to view
+their complete profile, role information, job description,
+role-specific KPIs, efficiency score, deployment readiness,
+performance history and reporting hierarchy.
+
+</p>
+
+<div
+
+class="employee-profile"
+
+id="employeeProfile">
+
+
+<!-- Empty State -->
+
+<div class="profile-placeholder">
+
+<i class="fa-solid fa-id-card"></i>
 
 <h3>
 
-Manpower Directory
+No Employee Selected
 
 </h3>
 
 <p>
 
-Browse and manage manpower across the project site.
+Select an employee card above to display
+their complete employee profile.
 
 </p>
 
 </div>
 
-<div class="directory-actions">
-
-<div class="directory-badge">
-
-Showing <span id="employeeCount">0</span> Employees
-
 </div>
 
 </div>
+/*====================================================
 
-</div>
+EMPLOYEE MASTER PROFILE
 
-<div class="employee-grid" id="employeeGrid">
+====================================================*/
 
-<!-- Sample Employee Card -->
+.employee-profile{
 
-<div class="employee-card">
+margin-top:30px;
 
-<div class="employee-top">
+}
 
-<div class="employee-photo">
+.profile-placeholder{
+
+text-align:center;
+
+padding:90px 30px;
+
+background:white;
+
+border-radius:18px;
+
+}
+
+.profile-placeholder i{
+
+font-size:70px;
+
+color:#B8C6CC;
+
+margin-bottom:25px;
+
+}
+
+.profile-placeholder h3{
+
+font-size:28px;
+
+margin-bottom:15px;
+
+color:var(--text);
+
+}
+
+.profile-placeholder p{
+
+font-size:15px;
+
+line-height:30px;
+
+color:var(--text-light);
+
+max-width:650px;
+
+margin:auto;
+
+}
+
+/*====================================================
+
+PROFILE LAYOUT
+
+====================================================*/
+
+.profile-container{
+
+display:grid;
+
+grid-template-columns:350px 1fr;
+
+gap:30px;
+
+margin-top:20px;
+
+}
+
+.profile-left{
+
+background:white;
+
+border-radius:18px;
+
+padding:25px;
+
+box-shadow:var(--shadow);
+
+}
+
+.profile-right{
+
+display:flex;
+
+flex-direction:column;
+
+gap:25px;
+
+}
+
+@media(max-width:1100px){
+
+.profile-container{
+
+grid-template-columns:1fr;
+
+}
+
+}
+<!--=====================================================
+
+EMPLOYEE EXECUTIVE PROFILE
+
+======================================================-->
+
+<div class="profile-container">
+
+<!--=====================================================
+
+LEFT PROFILE PANEL
+
+======================================================-->
+
+<div class="profile-left">
+
+<div class="employee-profile-header">
 
 <img
+
 src="assets/images/default-profile.png"
-alt="Employee">
 
-</div>
+alt="Employee"
 
-<div class="employee-details">
+id="profilePhoto"
 
-<h4>
+class="master-photo">
+
+<h2 id="profileName">
 
 Employee Name
 
-</h4>
+</h2>
 
-<div class="employee-id">
+<p id="profileRole">
 
-Employee ID : EMP00001
+Role
+
+</p>
+
+<span
+
+class="status-badge"
+
+id="currentStatus">
+
+Available
+
+</span>
 
 </div>
 
-<div class="designation">
 
-Executive Trainee
+<div class="profile-information">
+
+<div class="info-row">
+
+<label>
+
+Employee ID
+
+</label>
+
+<span id="profileEmployeeID">
+
+-
+
+</span>
 
 </div>
 
-</div>
-
-</div>
-
-<div class="info-grid">
-
-<div class="info-box">
+<div class="info-row">
 
 <label>
 
@@ -1419,15 +2145,31 @@ Department
 
 </label>
 
-<span>
+<span id="profileDepartment">
 
-Mechanical
+-
 
 </span>
 
 </div>
 
-<div class="info-box">
+<div class="info-row">
+
+<label>
+
+Role
+
+</label>
+
+<span id="profileDesignation">
+
+-
+
+</span>
+
+</div>
+
+<div class="info-row">
 
 <label>
 
@@ -1435,41 +2177,73 @@ Reporting Manager
 
 </label>
 
-<span>
+<span id="profileManager">
 
-Prem Kumar
+-
 
 </span>
 
 </div>
 
-<div class="info-box">
+<div class="info-row">
 
 <label>
 
-Current Assignment
+Current Site
 
 </label>
 
-<span>
+<span id="profileSite">
 
-Koppal Wind Project
+-
 
 </span>
 
 </div>
 
-<div class="info-box">
+<div class="info-row">
 
 <label>
 
-Deployment Status
+Official Email
 
 </label>
 
-<span class="status ready">
+<span id="profileEmail">
 
-Ready for Deployment
+-
+
+</span>
+
+</div>
+
+<div class="info-row">
+
+<label>
+
+Mobile Number
+
+</label>
+
+<span id="profileMobile">
+
+-
+
+</span>
+
+</div>
+
+<div class="info-row">
+
+<label>
+
+Joining Date
+
+</label>
+
+<span id="profileJoiningDate">
+
+-
 
 </span>
 
@@ -1477,21 +2251,97 @@ Ready for Deployment
 
 </div>
 
-<div class="employee-footer">
+</div>
 
-<div class="last-update">
 
-Last Updated : --
+
+<!--=====================================================
+
+RIGHT PANEL
+
+======================================================-->
+
+<div class="profile-right">
+
+<div class="profile-summary-card">
+
+<h3>
+
+Performance Summary
+
+</h3>
+
+<div class="summary-grid">
+
+<div class="summary-box">
+
+<span
+
+id="efficiencyScore">
+
+--%
+
+</span>
+
+<label>
+
+Efficiency
+
+</label>
 
 </div>
 
-<button
-class="profile-btn view-profile"
-data-employee="1">
+<div class="summary-box">
 
-View Profile
+<span
 
-</button>
+id="deploymentReadiness">
+
+--%
+
+</span>
+
+<label>
+
+Deployment Readiness
+
+</label>
+
+</div>
+
+<div class="summary-box">
+
+<span
+
+id="completedTasks">
+
+--
+
+</span>
+
+<label>
+
+Completed Tasks
+
+</label>
+
+</div>
+
+<div class="summary-box">
+
+<span
+
+id="pendingTasks">
+
+--
+
+</span>
+
+<label>
+
+Pending Tasks
+
+</label>
 
 </div>
 
@@ -1499,226 +2349,349 @@ View Profile
 
 </div>
 
-</section>
-<style>
+</div>
 
-/*=====================================================
+</div>
+/*====================================================
 
-EMPLOYEE PROFILE DRAWER
+EXECUTIVE EMPLOYEE PROFILE
 
-=====================================================*/
+====================================================*/
 
-.profile-overlay{
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-width:100%;
-
-height:100%;
-
-background:rgba(0,0,0,.45);
-
-display:none;
-
-justify-content:flex-end;
-
-align-items:stretch;
-
-z-index:9999;
-
-}
-
-.profile-overlay.active{
-
-display:flex;
-
-}
-
-.profile-panel{
-
-width:560px;
-
-background:#FFFFFF;
-
-height:100vh;
-
-overflow-y:auto;
-
-box-shadow:-10px 0 30px rgba(0,0,0,.18);
-
-animation:slidePanel .35s ease;
-
-}
-
-@keyframes slidePanel{
-
-from{
-
-transform:translateX(100%);
-
-}
-
-to{
-
-transform:translateX(0);
-
-}
-
-}
-
-/*=====================================================
-
-HEADER
-
-=====================================================*/
-
-.profile-header{
-
-background:var(--primary);
-
-padding:35px 30px;
+.employee-profile-header{
 
 text-align:center;
 
-position:relative;
-
-color:#FFF;
+margin-bottom:30px;
 
 }
 
-.close-profile{
+.master-photo{
 
-position:absolute;
+width:140px;
 
-top:20px;
-
-right:20px;
-
-width:42px;
-
-height:42px;
-
-border:none;
+height:140px;
 
 border-radius:50%;
-
-background:rgba(255,255,255,.18);
-
-color:white;
-
-cursor:pointer;
-
-font-size:18px;
-
-}
-
-.profile-avatar{
-
-width:120px;
-
-height:120px;
-
-border-radius:50%;
-
-border:5px solid white;
 
 object-fit:cover;
+
+border:5px solid var(--primary);
+
+margin-bottom:18px;
+
+}
+
+.employee-profile-header h2{
+
+font-size:28px;
+
+margin-bottom:8px;
+
+}
+
+.employee-profile-header p{
+
+font-size:15px;
+
+color:var(--text-light);
 
 margin-bottom:15px;
 
 }
 
-.profile-header h2{
+.status-badge{
 
-font-size:28px;
+display:inline-block;
 
-margin-bottom:6px;
+padding:8px 18px;
 
-}
+background:#EAF9F1;
 
-.profile-header p{
+color:var(--success);
 
-font-size:15px;
+border-radius:25px;
 
-opacity:.95;
+font-size:13px;
 
-}
-
-/*=====================================================
-
-BODY
-
-=====================================================*/
-
-.profile-body{
-
-padding:30px;
+font-weight:600;
 
 }
 
-.profile-section{
+.profile-information{
 
-margin-bottom:28px;
-
-}
-
-.profile-section h3{
-
-font-size:18px;
-
-color:var(--primary);
-
-margin-bottom:18px;
-
-padding-bottom:8px;
-
-border-bottom:2px solid #EEF3F5;
+margin-top:25px;
 
 }
 
-.profile-grid{
+.info-row{
 
-display:grid;
+display:flex;
 
-grid-template-columns:1fr 1fr;
+justify-content:space-between;
 
-gap:15px;
+align-items:center;
 
-}
+padding:14px 0;
 
-.profile-item{
-
-background:#F8FBFC;
-
-padding:14px;
-
-border-radius:12px;
+border-bottom:1px solid #ECECEC;
 
 }
 
-.profile-item label{
+.info-row label{
 
-display:block;
+font-weight:600;
 
-font-size:11px;
+font-size:14px;
 
-text-transform:uppercase;
+}
+
+.info-row span{
+
+font-size:14px;
 
 color:var(--text-light);
 
-margin-bottom:5px;
+}
 
-letter-spacing:.4px;
+.profile-summary-card{
+
+background:white;
+
+padding:25px;
+
+border-radius:18px;
+
+box-shadow:var(--shadow);
 
 }
 
-.profile-item span{
+.profile-summary-card h3{
+
+font-size:22px;
+
+margin-bottom:25px;
+
+color:var(--primary);
+
+}
+
+.summary-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:20px;
+
+}
+
+.summary-box{
+
+background:#F8FBFC;
+
+padding:22px;
+
+border-radius:15px;
+
+text-align:center;
+
+}
+
+.summary-box span{
+
+display:block;
+
+font-size:32px;
+
+font-weight:700;
+
+color:var(--primary);
+
+margin-bottom:10px;
+
+}
+
+.summary-box label{
 
 font-size:14px;
+
+color:var(--text-light);
+
+}
+<!--=====================================================
+
+ROLE LIBRARY & JOB DESCRIPTION
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Role Library & Job Description
+
+</h3>
+
+<div class="role-library">
+
+<div class="role-info">
+
+<div class="role-field">
+
+<label>
+
+Department
+
+</label>
+
+<span id="roleDepartment">
+
+Will load automatically
+
+</span>
+
+</div>
+
+<div class="role-field">
+
+<label>
+
+Role
+
+</label>
+
+<span id="roleDesignation">
+
+Will load automatically
+
+</span>
+
+</div>
+
+<div class="role-field">
+
+<label>
+
+Reports To
+
+</label>
+
+<span id="roleReporting">
+
+Will load automatically
+
+</span>
+
+</div>
+
+</div>
+
+
+<div class="jd-section">
+
+<h4>
+
+Job Description
+
+</h4>
+
+<div
+
+class="jd-box"
+
+id="jobDescription">
+
+The complete Job Description will automatically
+load according to the selected employee's role.
+No manual entry is required.
+
+</div>
+
+</div>
+
+
+<div class="responsibility-section">
+
+<h4>
+
+Key Responsibilities
+
+</h4>
+
+<ul
+
+id="responsibilityList"
+
+class="responsibility-list">
+
+<li>
+
+Responsibilities will automatically load from
+the Role Library.
+
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+/*====================================================
+
+ROLE LIBRARY
+
+====================================================*/
+
+.role-library{
+
+display:flex;
+
+flex-direction:column;
+
+gap:25px;
+
+}
+
+.role-info{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:20px;
+
+}
+
+.role-field{
+
+background:#F8FBFC;
+
+padding:18px;
+
+border-radius:15px;
+
+}
+
+.role-field label{
+
+display:block;
+
+font-size:13px;
+
+font-weight:600;
+
+margin-bottom:8px;
+
+color:var(--text-light);
+
+}
+
+.role-field span{
+
+font-size:15px;
 
 font-weight:600;
 
@@ -1726,13 +2699,1093 @@ color:var(--text);
 
 }
 
-/*=====================================================
+.jd-section h4,
 
-ACTION BUTTONS
+.responsibility-section h4{
 
-=====================================================*/
+font-size:18px;
 
-.action-buttons{
+margin-bottom:15px;
+
+color:var(--primary);
+
+}
+
+.jd-box{
+
+background:#F8FBFC;
+
+padding:22px;
+
+border-radius:15px;
+
+line-height:30px;
+
+font-size:15px;
+
+color:var(--text-light);
+
+}
+
+.responsibility-list{
+
+padding-left:22px;
+
+line-height:30px;
+
+color:var(--text-light);
+
+}
+
+.responsibility-list li{
+
+margin-bottom:10px;
+
+}
+
+@media(max-width:900px){
+
+.role-info{
+
+grid-template-columns:1fr;
+
+}
+
+}
+<!--=====================================================
+
+ROLE SPECIFIC KPI PERFORMANCE
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Role Specific KPI Performance
+
+</h3>
+
+<p class="section-description">
+
+KPIs are automatically assigned according to the employee's
+role. Team Leads and Project Managers can update progress
+and remarks. Efficiency Score will be calculated automatically.
+
+</p>
+
+
+<div
+
+class="kpi-container"
+
+id="kpiContainer">
+
+<!-- KPI 1 -->
+
+<div class="kpi-card">
+
+<div class="kpi-header">
+
+<h4 id="kpi1Title">
+
+KPI 1
+
+</h4>
+
+<span id="kpi1Score">
+
+0%
+
+</span>
+
+</div>
+
+<div class="progress-bar">
+
+<div
+
+class="progress-fill"
+
+id="kpi1Progress"
+
+style="width:0%;">
+
+</div>
+
+</div>
+
+<textarea
+
+id="kpi1Remarks"
+
+class="kpi-remarks"
+
+placeholder="Manager Remarks">
+
+</textarea>
+
+</div>
+
+
+<!-- KPI 2 -->
+
+<div class="kpi-card">
+
+<div class="kpi-header">
+
+<h4 id="kpi2Title">
+
+KPI 2
+
+</h4>
+
+<span id="kpi2Score">
+
+0%
+
+</span>
+
+</div>
+
+<div class="progress-bar">
+
+<div
+
+class="progress-fill"
+
+id="kpi2Progress"
+
+style="width:0%;">
+
+</div>
+
+</div>
+
+<textarea
+
+id="kpi2Remarks"
+
+class="kpi-remarks"
+
+placeholder="Manager Remarks">
+
+</textarea>
+
+</div>
+
+
+<!-- KPI 3 -->
+
+<div class="kpi-card">
+
+<div class="kpi-header">
+
+<h4 id="kpi3Title">
+
+KPI 3
+
+</h4>
+
+<span id="kpi3Score">
+
+0%
+
+</span>
+
+</div>
+
+<div class="progress-bar">
+
+<div
+
+class="progress-fill"
+
+id="kpi3Progress"
+
+style="width:0%;">
+
+</div>
+
+</div>
+
+<textarea
+
+id="kpi3Remarks"
+
+class="kpi-remarks"
+
+placeholder="Manager Remarks">
+
+</textarea>
+
+</div>
+
+
+<!-- KPI 4 -->
+
+<div class="kpi-card">
+
+<div class="kpi-header">
+
+<h4 id="kpi4Title">
+
+KPI 4
+
+</h4>
+
+<span id="kpi4Score">
+
+0%
+
+</span>
+
+</div>
+
+<div class="progress-bar">
+
+<div
+
+class="progress-fill"
+
+id="kpi4Progress"
+
+style="width:0%;">
+
+</div>
+
+</div>
+
+<textarea
+
+id="kpi4Remarks"
+
+class="kpi-remarks"
+
+placeholder="Manager Remarks">
+
+</textarea>
+
+</div>
+
+
+<!-- KPI 5 -->
+
+<div class="kpi-card">
+
+<div class="kpi-header">
+
+<h4 id="kpi5Title">
+
+KPI 5
+
+</h4>
+
+<span id="kpi5Score">
+
+0%
+
+</span>
+
+</div>
+
+<div class="progress-bar">
+
+<div
+
+class="progress-fill"
+
+id="kpi5Progress"
+
+style="width:0%;">
+
+</div>
+
+</div>
+
+<textarea
+
+id="kpi5Remarks"
+
+class="kpi-remarks"
+
+placeholder="Manager Remarks">
+
+</textarea>
+
+</div>
+
+</div>
+
+</div>
+/*====================================================
+
+ROLE KPI PERFORMANCE
+
+====================================================*/
+
+.kpi-container{
+
+display:flex;
+
+flex-direction:column;
+
+gap:22px;
+
+margin-top:25px;
+
+}
+
+.kpi-card{
+
+background:#F8FBFC;
+
+padding:22px;
+
+border-radius:16px;
+
+}
+
+.kpi-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:15px;
+
+}
+
+.kpi-header h4{
+
+font-size:18px;
+
+}
+
+.kpi-header span{
+
+font-size:18px;
+
+font-weight:700;
+
+color:var(--primary);
+
+}
+
+.progress-bar{
+
+width:100%;
+
+height:10px;
+
+background:#E4EBEF;
+
+border-radius:20px;
+
+overflow:hidden;
+
+margin-bottom:18px;
+
+}
+
+.progress-fill{
+
+height:100%;
+
+background:var(--primary);
+
+transition:.5s;
+
+}
+
+.kpi-remarks{
+
+width:100%;
+
+min-height:90px;
+
+padding:14px;
+
+border:1px solid var(--border);
+
+border-radius:12px;
+
+resize:vertical;
+
+font-size:14px;
+
+font-family:'Poppins',sans-serif;
+
+outline:none;
+
+}
+
+.kpi-remarks:focus{
+
+border-color:var(--primary);
+
+box-shadow:0 0 0 3px rgba(51,167,181,.12);
+
+}
+<!--=====================================================
+
+AUTOMATIC PERFORMANCE & DEPLOYMENT ENGINE
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Performance & Deployment Engine
+
+</h3>
+
+<p class="section-description">
+
+The values below are calculated automatically by the
+system based on KPI achievement, manager remarks,
+task completion, deployment history and compliance.
+These fields are read-only and cannot be edited directly.
+
+</p>
+
+
+<div class="performance-grid">
+
+<!-- Efficiency -->
+
+<div class="performance-card">
+
+<div class="performance-icon">
+
+<i class="fa-solid fa-chart-line"></i>
+
+</div>
+
+<h4>
+
+Overall Efficiency
+
+</h4>
+
+<h2 id="overallEfficiency">
+
+--%
+
+</h2>
+
+<p>
+
+Automatically Calculated
+
+</p>
+
+</div>
+
+
+<!-- Deployment -->
+
+<div class="performance-card">
+
+<div class="performance-icon">
+
+<i class="fa-solid fa-plane-departure"></i>
+
+</div>
+
+<h4>
+
+Deployment Readiness
+
+</h4>
+
+<h2 id="deploymentScore">
+
+--%
+
+</h2>
+
+<p>
+
+Automatically Calculated
+
+</p>
+
+</div>
+
+
+<!-- Recommendation -->
+
+<div class="performance-card">
+
+<div class="performance-icon">
+
+<i class="fa-solid fa-user-check"></i>
+
+</div>
+
+<h4>
+
+System Recommendation
+
+</h4>
+
+<h2 id="recommendationStatus">
+
+--
+
+</h2>
+
+<p>
+
+Generated Automatically
+
+</p>
+
+</div>
+
+
+<!-- Current Status -->
+
+<div class="performance-card">
+
+<div class="performance-icon">
+
+<i class="fa-solid fa-circle-check"></i>
+
+</div>
+
+<h4>
+
+Current Status
+
+</h4>
+
+<h2 id="currentDeploymentStatus">
+
+--
+
+</h2>
+
+<p>
+
+Live Status
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+/*====================================================
+
+PERFORMANCE ENGINE
+
+====================================================*/
+
+.performance-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+}
+
+.performance-card{
+
+background:#F8FBFC;
+
+border-radius:18px;
+
+padding:25px;
+
+text-align:center;
+
+transition:.30s;
+
+}
+
+.performance-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.performance-icon{
+
+width:65px;
+
+height:65px;
+
+margin:auto;
+
+margin-bottom:18px;
+
+border-radius:50%;
+
+background:#EAF8FA;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.performance-icon i{
+
+font-size:28px;
+
+color:var(--primary);
+
+}
+
+.performance-card h4{
+
+font-size:17px;
+
+margin-bottom:12px;
+
+}
+
+.performance-card h2{
+
+font-size:34px;
+
+color:var(--primary);
+
+margin-bottom:10px;
+
+font-weight:700;
+
+}
+
+.performance-card p{
+
+font-size:13px;
+
+color:var(--text-light);
+
+}
+<!--=====================================================
+
+DEPLOYMENT CONTROL CENTRE
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Deployment Control Centre
+
+</h3>
+
+<p class="section-description">
+
+Manage employee deployment, recall requests and
+deployment history. Access is controlled according
+to user role. Employees have view-only access.
+
+</p>
+
+
+<div class="deployment-grid">
+
+<div class="deployment-box">
+
+<label>
+
+Current Deployment Status
+
+</label>
+
+<h2 id="deploymentStatus">
+
+Not Deployed
+
+</h2>
+
+</div>
+
+
+<div class="deployment-box">
+
+<label>
+
+Current Project Site
+
+</label>
+
+<h2 id="deploymentSite">
+
+--
+
+</h2>
+
+</div>
+
+
+<div class="deployment-box">
+
+<label>
+
+Recommended By
+
+</label>
+
+<h2 id="recommendedBy">
+
+--
+
+</h2>
+
+</div>
+
+
+<div class="deployment-box">
+
+<label>
+
+Approved By
+
+</label>
+
+<h2 id="approvedBy">
+
+--
+
+</h2>
+
+</div>
+
+</div>
+
+
+<div class="deployment-buttons">
+
+<button
+
+class="btn btn-success"
+
+id="deployEmployee">
+
+<i class="fa-solid fa-plane-departure"></i>
+
+Deploy Employee
+
+</button>
+
+
+<button
+
+class="btn btn-warning"
+
+id="recallEmployee">
+
+<i class="fa-solid fa-arrow-rotate-left"></i>
+
+Recall Employee
+
+</button>
+
+
+<button
+
+class="btn btn-primary"
+
+id="deploymentHistory">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+Deployment History
+
+</button>
+
+</div>
+
+</div>
+/*====================================================
+
+DEPLOYMENT CONTROL CENTRE
+
+====================================================*/
+
+.deployment-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+margin-bottom:30px;
+
+}
+
+.deployment-box{
+
+background:#F8FBFC;
+
+padding:22px;
+
+border-radius:16px;
+
+text-align:center;
+
+}
+
+.deployment-box label{
+
+display:block;
+
+font-size:13px;
+
+color:var(--text-light);
+
+margin-bottom:10px;
+
+font-weight:600;
+
+}
+
+.deployment-box h2{
+
+font-size:24px;
+
+color:var(--primary);
+
+}
+
+.deployment-buttons{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+justify-content:flex-end;
+
+}
+<!--=====================================================
+
+MANAGER OBSERVATIONS & PERFORMANCE REVIEW
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Manager Observations & Performance Review
+
+</h3>
+
+<p class="section-description">
+
+Manager observations contribute towards the employee's
+overall performance assessment, efficiency score,
+deployment readiness and future development planning.
+Only authorised Team Leads, Project Managers and
+Administrators can edit this section.
+
+</p>
+
+
+<div class="manager-review">
+
+<div class="review-row">
+
+<label>
+
+Latest Performance Rating
+
+</label>
+
+<div class="review-value"
+
+id="performanceRating">
+
+Not Yet Evaluated
+
+</div>
+
+</div>
+
+
+<div class="review-row">
+
+<label>
+
+Manager Recommendation
+
+</label>
+
+<div class="review-value"
+
+id="managerRecommendation">
+
+Pending Review
+
+</div>
+
+</div>
+
+
+<div class="review-row">
+
+<label>
+
+Observation Date
+
+</label>
+
+<div class="review-value"
+
+id="reviewDate">
+
+--
+
+</div>
+
+</div>
+
+
+<div class="review-row">
+
+<label>
+
+Reviewed By
+
+</label>
+
+<div class="review-value"
+
+id="reviewedBy">
+
+--
+
+</div>
+
+</div>
+
+
+<div class="review-comments">
+
+<label>
+
+Manager Remarks
+
+</label>
+
+<textarea
+
+id="managerRemarks"
+
+placeholder="Manager observations will appear here. Team Leads and Project Managers can edit this field according to their access rights.">
+
+</textarea>
+
+</div>
+
+
+<div class="review-actions">
+
+<button
+
+class="btn btn-success"
+
+id="saveReview">
+
+<i class="fa-solid fa-floppy-disk"></i>
+
+Save Review
+
+</button>
+
+
+<button
+
+class="btn btn-primary"
+
+id="viewHistory">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+View Review History
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+/*====================================================
+
+MANAGER OBSERVATIONS
+
+====================================================*/
+
+.manager-review{
+
+margin-top:30px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:22px;
+
+}
+
+.review-row{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:16px 20px;
+
+background:#F8FBFC;
+
+border-radius:14px;
+
+}
+
+.review-row label{
+
+font-weight:600;
+
+font-size:14px;
+
+}
+
+.review-value{
+
+font-size:15px;
+
+font-weight:600;
+
+color:var(--primary);
+
+}
+
+.review-comments{
 
 display:flex;
 
@@ -1740,352 +3793,1146 @@ flex-direction:column;
 
 gap:12px;
 
-margin-top:25px;
-
 }
 
-.primary-btn{
-
-height:48px;
-
-border:none;
-
-border-radius:12px;
-
-background:var(--primary);
-
-color:white;
-
-font-size:15px;
+.review-comments label{
 
 font-weight:600;
 
-cursor:pointer;
-
-transition:.3s;
+font-size:14px;
 
 }
 
-.primary-btn:hover{
-
-background:var(--primary-dark);
-
-}
-
-.secondary-btn{
-
-height:48px;
-
-border:1px solid var(--primary);
-
-background:white;
-
-color:var(--primary);
-
-border-radius:12px;
-
-font-size:15px;
-
-font-weight:600;
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-.secondary-btn:hover{
-
-background:#EAF8FA;
-
-}
-
-@media(max-width:700px){
-
-.profile-panel{
+.review-comments textarea{
 
 width:100%;
 
+min-height:140px;
+
+padding:16px;
+
+border:1px solid var(--border);
+
+border-radius:14px;
+
+resize:vertical;
+
+font-family:'Poppins',sans-serif;
+
+font-size:14px;
+
+outline:none;
+
 }
 
-.profile-grid{
+.review-comments textarea:focus{
 
-grid-template-columns:1fr;
+border-color:var(--primary);
+
+box-shadow:0 0 0 3px rgba(51,167,181,.12);
 
 }
 
-}
+.review-actions{
 
-</style>
+display:flex;
+
+justify-content:flex-end;
+
+gap:15px;
+
+flex-wrap:wrap;
+
+}
 <!--=====================================================
 
-EMPLOYEE PROFILE DRAWER
+EMPLOYEE DEVELOPMENT & TRAINING CENTRE
 
 ======================================================-->
 
-<div class="profile-overlay" id="profileOverlay">
+<div class="profile-summary-card">
 
-<div class="profile-panel">
+<h3>
 
-<div class="profile-header">
+Employee Development & Training Centre
 
-<button class="close-profile" id="closeProfile">
+</h3>
 
-<i class="fa-solid fa-xmark"></i>
+<p class="section-description">
 
-</button>
+Track employee development, certifications, competency,
+training history and promotion readiness. This module
+supports long-term manpower planning and capability
+development across all departments.
 
-<img
-src="assets/images/default-profile.png"
-class="profile-avatar"
-id="drawerPhoto">
+</p>
 
-<h2 id="drawerName">
 
-Employee Name
+<div class="training-grid">
+
+<div class="training-box">
+
+<label>
+
+Training Status
+
+</label>
+
+<h2 id="trainingStatus">
+
+--
 
 </h2>
 
-<p id="drawerDesignation">
+</div>
 
-Executive Trainee
+<div class="training-box">
+
+<label>
+
+Mandatory Trainings Completed
+
+</label>
+
+<h2 id="mandatoryTraining">
+
+--
+
+</h2>
+
+</div>
+
+<div class="training-box">
+
+<label>
+
+Technical Competency
+
+</label>
+
+<h2 id="technicalCompetency">
+
+--
+
+</h2>
+
+</div>
+
+<div class="training-box">
+
+<label>
+
+Promotion Readiness
+
+</label>
+
+<h2 id="promotionReadiness">
+
+--
+
+</h2>
+
+</div>
+
+</div>
+
+
+<div class="training-section">
+
+<h4>
+
+Professional Certifications
+
+</h4>
+
+<ul
+
+class="training-list"
+
+id="certificationList">
+
+<li>
+
+No certifications available.
+
+</li>
+
+</ul>
+
+</div>
+
+
+<div class="training-section">
+
+<h4>
+
+Skill Gap Analysis
+
+</h4>
+
+<div
+
+class="skill-gap"
+
+id="skillGap">
+
+Skill gap analysis will automatically
+appear based on the employee's role,
+training records and competency
+assessment.
+
+</div>
+
+</div>
+
+
+<div class="training-section">
+
+<h4>
+
+Development Plan
+
+</h4>
+
+<textarea
+
+id="developmentPlan"
+
+placeholder="Development plans, future training recommendations and mentoring plans will appear here.">
+
+</textarea>
+
+</div>
+
+</div>
+/*====================================================
+
+EMPLOYEE DEVELOPMENT CENTRE
+
+====================================================*/
+
+.training-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+margin-bottom:30px;
+
+}
+
+.training-box{
+
+background:#F8FBFC;
+
+padding:22px;
+
+border-radius:16px;
+
+text-align:center;
+
+}
+
+.training-box label{
+
+display:block;
+
+font-size:13px;
+
+font-weight:600;
+
+color:var(--text-light);
+
+margin-bottom:10px;
+
+}
+
+.training-box h2{
+
+font-size:24px;
+
+color:var(--primary);
+
+}
+
+.training-section{
+
+margin-top:30px;
+
+}
+
+.training-section h4{
+
+margin-bottom:15px;
+
+font-size:18px;
+
+color:var(--primary);
+
+}
+
+.training-list{
+
+padding-left:22px;
+
+line-height:30px;
+
+color:var(--text-light);
+
+}
+
+.skill-gap{
+
+background:#F8FBFC;
+
+padding:20px;
+
+border-radius:14px;
+
+line-height:28px;
+
+color:var(--text-light);
+
+}
+
+#developmentPlan{
+
+width:100%;
+
+min-height:140px;
+
+padding:16px;
+
+border:1px solid var(--border);
+
+border-radius:14px;
+
+resize:vertical;
+
+font-family:'Poppins',sans-serif;
+
+font-size:14px;
+
+outline:none;
+
+}
+
+#developmentPlan:focus{
+
+border-color:var(--primary);
+
+box-shadow:0 0 0 3px rgba(51,167,181,.12);
+
+}
+<!--=====================================================
+
+EMPLOYEE LIFECYCLE HISTORY
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Employee Lifecycle History
+
+</h3>
+
+<p class="section-description">
+
+Complete chronological history of the employee throughout
+their journey at Serentica. Every deployment, recall,
+promotion, training, appraisal and role change will be
+automatically recorded by the system.
+
+</p>
+
+
+<div class="timeline-container">
+
+<div id="employeeTimeline">
+
+<div class="timeline-empty">
+
+<i class="fa-solid fa-timeline"></i>
+
+<h3>
+
+No History Available
+
+</h3>
+
+<p>
+
+Lifecycle records will automatically appear
+as employee activities are performed.
 
 </p>
 
 </div>
 
-<div class="profile-body">
-
-<!-- BASIC INFORMATION -->
-
-<div class="profile-section">
-
-<h3>
-
-Basic Information
-
-</h3>
-
-<div class="profile-grid">
-
-<div class="profile-item">
-
-<label>Employee ID</label>
-
-<span id="drawerEmployeeId">--</span>
-
-</div>
-
-<div class="profile-item">
-
-<label>Department</label>
-
-<span id="drawerDepartment">--</span>
-
-</div>
-
-<div class="profile-item">
-
-<label>Reporting Manager</label>
-
-<span id="drawerManager">--</span>
-
-</div>
-
-<div class="profile-item">
-
-<label>Current Assignment</label>
-
-<span id="drawerAssignment">--</span>
-
 </div>
 
 </div>
 
 </div>
+/*====================================================
 
-<!-- OPERATIONAL INFORMATION -->
+EMPLOYEE LIFECYCLE
 
-<div class="profile-section">
+====================================================*/
 
-<h3>
+.timeline-container{
 
-Operational Information
-
-</h3>
-
-<div class="profile-grid">
-
-<div class="profile-item">
-
-<label>Deployment Status</label>
-
-<span id="drawerStatus">--</span>
-
-</div>
-
-<div class="profile-item">
-
-<label>Availability</label>
-
-<span id="drawerAvailability">--</span>
-
-</div>
-
-<div class="profile-item">
-
-<label>Current Site</label>
-
-<span id="drawerSite">--</span>
-
-</div>
-
-<div class="profile-item">
-
-<label>Reporting Cluster</label>
-
-<span id="drawerCluster">--</span>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- PERFORMANCE -->
-
-<div class="profile-section">
-
-<h3>
-
-Performance
-
-</h3>
-
-<div class="profile-grid">
-
-<div class="profile-item">
-
-<label>Efficiency</label>
-
-<span id="drawerEfficiency">--</span>
-
-</div>
-
-<div class="profile-item">
-
-<label>Training Status</label>
-
-<span id="drawerTraining">--</span>
-
-</div>
-
-<div class="profile-item">
-
-<label>Skill Matrix</label>
-
-<span id="drawerSkill">--</span>
-
-</div>
-
-<div class="profile-item">
-
-<label>Remarks</label>
-
-<span id="drawerRemarks">--</span>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- ACTIONS -->
-
-<div class="profile-section">
-
-<h3>
-
-Actions
-
-</h3>
-
-<div class="action-buttons">
-
-<button class="primary-btn"
-
-id="recommendDeployment">
-
-Recommend Deployment
-
-</button>
-
-<button class="secondary-btn"
-
-id="deploymentHistory">
-
-View Deployment History
-
-</button>
-
-<button class="secondary-btn"
-
-id="editEmployee">
-
-Edit Employee Details
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-/*=====================================================
-
-TABLE VIEW
-
-=====================================================*/
-
-.table-section{
-
-display:none;
-
-margin-top:35px;
+margin-top:30px;
 
 }
 
-.table-section.active{
+.timeline-empty{
 
-display:block;
+text-align:center;
 
-}
+padding:80px 30px;
 
-.table-container{
+background:#F8FBFC;
 
-background:var(--white);
-
-border-radius:20px;
-
-box-shadow:var(--shadow);
-
-overflow:hidden;
+border-radius:18px;
 
 }
 
-.employee-table{
+.timeline-empty i{
+
+font-size:60px;
+
+color:#B8C6CC;
+
+margin-bottom:20px;
+
+}
+
+.timeline-empty h3{
+
+font-size:24px;
+
+margin-bottom:12px;
+
+}
+
+.timeline-empty p{
+
+color:var(--text-light);
+
+line-height:28px;
+
+max-width:500px;
+
+margin:auto;
+
+}
+
+.timeline-item{
+
+display:flex;
+
+gap:20px;
+
+margin-bottom:25px;
+
+}
+
+.timeline-icon{
+
+width:55px;
+
+height:55px;
+
+border-radius:50%;
+
+background:#EAF8FA;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+flex-shrink:0;
+
+}
+
+.timeline-icon i{
+
+font-size:22px;
+
+color:var(--primary);
+
+}
+
+.timeline-content{
+
+flex:1;
+
+background:#F8FBFC;
+
+padding:20px;
+
+border-radius:16px;
+
+}
+
+.timeline-content h4{
+
+margin-bottom:8px;
+
+font-size:18px;
+
+}
+
+.timeline-content p{
+
+line-height:28px;
+
+color:var(--text-light);
+
+font-size:14px;
+
+}
+
+.timeline-date{
+
+margin-top:12px;
+
+font-size:13px;
+
+font-weight:600;
+
+color:var(--primary);
+
+}
+<!--=====================================================
+
+DOCUMENTS & COMPLIANCE CENTRE
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Documents & Compliance Centre
+
+</h3>
+
+<p class="section-description">
+
+Monitor employee compliance, mandatory documentation,
+certifications, safety requirements and document validity.
+Compliance status is automatically considered during
+deployment approval.
+
+</p>
+
+<div class="compliance-grid">
+
+<div class="compliance-card">
+
+<div class="compliance-icon">
+
+<i class="fa-solid fa-file-circle-check"></i>
+
+</div>
+
+<h4>
+
+Overall Compliance
+
+</h4>
+
+<h2 id="overallCompliance">
+
+--%
+
+</h2>
+
+<p>
+
+Calculated Automatically
+
+</p>
+
+</div>
+
+<div class="compliance-card">
+
+<div class="compliance-icon">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+</div>
+
+<h4>
+
+Safety Compliance
+
+</h4>
+
+<h2 id="safetyCompliance">
+
+--
+
+</h2>
+
+<p>
+
+Live Status
+
+</p>
+
+</div>
+
+<div class="compliance-card">
+
+<div class="compliance-icon">
+
+<i class="fa-solid fa-certificate"></i>
+
+</div>
+
+<h4>
+
+Certification Status
+
+</h4>
+
+<h2 id="certificationStatus">
+
+--
+
+</h2>
+
+<p>
+
+Automatic Verification
+
+</p>
+
+</div>
+
+<div class="compliance-card">
+
+<div class="compliance-icon">
+
+<i class="fa-solid fa-calendar-check"></i>
+
+</div>
+
+<h4>
+
+Document Validity
+
+</h4>
+
+<h2 id="documentValidity">
+
+--
+
+</h2>
+
+<p>
+
+Expiry Monitoring
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="document-table-container">
+
+<h4>
+
+Employee Documents
+
+</h4>
+
+<table class="document-table">
+
+<thead>
+
+<tr>
+
+<th>Document</th>
+
+<th>Status</th>
+
+<th>Valid Until</th>
+
+<th>Last Updated</th>
+
+<th>Remarks</th>
+
+</tr>
+
+</thead>
+
+<tbody id="documentTableBody">
+
+<tr>
+
+<td colspan="5" class="empty-table">
+
+Employee documents will automatically appear here.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+/*====================================================
+
+DOCUMENTS & COMPLIANCE
+
+====================================================*/
+
+.compliance-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+margin-bottom:35px;
+
+}
+
+.compliance-card{
+
+background:#F8FBFC;
+
+padding:24px;
+
+border-radius:16px;
+
+text-align:center;
+
+transition:.30s;
+
+}
+
+.compliance-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.compliance-icon{
+
+width:60px;
+
+height:60px;
+
+margin:auto;
+
+margin-bottom:18px;
+
+border-radius:50%;
+
+background:#EAF8FA;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.compliance-icon i{
+
+font-size:26px;
+
+color:var(--primary);
+
+}
+
+.compliance-card h4{
+
+margin-bottom:10px;
+
+font-size:17px;
+
+}
+
+.compliance-card h2{
+
+font-size:30px;
+
+color:var(--primary);
+
+margin-bottom:8px;
+
+}
+
+.compliance-card p{
+
+font-size:13px;
+
+color:var(--text-light);
+
+}
+
+.document-table-container{
+
+margin-top:30px;
+
+}
+
+.document-table-container h4{
+
+margin-bottom:18px;
+
+font-size:18px;
+
+color:var(--primary);
+
+}
+
+.document-table{
 
 width:100%;
 
 border-collapse:collapse;
 
+background:white;
+
+border-radius:14px;
+
+overflow:hidden;
+
 }
 
-.employee-table thead{
+.document-table thead{
+
+background:#33A7B5;
+
+color:white;
+
+}
+
+.document-table th{
+
+padding:16px;
+
+font-size:14px;
+
+font-weight:600;
+
+text-align:left;
+
+}
+
+.document-table td{
+
+padding:16px;
+
+border-bottom:1px solid #ECECEC;
+
+font-size:14px;
+
+}
+
+.empty-table{
+
+text-align:center;
+
+padding:40px;
+
+color:var(--text-light);
+
+}
+<!--=====================================================
+
+TASK ASSIGNMENT & WORK ALLOCATION CENTRE
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Task Assignment & Work Allocation Centre
+
+</h3>
+
+<p class="section-description">
+
+Manage work allocation, monitor task progress and evaluate
+employee productivity. Task completion automatically
+contributes towards KPI achievement, efficiency score and
+deployment readiness.
+
+</p>
+
+
+<div class="task-summary-grid">
+
+<div class="task-summary-card">
+
+<label>
+
+Assigned Tasks
+
+</label>
+
+<h2 id="assignedTasks">
+
+--
+
+</h2>
+
+</div>
+
+<div class="task-summary-card">
+
+<label>
+
+Completed Tasks
+
+</label>
+
+<h2 id="completedTaskCount">
+
+--
+
+</h2>
+
+</div>
+
+<div class="task-summary-card">
+
+<label>
+
+Pending Tasks
+
+</label>
+
+<h2 id="pendingTaskCount">
+
+--
+
+</h2>
+
+</div>
+
+<div class="task-summary-card">
+
+<label>
+
+Completion Rate
+
+</label>
+
+<h2 id="completionRate">
+
+--%
+
+</h2>
+
+</div>
+
+</div>
+
+
+<div class="task-table-container">
+
+<h4>
+
+Assigned Work Packages
+
+</h4>
+
+<table class="task-table">
+
+<thead>
+
+<tr>
+
+<th>Task</th>
+
+<th>Priority</th>
+
+<th>Assigned By</th>
+
+<th>Target Date</th>
+
+<th>Status</th>
+
+<th>Progress</th>
+
+</tr>
+
+</thead>
+
+<tbody id="taskTableBody">
+
+<tr>
+
+<td colspan="6"
+
+class="empty-table">
+
+Tasks will automatically appear here after
+assignment by Team Leads or Project Managers.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="task-action-buttons">
+
+<button
+
+class="btn btn-success"
+
+id="assignTask">
+
+<i class="fa-solid fa-list-check"></i>
+
+Assign Task
+
+</button>
+
+
+<button
+
+class="btn btn-primary"
+
+id="viewTaskHistory">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+Task History
+
+</button>
+
+</div>
+
+</div>
+/*====================================================
+
+TASK MANAGEMENT
+
+====================================================*/
+
+.task-summary-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+margin-bottom:35px;
+
+}
+
+.task-summary-card{
+
+background:#F8FBFC;
+
+padding:22px;
+
+border-radius:16px;
+
+text-align:center;
+
+transition:.30s;
+
+}
+
+.task-summary-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.task-summary-card label{
+
+display:block;
+
+font-size:13px;
+
+font-weight:600;
+
+color:var(--text-light);
+
+margin-bottom:10px;
+
+}
+
+.task-summary-card h2{
+
+font-size:30px;
+
+color:var(--primary);
+
+}
+
+.task-table-container{
+
+margin-top:30px;
+
+}
+
+.task-table-container h4{
+
+margin-bottom:18px;
+
+font-size:18px;
+
+color:var(--primary);
+
+}
+
+.task-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+background:white;
+
+border-radius:14px;
+
+overflow:hidden;
+
+}
+
+.task-table thead{
 
 background:var(--primary);
 
@@ -2093,9 +4940,9 @@ color:white;
 
 }
 
-.employee-table th{
+.task-table th{
 
-padding:18px;
+padding:16px;
 
 text-align:left;
 
@@ -2105,503 +4952,3617 @@ font-weight:600;
 
 }
 
-.employee-table td{
+.task-table td{
 
-padding:18px;
+padding:16px;
 
-border-bottom:1px solid #EEF2F5;
+border-bottom:1px solid #ECECEC;
 
 font-size:14px;
 
 }
 
-.employee-table tbody tr:hover{
+.task-action-buttons{
+
+display:flex;
+
+justify-content:flex-end;
+
+gap:15px;
+
+margin-top:30px;
+
+flex-wrap:wrap;
+
+}
+<!--=====================================================
+
+ATTENDANCE, LEAVE & SITE AVAILABILITY CENTRE
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Attendance, Leave & Site Availability Centre
+
+</h3>
+
+<p class="section-description">
+
+Monitor employee attendance, site availability,
+leave records and deployment availability.
+This module supports manpower planning and
+deployment decisions across all project sites.
+
+</p>
+
+
+<div class="availability-grid">
+
+<div class="availability-card">
+
+<div class="availability-icon">
+
+<i class="fa-solid fa-calendar-check"></i>
+
+</div>
+
+<h4>
+
+Today's Attendance
+
+</h4>
+
+<h2 id="attendanceStatus">
+
+--
+
+</h2>
+
+<p>
+
+Auto Updated
+
+</p>
+
+</div>
+
+
+<div class="availability-card">
+
+<div class="availability-icon">
+
+<i class="fa-solid fa-user-clock"></i>
+
+</div>
+
+<h4>
+
+Current Shift
+
+</h4>
+
+<h2 id="currentShift">
+
+--
+
+</h2>
+
+<p>
+
+Auto Updated
+
+</p>
+
+</div>
+
+
+<div class="availability-card">
+
+<div class="availability-icon">
+
+<i class="fa-solid fa-person-circle-check"></i>
+
+</div>
+
+<h4>
+
+Site Availability
+
+</h4>
+
+<h2 id="siteAvailability">
+
+--
+
+</h2>
+
+<p>
+
+Live Status
+
+</p>
+
+</div>
+
+
+<div class="availability-card">
+
+<div class="availability-icon">
+
+<i class="fa-solid fa-calendar-xmark"></i>
+
+</div>
+
+<h4>
+
+Leave Status
+
+</h4>
+
+<h2 id="leaveStatus">
+
+--
+
+</h2>
+
+<p>
+
+Current Leave Status
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="attendance-history">
+
+<h4>
+
+Attendance & Leave Summary
+
+</h4>
+
+<table class="attendance-table">
+
+<thead>
+
+<tr>
+
+<th>Month</th>
+
+<th>Present</th>
+
+<th>Leave</th>
+
+<th>Absent</th>
+
+<th>Site Availability</th>
+
+</tr>
+
+</thead>
+
+<tbody id="attendanceTableBody">
+
+<tr>
+
+<td colspan="5"
+
+class="empty-table">
+
+Attendance records will automatically appear
+here after employee attendance is synced.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="availability-note">
+
+<i class="fa-solid fa-circle-info"></i>
+
+<span>
+
+Attendance, leave balance, shift allocation and site
+availability will automatically synchronize with the
+employee database and deployment module.
+
+</span>
+
+</div>
+
+</div>
+/*====================================================
+
+ATTENDANCE & SITE AVAILABILITY
+
+====================================================*/
+
+.availability-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+margin-bottom:35px;
+
+}
+
+.availability-card{
 
 background:#F8FBFC;
 
-}
+padding:24px;
 
-.table-status{
+border-radius:18px;
 
-display:inline-block;
-
-padding:6px 12px;
-
-border-radius:20px;
-
-font-size:12px;
-
-font-weight:600;
-
-}
-
-.table-profile{
-
-background:var(--primary);
-
-color:white;
-
-border:none;
-
-padding:8px 14px;
-
-border-radius:8px;
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-.table-profile:hover{
-
-background:var(--primary-dark);
-
-}
-<!-- =====================================================
-
-TABLE VIEW
-
-===================================================== -->
-
-<section class="table-section" id="tableSection">
-
-    <div class="table-container">
-
-        <table class="employee-table">
-
-            <thead>
-
-                <tr>
-
-                    <th>Employee ID</th>
-
-                    <th>Name</th>
-
-                    <th>Department</th>
-
-                    <th>Designation</th>
-
-                    <th>Deployment Status</th>
-
-                    <th>Action</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="employeeTableBody">
-
-                <tr>
-
-                    <td>EMP00001</td>
-
-                    <td>Employee Name</td>
-
-                    <td>Mechanical</td>
-
-                    <td>Executive Trainee</td>
-
-                    <td>
-
-                        <span class="table-status ready">
-
-                            Ready for Deployment
-
-                        </span>
-
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="table-profile view-profile"
-                            data-employee="1">
-
-                            View Profile
-
-                        </button>
-
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-</section>
-<!-- =====================================================
-
-PAGINATION
-
-===================================================== -->
-
-<section class="pagination-section">
-
-    <div class="pagination">
-
-        <button class="page-btn">
-
-            <i class="fa-solid fa-angle-left"></i>
-
-        </button>
-
-        <button class="page-btn active">
-
-            1
-
-        </button>
-
-        <button class="page-btn">
-
-            2
-
-        </button>
-
-        <button class="page-btn">
-
-            3
-
-        </button>
-
-        <button class="page-btn">
-
-            <i class="fa-solid fa-angle-right"></i>
-
-        </button>
-
-    </div>
-
-</section>
-/*=====================================================
-
-PAGINATION
-
-=====================================================*/
-
-.pagination-section{
-
-margin:35px 0 50px;
-
-display:flex;
-
-justify-content:center;
-
-}
-
-.pagination{
-
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
-}
-
-.page-btn{
-
-width:45px;
-
-height:45px;
-
-border:none;
-
-border-radius:12px;
-
-background:#FFFFFF;
-
-box-shadow:var(--shadow);
-
-font-size:14px;
-
-font-weight:600;
-
-cursor:pointer;
+text-align:center;
 
 transition:.30s;
 
-color:var(--text);
+}
+
+.availability-card:hover{
+
+transform:translateY(-5px);
 
 }
 
-.page-btn:hover{
-
-background:#EAF8FA;
-
-color:var(--primary);
-
-}
-
-.page-btn.active{
-
-background:var(--primary);
-
-color:#FFFFFF;
-
-}
-<!-- =====================================================
-
-RETURN TO DASHBOARD
-
-===================================================== -->
-
-<a href="welcome.html"
-
-class="floating-dashboard"
-
-title="Return to Dashboard">
-
-    <i class="fa-solid fa-arrow-left"></i>
-
-    <span>
-
-        Return to Dashboard
-
-    </span>
-
-</a>
-/*=====================================================
-
-FLOATING RETURN TO DASHBOARD
-
-=====================================================*/
-
-.floating-dashboard{
-
-position:fixed;
-
-right:30px;
-
-bottom:30px;
-
-display:flex;
-
-align-items:center;
-
-gap:10px;
-
-padding:14px 22px;
-
-background:var(--primary);
-
-color:#FFFFFF;
-
-text-decoration:none;
-
-border-radius:50px;
-
-font-size:14px;
-
-font-weight:600;
-
-box-shadow:0 12px 25px rgba(0,0,0,.20);
-
-transition:.30s;
-
-z-index:9999;
-
-}
-
-.floating-dashboard:hover{
-
-background:var(--primary-dark);
-
-transform:translateY(-3px);
-
-}
-
-.floating-dashboard i{
-
-font-size:16px;
-
-}
-
-@media(max-width:768px){
-
-.floating-dashboard{
-
-right:20px;
-
-bottom:20px;
-
-padding:14px;
-
-border-radius:50%;
+.availability-icon{
 
 width:60px;
 
 height:60px;
 
+margin:auto;
+
+margin-bottom:18px;
+
+background:#EAF8FA;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
 justify-content:center;
 
 }
 
-.floating-dashboard span{
+.availability-icon i{
 
-display:none;
+font-size:26px;
+
+color:var(--primary);
+
+}
+
+.availability-card h4{
+
+margin-bottom:10px;
+
+font-size:17px;
+
+}
+
+.availability-card h2{
+
+font-size:30px;
+
+color:var(--primary);
+
+margin-bottom:8px;
+
+}
+
+.availability-card p{
+
+font-size:13px;
+
+color:var(--text-light);
+
+}
+
+.attendance-history{
+
+margin-top:35px;
+
+}
+
+.attendance-history h4{
+
+margin-bottom:18px;
+
+font-size:18px;
+
+color:var(--primary);
+
+}
+
+.attendance-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+background:white;
+
+border-radius:14px;
+
+overflow:hidden;
+
+}
+
+.attendance-table thead{
+
+background:var(--primary);
+
+color:white;
+
+}
+
+.attendance-table th{
+
+padding:16px;
+
+font-size:14px;
+
+font-weight:600;
+
+text-align:left;
+
+}
+
+.attendance-table td{
+
+padding:16px;
+
+border-bottom:1px solid #ECECEC;
+
+font-size:14px;
+
+}
+
+.availability-note{
+
+margin-top:30px;
+
+background:#F8FBFC;
+
+padding:18px 22px;
+
+border-left:5px solid var(--primary);
+
+border-radius:12px;
+
+display:flex;
+
+gap:15px;
+
+align-items:flex-start;
+
+}
+
+.availability-note i{
+
+color:var(--primary);
+
+font-size:20px;
+
+margin-top:2px;
+
+}
+
+.availability-note span{
+
+line-height:28px;
+
+font-size:14px;
+
+color:var(--text-light);
+
+}
+<!--=====================================================
+
+REPORTING HIERARCHY & ORGANISATION STRUCTURE
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Reporting Hierarchy & Organisation Structure
+
+</h3>
+
+<p class="section-description">
+
+Displays the employee's reporting structure across the
+project. Reporting relationships are automatically synced
+from the Organisation Chart module and always remain up
+to date.
+
+</p>
+
+<div class="hierarchy-grid">
+
+<div class="hierarchy-card">
+
+<div class="hierarchy-icon">
+
+<i class="fa-solid fa-user"></i>
+
+</div>
+
+<label>
+
+Reports To
+
+</label>
+
+<h4 id="reportsTo">
+
+--
+
+</h4>
+
+<p>
+
+Immediate Reporting Manager
+
+</p>
+
+</div>
+
+
+<div class="hierarchy-card">
+
+<div class="hierarchy-icon">
+
+<i class="fa-solid fa-users"></i>
+
+</div>
+
+<label>
+
+Team Lead
+
+</label>
+
+<h4 id="teamLead">
+
+--
+
+</h4>
+
+<p>
+
+Department Team Lead
+
+</p>
+
+</div>
+
+
+<div class="hierarchy-card">
+
+<div class="hierarchy-icon">
+
+<i class="fa-solid fa-user-tie"></i>
+
+</div>
+
+<label>
+
+Project Manager
+
+</label>
+
+<h4 id="projectManager">
+
+--
+
+</h4>
+
+<p>
+
+Site Project Manager
+
+</p>
+
+</div>
+
+
+<div class="hierarchy-card">
+
+<div class="hierarchy-icon">
+
+<i class="fa-solid fa-building-user"></i>
+
+</div>
+
+<label>
+
+Department
+
+</label>
+
+<h4 id="employeeDepartment">
+
+--
+
+</h4>
+
+<p>
+
+Functional Department
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="organisation-preview">
+
+<h4>
+
+Organisation Position
+
+</h4>
+
+<div class="org-preview-box">
+
+<div class="org-preview-icon">
+
+<i class="fa-solid fa-sitemap"></i>
+
+</div>
+
+<div>
+
+<h3 id="employeePosition">
+
+Position not yet linked
+
+</h3>
+
+<p>
+
+This employee's reporting structure is
+automatically connected with the Organisation
+Chart module.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="hierarchy-footer">
+
+<button
+
+class="btn btn-primary"
+
+id="viewOrgChart">
+
+<i class="fa-solid fa-sitemap"></i>
+
+View Organisation Chart
+
+</button>
+
+</div>
+
+</div>
+/*====================================================
+
+REPORTING HIERARCHY
+
+====================================================*/
+
+.hierarchy-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+margin-bottom:35px;
+
+}
+
+.hierarchy-card{
+
+background:#F8FBFC;
+
+padding:24px;
+
+border-radius:18px;
+
+text-align:center;
+
+transition:.30s;
+
+}
+
+.hierarchy-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.hierarchy-icon{
+
+width:60px;
+
+height:60px;
+
+margin:auto;
+
+margin-bottom:18px;
+
+background:#EAF8FA;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.hierarchy-icon i{
+
+font-size:24px;
+
+color:var(--primary);
+
+}
+
+.hierarchy-card label{
+
+display:block;
+
+font-size:13px;
+
+font-weight:600;
+
+color:var(--text-light);
+
+margin-bottom:8px;
+
+}
+
+.hierarchy-card h4{
+
+font-size:20px;
+
+margin-bottom:8px;
+
+color:var(--primary);
+
+}
+
+.hierarchy-card p{
+
+font-size:13px;
+
+color:var(--text-light);
+
+}
+
+.organisation-preview{
+
+margin-top:35px;
+
+}
+
+.organisation-preview h4{
+
+margin-bottom:18px;
+
+color:var(--primary);
+
+}
+
+.org-preview-box{
+
+display:flex;
+
+align-items:center;
+
+gap:20px;
+
+padding:22px;
+
+background:#F8FBFC;
+
+border-radius:18px;
+
+}
+
+.org-preview-icon{
+
+width:70px;
+
+height:70px;
+
+background:#EAF8FA;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.org-preview-icon i{
+
+font-size:30px;
+
+color:var(--primary);
+
+}
+
+.org-preview-box h3{
+
+margin-bottom:8px;
+
+}
+
+.org-preview-box p{
+
+line-height:26px;
+
+color:var(--text-light);
+
+}
+
+.hierarchy-footer{
+
+display:flex;
+
+justify-content:flex-end;
+
+margin-top:30px;
+
+}
+<!--=====================================================
+
+EMPLOYEE ANALYTICS & PERFORMANCE DASHBOARD
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Employee Analytics & Performance Dashboard
+
+</h3>
+
+<p class="section-description">
+
+A consolidated analytical view of employee performance,
+KPI achievement, productivity, deployment readiness,
+training progress and overall workforce contribution.
+All metrics are automatically calculated by the system.
+
+</p>
+
+
+<div class="analytics-grid">
+
+<div class="analytics-card">
+
+<div class="analytics-icon">
+
+<i class="fa-solid fa-chart-simple"></i>
+
+</div>
+
+<label>
+
+Overall Performance Index
+
+</label>
+
+<h2 id="overallPerformanceIndex">
+
+--
+
+</h2>
+
+<p>
+
+Calculated Automatically
+
+</p>
+
+</div>
+
+
+<div class="analytics-card">
+
+<div class="analytics-icon">
+
+<i class="fa-solid fa-gauge-high"></i>
+
+</div>
+
+<label>
+
+KPI Achievement
+
+</label>
+
+<h2 id="kpiAchievement">
+
+--
+
+</h2>
+
+<p>
+
+Live KPI Score
+
+</p>
+
+</div>
+
+
+<div class="analytics-card">
+
+<div class="analytics-icon">
+
+<i class="fa-solid fa-arrow-trend-up"></i>
+
+</div>
+
+<label>
+
+Productivity Trend
+
+</label>
+
+<h2 id="productivityTrend">
+
+--
+
+</h2>
+
+<p>
+
+Rolling Performance
+
+</p>
+
+</div>
+
+
+<div class="analytics-card">
+
+<div class="analytics-icon">
+
+<i class="fa-solid fa-award"></i>
+
+</div>
+
+<label>
+
+Promotion Readiness
+
+</label>
+
+<h2 id="promotionScore">
+
+--
+
+</h2>
+
+<p>
+
+Calculated Automatically
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="analytics-summary">
+
+<h4>
+
+Executive Summary
+
+</h4>
+
+<div
+
+class="summary-box"
+
+id="analyticsSummary">
+
+The Executive Summary will automatically
+generate insights based on KPI achievement,
+task completion, manager observations,
+deployment history, compliance,
+attendance and overall employee performance.
+
+</div>
+
+</div>
+
+</div>
+/*====================================================
+
+EMPLOYEE ANALYTICS DASHBOARD
+
+====================================================*/
+
+.analytics-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+margin-bottom:35px;
+
+}
+
+.analytics-card{
+
+background:#F8FBFC;
+
+padding:24px;
+
+border-radius:18px;
+
+text-align:center;
+
+transition:.30s;
+
+}
+
+.analytics-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.analytics-icon{
+
+width:60px;
+
+height:60px;
+
+margin:auto;
+
+margin-bottom:18px;
+
+background:#EAF8FA;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.analytics-icon i{
+
+font-size:26px;
+
+color:var(--primary);
+
+}
+
+.analytics-card label{
+
+display:block;
+
+font-size:13px;
+
+font-weight:600;
+
+color:var(--text-light);
+
+margin-bottom:8px;
+
+}
+
+.analytics-card h2{
+
+font-size:30px;
+
+color:var(--primary);
+
+margin-bottom:8px;
+
+}
+
+.analytics-card p{
+
+font-size:13px;
+
+color:var(--text-light);
+
+}
+
+.analytics-summary{
+
+margin-top:35px;
+
+}
+
+.analytics-summary h4{
+
+margin-bottom:18px;
+
+color:var(--primary);
+
+}
+
+.summary-box{
+
+background:#F8FBFC;
+
+padding:24px;
+
+border-radius:18px;
+
+line-height:30px;
+
+color:var(--text-light);
+
+border-left:5px solid var(--primary);
+
+}
+<!--=====================================================
+
+INTELLIGENT NOTIFICATION & ALERT CENTRE
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Intelligent Notification & Alert Centre
+
+</h3>
+
+<p class="section-description">
+
+Automatically generated notifications and alerts based on
+employee activities, KPI performance, deployment status,
+training, compliance, attendance and managerial actions.
+Notifications are role-based and synchronised across the
+entire manpower management system.
+
+</p>
+
+
+<div class="notification-summary">
+
+<div class="notification-card">
+
+<div class="notification-icon">
+
+<i class="fa-solid fa-bell"></i>
+
+</div>
+
+<label>
+
+Unread Notifications
+
+</label>
+
+<h2 id="unreadNotifications">
+
+--
+
+</h2>
+
+</div>
+
+
+<div class="notification-card">
+
+<div class="notification-icon">
+
+<i class="fa-solid fa-circle-exclamation"></i>
+
+</div>
+
+<label>
+
+Critical Alerts
+
+</label>
+
+<h2 id="criticalAlerts">
+
+--
+
+</h2>
+
+</div>
+
+
+<div class="notification-card">
+
+<div class="notification-icon">
+
+<i class="fa-solid fa-circle-check"></i>
+
+</div>
+
+<label>
+
+Resolved Alerts
+
+</label>
+
+<h2 id="resolvedAlerts">
+
+--
+
+</h2>
+
+</div>
+
+
+<div class="notification-card">
+
+<div class="notification-icon">
+
+<i class="fa-solid fa-calendar-days"></i>
+
+</div>
+
+<label>
+
+Upcoming Actions
+
+</label>
+
+<h2 id="upcomingActions">
+
+--
+
+</h2>
+
+</div>
+
+</div>
+
+
+<div class="notification-history">
+
+<h4>
+
+Recent Notifications
+
+</h4>
+
+<div
+
+class="notification-list"
+
+id="notificationHistory">
+
+<div class="notification-empty">
+
+<i class="fa-solid fa-bell-slash"></i>
+
+<h3>
+
+No Notifications
+
+</h3>
+
+<p>
+
+System generated notifications will
+automatically appear here.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+/*====================================================
+
+NOTIFICATION CENTRE
+
+====================================================*/
+
+.notification-summary{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+margin-bottom:35px;
+
+}
+
+.notification-card{
+
+background:#F8FBFC;
+
+padding:24px;
+
+border-radius:18px;
+
+text-align:center;
+
+transition:.30s;
+
+}
+
+.notification-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.notification-icon{
+
+width:60px;
+
+height:60px;
+
+margin:auto;
+
+margin-bottom:18px;
+
+background:#EAF8FA;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.notification-icon i{
+
+font-size:25px;
+
+color:var(--primary);
+
+}
+
+.notification-card label{
+
+display:block;
+
+font-size:13px;
+
+font-weight:600;
+
+color:var(--text-light);
+
+margin-bottom:10px;
+
+}
+
+.notification-card h2{
+
+font-size:30px;
+
+color:var(--primary);
+
+}
+
+.notification-history{
+
+margin-top:35px;
+
+}
+
+.notification-history h4{
+
+margin-bottom:20px;
+
+color:var(--primary);
+
+}
+
+.notification-list{
+
+display:flex;
+
+flex-direction:column;
+
+gap:16px;
+
+}
+
+.notification-empty{
+
+background:#F8FBFC;
+
+padding:60px;
+
+text-align:center;
+
+border-radius:18px;
+
+}
+
+.notification-empty i{
+
+font-size:55px;
+
+color:#BCC8CD;
+
+margin-bottom:18px;
+
+}
+
+.notification-empty h3{
+
+margin-bottom:12px;
+
+}
+
+.notification-empty p{
+
+color:var(--text-light);
+
+line-height:28px;
+
+}
+<!--=====================================================
+
+EMPLOYEE ACHIEVEMENTS & CAREER PROGRESSION
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Employee Achievement, Recognition & Career Progression
+
+</h3>
+
+<p class="section-description">
+
+A complete overview of employee achievements,
+recognition, career milestones and growth potential.
+This information is automatically generated using
+performance, KPI achievement, deployment history,
+training, manager remarks and overall contribution.
+
+</p>
+
+
+<div class="achievement-grid">
+
+<div class="achievement-card">
+
+<div class="achievement-icon">
+
+<i class="fa-solid fa-medal"></i>
+
+</div>
+
+<label>
+
+Recognition Level
+
+</label>
+
+<h2 id="recognitionLevel">
+
+--
+
+</h2>
+
+<p>
+
+Automatic Evaluation
+
+</p>
+
+</div>
+
+
+<div class="achievement-card">
+
+<div class="achievement-icon">
+
+<i class="fa-solid fa-trophy"></i>
+
+</div>
+
+<label>
+
+Achievements Earned
+
+</label>
+
+<h2 id="achievementCount">
+
+--
+
+</h2>
+
+<p>
+
+Career Milestones
+
+</p>
+
+</div>
+
+
+<div class="achievement-card">
+
+<div class="achievement-icon">
+
+<i class="fa-solid fa-ranking-star"></i>
+
+</div>
+
+<label>
+
+Performance Ranking
+
+</label>
+
+<h2 id="performanceRank">
+
+--
+
+</h2>
+
+<p>
+
+Department Ranking
+
+</p>
+
+</div>
+
+
+<div class="achievement-card">
+
+<div class="achievement-icon">
+
+<i class="fa-solid fa-user-graduate"></i>
+
+</div>
+
+<label>
+
+Career Growth Stage
+
+</label>
+
+<h2 id="careerStage">
+
+--
+
+</h2>
+
+<p>
+
+Automatic Assessment
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="recognition-section">
+
+<h4>
+
+Career Highlights
+
+</h4>
+
+<div
+
+class="recognition-box"
+
+id="careerHighlights">
+
+Employee achievements, appreciation,
+major project contributions,
+successful deployments,
+leadership initiatives and recognitions
+will automatically appear here.
+
+</div>
+
+</div>
+
+
+<div class="recognition-section">
+
+<h4>
+
+Manager Recommendation
+
+</h4>
+
+<div
+
+class="manager-box"
+
+id="managerRecommendation">
+
+Manager observations and promotion
+recommendations will automatically
+appear here after review.
+
+</div>
+
+</div>
+
+</div>
+/*====================================================
+
+ACHIEVEMENTS & CAREER PROGRESSION
+
+====================================================*/
+
+.achievement-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+margin-bottom:35px;
+
+}
+
+.achievement-card{
+
+background:#F8FBFC;
+
+padding:24px;
+
+border-radius:18px;
+
+text-align:center;
+
+transition:.30s;
+
+}
+
+.achievement-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.achievement-icon{
+
+width:60px;
+
+height:60px;
+
+margin:auto;
+
+margin-bottom:18px;
+
+background:#EAF8FA;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.achievement-icon i{
+
+font-size:26px;
+
+color:var(--primary);
+
+}
+
+.achievement-card label{
+
+display:block;
+
+font-size:13px;
+
+font-weight:600;
+
+color:var(--text-light);
+
+margin-bottom:10px;
+
+}
+
+.achievement-card h2{
+
+font-size:30px;
+
+color:var(--primary);
+
+margin-bottom:8px;
+
+}
+
+.achievement-card p{
+
+font-size:13px;
+
+color:var(--text-light);
+
+}
+
+.recognition-section{
+
+margin-top:35px;
+
+}
+
+.recognition-section h4{
+
+margin-bottom:18px;
+
+color:var(--primary);
+
+}
+
+.recognition-box,
+
+.manager-box{
+
+background:#F8FBFC;
+
+padding:24px;
+
+border-radius:18px;
+
+border-left:5px solid var(--primary);
+
+line-height:30px;
+
+color:var(--text-light);
+
+}
+<!--=====================================================
+
+ROLE BASED ACCESS & WORKFLOW ENGINE
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Role Based Access & Workflow Engine
+
+</h3>
+
+<p class="section-description">
+
+Displays the permissions currently assigned to this
+logged-in user. All permissions are automatically
+controlled according to the employee's designation,
+department and role within the organisation.
+
+</p>
+
+
+<div class="permission-summary">
+
+<div class="permission-card">
+
+<div class="permission-icon">
+
+<i class="fa-solid fa-user-lock"></i>
+
+</div>
+
+<label>
+
+Current Role
+
+</label>
+
+<h2 id="loggedRole">
+
+--
+
+</h2>
+
+</div>
+
+
+<div class="permission-card">
+
+<div class="permission-icon">
+
+<i class="fa-solid fa-eye"></i>
+
+</div>
+
+<label>
+
+View Permission
+
+</label>
+
+<h2 id="viewPermission">
+
+--
+
+</h2>
+
+</div>
+
+
+<div class="permission-card">
+
+<div class="permission-icon">
+
+<i class="fa-solid fa-pen-to-square"></i>
+
+</div>
+
+<label>
+
+Edit Permission
+
+</label>
+
+<h2 id="editPermission">
+
+--
+
+</h2>
+
+</div>
+
+
+<div class="permission-card">
+
+<div class="permission-icon">
+
+<i class="fa-solid fa-circle-check"></i>
+
+</div>
+
+<label>
+
+Approval Rights
+
+</label>
+
+<h2 id="approvalPermission">
+
+--
+
+</h2>
+
+</div>
+
+</div>
+
+
+<div class="permission-table">
+
+<h4>
+
+Current Module Permissions
+
+</h4>
+
+<table class="role-table">
+
+<thead>
+
+<tr>
+
+<th>Module</th>
+
+<th>View</th>
+
+<th>Edit</th>
+
+<th>Approve</th>
+
+<th>Delete</th>
+
+</tr>
+
+</thead>
+
+<tbody id="permissionTable">
+
+<tr>
+
+<td colspan="5"
+
+class="empty-table">
+
+Permissions will automatically load
+based on the logged-in user's role.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="workflow-note">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+<span>
+
+Permissions are centrally managed.
+Changes made by the System Administrator
+are automatically reflected throughout
+the Manpower Management System.
+
+</span>
+
+</div>
+
+</div>
+/*====================================================
+
+ROLE BASED ACCESS
+
+====================================================*/
+
+.permission-summary{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+margin-bottom:35px;
+
+}
+
+.permission-card{
+
+background:#F8FBFC;
+
+padding:24px;
+
+border-radius:18px;
+
+text-align:center;
+
+transition:.30s;
+
+}
+
+.permission-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.permission-icon{
+
+width:60px;
+
+height:60px;
+
+margin:auto;
+
+margin-bottom:18px;
+
+background:#EAF8FA;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.permission-icon i{
+
+font-size:24px;
+
+color:var(--primary);
+
+}
+
+.permission-card label{
+
+display:block;
+
+font-size:13px;
+
+font-weight:600;
+
+color:var(--text-light);
+
+margin-bottom:10px;
+
+}
+
+.permission-card h2{
+
+font-size:28px;
+
+color:var(--primary);
+
+}
+
+.permission-table{
+
+margin-top:35px;
+
+}
+
+.permission-table h4{
+
+margin-bottom:18px;
+
+color:var(--primary);
+
+}
+
+.role-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+background:white;
+
+border-radius:14px;
+
+overflow:hidden;
+
+}
+
+.role-table thead{
+
+background:var(--primary);
+
+color:white;
+
+}
+
+.role-table th{
+
+padding:16px;
+
+font-size:14px;
+
+font-weight:600;
+
+text-align:left;
+
+}
+
+.role-table td{
+
+padding:16px;
+
+border-bottom:1px solid #ECECEC;
+
+font-size:14px;
+
+}
+
+.workflow-note{
+
+margin-top:30px;
+
+padding:22px;
+
+background:#F8FBFC;
+
+border-left:5px solid var(--primary);
+
+border-radius:14px;
+
+display:flex;
+
+gap:15px;
+
+align-items:flex-start;
+
+}
+
+.workflow-note i{
+
+font-size:22px;
+
+color:var(--primary);
+
+margin-top:2px;
+
+}
+
+.workflow-note span{
+
+line-height:28px;
+
+color:var(--text-light);
+
+}
+<!--=====================================================
+
+AUTOMATIC PERFORMANCE CALCULATION ENGINE
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Automatic Performance Calculation Engine
+
+</h3>
+
+<p class="section-description">
+
+This intelligent engine continuously evaluates employee
+performance by analysing KPI achievement, assigned work,
+manager remarks, deployment history, compliance,
+training completion and attendance. Every score shown
+throughout the system is generated automatically from
+this calculation engine.
+
+</p>
+
+
+<div class="engine-grid">
+
+<div class="engine-card">
+
+<div class="engine-icon">
+
+<i class="fa-solid fa-chart-line"></i>
+
+</div>
+
+<label>
+
+Overall Efficiency Score
+
+</label>
+
+<h2 id="efficiencyScore">
+
+--
+
+</h2>
+
+<p>
+
+Automatically Calculated
+
+</p>
+
+</div>
+
+
+
+<div class="engine-card">
+
+<div class="engine-icon">
+
+<i class="fa-solid fa-bullseye"></i>
+
+</div>
+
+<label>
+
+KPI Performance
+
+</label>
+
+<h2 id="overallKPI">
+
+--
+
+</h2>
+
+<p>
+
+Live Calculation
+
+</p>
+
+</div>
+
+
+
+<div class="engine-card">
+
+<div class="engine-icon">
+
+<i class="fa-solid fa-people-carry-box"></i>
+
+</div>
+
+<label>
+
+Deployment Readiness
+
+</label>
+
+<h2 id="deploymentReadiness">
+
+--
+
+</h2>
+
+<p>
+
+System Generated
+
+</p>
+
+</div>
+
+
+
+<div class="engine-card">
+
+<div class="engine-icon">
+
+<i class="fa-solid fa-user-up"></i>
+
+</div>
+
+<label>
+
+Promotion Readiness
+
+</label>
+
+<h2 id="promotionReadiness">
+
+--
+
+</h2>
+
+<p>
+
+AI Recommendation Engine
+
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="performance-breakdown">
+
+<h4>
+
+Performance Breakdown
+
+</h4>
+
+<table class="performance-engine-table">
+
+<thead>
+
+<tr>
+
+<th>Evaluation Parameter</th>
+
+<th>Weightage</th>
+
+<th>Current Score</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="performanceBreakdown">
+
+<tr>
+
+<td>KPI Achievement</td>
+
+<td>30%</td>
+
+<td>Automatic</td>
+
+<td>--</td>
+
+</tr>
+
+<tr>
+
+<td>Task Completion</td>
+
+<td>20%</td>
+
+<td>Automatic</td>
+
+<td>--</td>
+
+</tr>
+
+<tr>
+
+<td>Manager Remarks</td>
+
+<td>15%</td>
+
+<td>Automatic</td>
+
+<td>--</td>
+
+</tr>
+
+<tr>
+
+<td>Attendance</td>
+
+<td>10%</td>
+
+<td>Automatic</td>
+
+<td>--</td>
+
+</tr>
+
+<tr>
+
+<td>Training Completion</td>
+
+<td>10%</td>
+
+<td>Automatic</td>
+
+<td>--</td>
+
+</tr>
+
+<tr>
+
+<td>Compliance</td>
+
+<td>10%</td>
+
+<td>Automatic</td>
+
+<td>--</td>
+
+</tr>
+
+<tr>
+
+<td>Deployment Performance</td>
+
+<td>5%</td>
+
+<td>Automatic</td>
+
+<td>--</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+/*====================================================
+
+AUTOMATIC PERFORMANCE ENGINE
+
+====================================================*/
+
+.engine-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+margin-bottom:35px;
+
+}
+
+.engine-card{
+
+background:#F8FBFC;
+
+padding:24px;
+
+border-radius:18px;
+
+text-align:center;
+
+transition:.30s;
+
+}
+
+.engine-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.engine-icon{
+
+width:60px;
+
+height:60px;
+
+margin:auto;
+
+margin-bottom:18px;
+
+background:#EAF8FA;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+.engine-icon i{
+
+font-size:25px;
+
+color:var(--primary);
+
+}
+
+.engine-card label{
+
+display:block;
+
+font-size:13px;
+
+font-weight:600;
+
+color:var(--text-light);
+
+margin-bottom:10px;
+
+}
+
+.engine-card h2{
+
+font-size:30px;
+
+color:var(--primary);
+
+margin-bottom:8px;
+
+}
+
+.engine-card p{
+
+font-size:13px;
+
+color:var(--text-light);
+
+}
+
+.performance-breakdown{
+
+margin-top:35px;
+
+}
+
+.performance-breakdown h4{
+
+margin-bottom:18px;
+
+color:var(--primary);
+
+}
+
+.performance-engine-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+background:white;
+
+border-radius:15px;
+
+overflow:hidden;
+
+}
+
+.performance-engine-table thead{
+
+background:var(--primary);
+
+color:white;
+
+}
+
+.performance-engine-table th{
+
+padding:16px;
+
+text-align:left;
+
+font-size:14px;
+
+}
+
+.performance-engine-table td{
+
+padding:16px;
+
+border-bottom:1px solid #ECECEC;
+
+font-size:14px;
+
+}
+<!--=====================================================
+
+EMPLOYEE MASTER DATA STRUCTURE
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+Employee Master Data Structure
+
+</h3>
+
+<p class="section-description">
+
+This section represents the employee master profile used
+throughout the Serentica Site Manpower Management System.
+Every module automatically references this information,
+ensuring consistency across deployment, KPI evaluation,
+organisation hierarchy, task management and reporting.
+
+</p>
+
+<div class="master-data-grid">
+
+<div class="master-card">
+
+<div class="master-icon">
+
+<i class="fa-solid fa-id-card"></i>
+
+</div>
+
+<label>
+
+Employee Code
+
+</label>
+
+<h4 id="masterEmployeeID">
+
+--
+
+</h4>
+
+</div>
+
+
+<div class="master-card">
+
+<div class="master-icon">
+
+<i class="fa-solid fa-user"></i>
+
+</div>
+
+<label>
+
+Employee Name
+
+</label>
+
+<h4 id="masterEmployeeName">
+
+--
+
+</h4>
+
+</div>
+
+
+<div class="master-card">
+
+<div class="master-icon">
+
+<i class="fa-solid fa-building"></i>
+
+</div>
+
+<label>
+
+Department
+
+</label>
+
+<h4 id="masterDepartment">
+
+--
+
+</h4>
+
+</div>
+
+
+<div class="master-card">
+
+<div class="master-icon">
+
+<i class="fa-solid fa-user-tie"></i>
+
+</div>
+
+<label>
+
+Role
+
+</label>
+
+<h4 id="masterRole">
+
+--
+
+</h4>
+
+</div>
+
+</div>
+
+
+<div class="master-data-table">
+
+<h4>
+
+Modules Automatically Connected
+
+</h4>
+
+<table class="master-table">
+
+<thead>
+
+<tr>
+
+<th>Module</th>
+
+<th>Reads Employee Data</th>
+
+<th>Automatic Sync</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>Employee Profile</td>
+
+<td>Yes</td>
+
+<td>✔</td>
+
+</tr>
+
+<tr>
+
+<td>Department Dashboard</td>
+
+<td>Yes</td>
+
+<td>✔</td>
+
+</tr>
+
+<tr>
+
+<td>Organisation Chart</td>
+
+<td>Yes</td>
+
+<td>✔</td>
+
+</tr>
+
+<tr>
+
+<td>KPI Engine</td>
+
+<td>Yes</td>
+
+<td>✔</td>
+
+</tr>
+
+<tr>
+
+<td>Deployment Module</td>
+
+<td>Yes</td>
+
+<td>✔</td>
+
+</tr>
+
+<tr>
+
+<td>Task Management</td>
+
+<td>Yes</td>
+
+<td>✔</td>
+
+</tr>
+
+<tr>
+
+<td>Training Centre</td>
+
+<td>Yes</td>
+
+<td>✔</td>
+
+</tr>
+
+<tr>
+
+<td>Compliance Centre</td>
+
+<td>Yes</td>
+
+<td>✔</td>
+
+</tr>
+
+<tr>
+
+<td>Welcome Dashboard</td>
+
+<td>Yes</td>
+
+<td>✔</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+/*====================================================
+
+EMPLOYEE MASTER DATA
+
+====================================================*/
+
+.master-data-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+margin-bottom:35px;
+
+}
+
+.master-card{
+
+background:#F8FBFC;
+
+padding:24px;
+
+border-radius:18px;
+
+text-align:center;
+
+transition:.30s;
+
+}
+
+.master-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.master-icon{
+
+width:60px;
+
+height:60px;
+
+margin:auto;
+
+margin-bottom:18px;
+
+background:#EAF8FA;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+.master-icon i{
+
+font-size:25px;
+
+color:var(--primary);
+
+}
+
+.master-card label{
+
+display:block;
+
+font-size:13px;
+
+font-weight:600;
+
+color:var(--text-light);
+
+margin-bottom:10px;
+
+}
+
+.master-card h4{
+
+font-size:22px;
+
+color:var(--primary);
+
+}
+
+.master-data-table{
+
+margin-top:35px;
+
+}
+
+.master-data-table h4{
+
+margin-bottom:18px;
+
+color:var(--primary);
+
+}
+
+.master-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+background:white;
+
+border-radius:15px;
+
+overflow:hidden;
+
+}
+
+.master-table thead{
+
+background:var(--primary);
+
+color:white;
+
+}
+
+.master-table th{
+
+padding:16px;
+
+text-align:left;
+
+font-size:14px;
+
+}
+
+.master-table td{
+
+padding:16px;
+
+border-bottom:1px solid #ECECEC;
+
+font-size:14px;
+
+}
+<!--=====================================================
+
+SYSTEM INTEGRATION CENTRE
+
+======================================================-->
+
+<div class="profile-summary-card">
+
+<h3>
+
+System Integration Centre
+
+</h3>
+
+<p class="section-description">
+
+This module displays the integration status of every
+major system within the Serentica Site Manpower
+Management System. All information shown throughout
+the application is synchronised automatically using
+these connected modules.
+
+</p>
+
+<div class="integration-grid">
+
+<div class="integration-card">
+
+<div class="integration-icon">
+
+<i class="fa-solid fa-user-group"></i>
+
+</div>
+
+<h4>
+
+Employee Profile
+
+</h4>
+
+<p>
+
+Primary Data Source
+
+</p>
+
+<span class="status-connected">
+
+Connected
+
+</span>
+
+</div>
+
+
+
+<div class="integration-card">
+
+<div class="integration-icon">
+
+<i class="fa-solid fa-sitemap"></i>
+
+</div>
+
+<h4>
+
+Organisation Chart
+
+</h4>
+
+<p>
+
+Reporting Structure
+
+</p>
+
+<span class="status-connected">
+
+Connected
+
+</span>
+
+</div>
+
+
+
+<div class="integration-card">
+
+<div class="integration-icon">
+
+<i class="fa-solid fa-list-check"></i>
+
+</div>
+
+<h4>
+
+Task Management
+
+</h4>
+
+<p>
+
+Performance Tracking
+
+</p>
+
+<span class="status-connected">
+
+Connected
+
+</span>
+
+</div>
+
+
+
+<div class="integration-card">
+
+<div class="integration-icon">
+
+<i class="fa-solid fa-chart-column"></i>
+
+</div>
+
+<h4>
+
+KPI Engine
+
+</h4>
+
+<p>
+
+Performance Evaluation
+
+</p>
+
+<span class="status-connected">
+
+Connected
+
+</span>
+
+</div>
+
+
+
+<div class="integration-card">
+
+<div class="integration-icon">
+
+<i class="fa-solid fa-truck-ramp-box"></i>
+
+</div>
+
+<h4>
+
+Deployment Module
+
+</h4>
+
+<p>
+
+Site Movement
+
+</p>
+
+<span class="status-connected">
+
+Connected
+
+</span>
+
+</div>
+
+
+
+<div class="integration-card">
+
+<div class="integration-icon">
+
+<i class="fa-solid fa-user-shield"></i>
+
+</div>
+
+<h4>
+
+Compliance Centre
+
+</h4>
+
+<p>
+
+Safety & Compliance
+
+</p>
+
+<span class="status-connected">
+
+Connected
+
+</span>
+
+</div>
+
+
+
+<div class="integration-card">
+
+<div class="integration-icon">
+
+<i class="fa-solid fa-graduation-cap"></i>
+
+</div>
+
+<h4>
+
+Training Centre
+
+</h4>
+
+<p>
+
+Skill Development
+
+</p>
+
+<span class="status-connected">
+
+Connected
+
+</span>
+
+</div>
+
+
+
+<div class="integration-card">
+
+<div class="integration-icon">
+
+<i class="fa-solid fa-gauge-high"></i>
+
+</div>
+
+<h4>
+
+Welcome Dashboard
+
+</h4>
+
+<p>
+
+Executive Dashboard
+
+</p>
+
+<span class="status-connected">
+
+Connected
+
+</span>
+
+</div>
+
+</div>
+
+
+
+<div class="integration-summary">
+
+<h4>
+
+Integration Workflow
+
+</h4>
+
+<div class="integration-box">
+
+Employee information entered into the system
+automatically updates all connected modules.
+
+Department changes, reporting hierarchy,
+deployment status, KPI performance,
+manager remarks, attendance,
+training progress and compliance records
+remain synchronised throughout the application
+without duplicate data entry.
+
+</div>
+
+</div>
+
+</div>
+/*====================================================
+
+SYSTEM INTEGRATION
+
+====================================================*/
+
+.integration-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+
+gap:22px;
+
+margin-top:30px;
+
+margin-bottom:35px;
+
+}
+
+.integration-card{
+
+background:#F8FBFC;
+
+padding:25px;
+
+border-radius:18px;
+
+text-align:center;
+
+transition:.30s;
+
+}
+
+.integration-card:hover{
+
+transform:translateY(-6px);
+
+}
+
+.integration-icon{
+
+width:65px;
+
+height:65px;
+
+margin:auto;
+
+margin-bottom:18px;
+
+background:#EAF8FA;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.integration-icon i{
+
+font-size:26px;
+
+color:var(--primary);
+
+}
+
+.integration-card h4{
+
+margin-bottom:10px;
+
+font-size:18px;
+
+}
+
+.integration-card p{
+
+font-size:13px;
+
+color:var(--text-light);
+
+margin-bottom:18px;
+
+}
+
+.status-connected{
+
+display:inline-block;
+
+padding:8px 18px;
+
+border-radius:25px;
+
+background:#E8F8EF;
+
+color:#27AE60;
+
+font-size:13px;
+
+font-weight:600;
+
+}
+
+.integration-summary{
+
+margin-top:35px;
+
+}
+
+.integration-summary h4{
+
+margin-bottom:18px;
+
+color:var(--primary);
+
+}
+
+.integration-box{
+
+background:#F8FBFC;
+
+padding:25px;
+
+border-left:5px solid var(--primary);
+
+border-radius:15px;
+
+line-height:30px;
+
+color:var(--text-light);
+
+}
+/*=====================================================
+
+SERENTICA EMPLOYEE MODULE ENGINE
+FINAL SYSTEM INITIALISATION
+
+======================================================*/
+
+/*------------------------------------
+Load Logged-in User
+------------------------------------*/
+
+const loggedUser = JSON.parse(localStorage.getItem("loggedUser")) || {};
+
+
+/*------------------------------------
+Utility Function
+------------------------------------*/
+
+function setValue(id,value){
+
+const element=document.getElementById(id);
+
+if(element){
+
+element.textContent=value || "--";
 
 }
 
 }
-<script>
+
+
+/*------------------------------------
+Load Employee Profile
+------------------------------------*/
+
+function loadEmployeeProfile(){
+
+setValue("masterEmployeeID",loggedUser.employeeId);
+
+setValue("masterEmployeeName",loggedUser.name);
+
+setValue("masterDepartment",loggedUser.department);
+
+setValue("masterRole",loggedUser.role);
+
+setValue("loggedRole",loggedUser.role);
+
+}
+
+
+/*------------------------------------
+Load Reporting Hierarchy
+------------------------------------*/
+
+function loadReportingHierarchy(){
+
+setValue("reportsTo",loggedUser.reportingManager);
+
+setValue("teamLead",loggedUser.teamLead);
+
+setValue("projectManager",loggedUser.projectManager);
+
+setValue("employeeDepartment",loggedUser.department);
+
+setValue("employeePosition",loggedUser.designation);
+
+}
+
+
+/*------------------------------------
+Attendance Module
+------------------------------------*/
+
+function loadAttendance(){
+
+setValue("attendanceStatus",loggedUser.attendanceStatus);
+
+setValue("currentShift",loggedUser.shift);
+
+setValue("siteAvailability",loggedUser.siteAvailability);
+
+setValue("leaveStatus",loggedUser.leaveStatus);
+
+}
+
+
+/*------------------------------------
+Performance Engine
+------------------------------------*/
+
+function loadPerformance(){
+
+setValue("overallPerformanceIndex",loggedUser.performanceIndex);
+
+setValue("kpiAchievement",loggedUser.kpiScore);
+
+setValue("productivityTrend",loggedUser.productivityTrend);
+
+setValue("promotionScore",loggedUser.promotionReadiness);
+
+setValue("efficiencyScore",loggedUser.efficiency);
+
+setValue("overallKPI",loggedUser.kpiScore);
+
+setValue("deploymentReadiness",loggedUser.deploymentStatus);
+
+setValue("promotionReadiness",loggedUser.promotionReadiness);
+
+}
+
+
+/*------------------------------------
+Achievements
+------------------------------------*/
+
+function loadAchievements(){
+
+setValue("recognitionLevel",loggedUser.recognition);
+
+setValue("achievementCount",loggedUser.achievements);
+
+setValue("performanceRank",loggedUser.departmentRank);
+
+setValue("careerStage",loggedUser.careerStage);
+
+}
+
+
+/*------------------------------------
+Notifications
+------------------------------------*/
+
+function loadNotifications(){
+
+setValue("unreadNotifications",loggedUser.unreadNotifications);
+
+setValue("criticalAlerts",loggedUser.criticalAlerts);
+
+setValue("resolvedAlerts",loggedUser.resolvedAlerts);
+
+setValue("upcomingActions",loggedUser.upcomingActions);
+
+}
+
+
+/*------------------------------------
+Permissions
+------------------------------------*/
+
+function loadPermissions(){
+
+switch(loggedUser.role){
+
+case "Admin":
+
+setValue("viewPermission","Full");
+
+setValue("editPermission","Full");
+
+setValue("approvalPermission","Full");
+
+break;
+
+case "Project Manager":
+
+setValue("viewPermission","Full");
+
+setValue("editPermission","Department");
+
+setValue("approvalPermission","Yes");
+
+break;
+
+case "Team Lead":
+
+setValue("viewPermission","Team");
+
+setValue("editPermission","Team");
+
+setValue("approvalPermission","Limited");
+
+break;
+
+default:
+
+setValue("viewPermission","Self");
+
+setValue("editPermission","Self");
+
+setValue("approvalPermission","No");
+
+}
+
+}
+
+
+/*------------------------------------
+Refresh Welcome Dashboard
+
+------------------------------------*/
+
+function refreshDashboard(){
+
+const dashboard=JSON.parse(localStorage.getItem("dashboardKPIs"));
+
+if(dashboard){
+
+localStorage.setItem(
+
+"dashboardKPIs",
+
+JSON.stringify(dashboard)
+
+);
+
+}
+
+}
+
+
+/*------------------------------------
+Auto Initialise
+
+------------------------------------*/
+
+window.addEventListener("load",()=>{
+
+loadEmployeeProfile();
+
+loadReportingHierarchy();
+
+loadAttendance();
+
+loadPerformance();
+
+loadAchievements();
+
+loadNotifications();
+
+loadPermissions();
+
+refreshDashboard();
+
+});
+
 
 /*=====================================================
 
-CARD / TABLE VIEW TOGGLE
+END OF EMPLOYEE MODULE
 
-=====================================================*/
-
-const cardViewBtn = document.getElementById("cardView");
-const tableViewBtn = document.getElementById("tableView");
-
-const directorySection = document.querySelector(".directory-section");
-const tableSection = document.getElementById("tableSection");
-
-cardViewBtn.addEventListener("click", function(){
-
-    cardViewBtn.classList.add("active");
-    tableViewBtn.classList.remove("active");
-
-    directorySection.style.display = "block";
-    tableSection.classList.remove("active");
-
+======================================================*/
 });
-
-tableViewBtn.addEventListener("click", function(){
-
-    tableViewBtn.classList.add("active");
-    cardViewBtn.classList.remove("active");
-
-    directorySection.style.display = "none";
-    tableSection.classList.add("active");
-
-});
-
-
-/*=====================================================
-
-PROFILE DRAWER
-
-=====================================================*/
-
-const profileOverlay = document.getElementById("profileOverlay");
-const closeProfile = document.getElementById("closeProfile");
-
-document.querySelectorAll(".view-profile").forEach(function(button){
-
-    button.addEventListener("click", function(){
-
-        profileOverlay.classList.add("active");
-
-    });
-
-});
-
-closeProfile.addEventListener("click", function(){
-
-    profileOverlay.classList.remove("active");
-
-});
-
-profileOverlay.addEventListener("click", function(event){
-
-    if(event.target === profileOverlay){
-
-        profileOverlay.classList.remove("active");
-
-    }
-
-});
-
-
-/*=====================================================
-
-SEARCH (PLACEHOLDER)
-
-=====================================================*/
-
-const searchInput = document.getElementById("searchEmployee");
-
-searchInput.addEventListener("keyup", function(){
-
-    console.log("Searching:", this.value);
-
-});
-
-
-/*=====================================================
-
-FILTERS (PLACEHOLDER)
-
-=====================================================*/
-
-document.getElementById("departmentFilter").addEventListener("change", function(){
-
-    console.log("Department:", this.value);
-
-});
-
-document.getElementById("statusFilter").addEventListener("change", function(){
-
-    console.log("Status:", this.value);
-
-});
-
-document.getElementById("designationFilter").addEventListener("change", function(){
-
-    console.log("Designation:", this.value);
-
-});
-
-
-/*=====================================================
-
-EXPORT BUTTON
-
-=====================================================*/
-
-document.getElementById("exportExcel").addEventListener("click", function(){
-
-    alert("Excel export functionality will be connected during backend integration.");
-
-});
-
-
-/*=====================================================
-
-SESSION DATA (PLACEHOLDER)
-
-=====================================================*/
-
-document.getElementById("userName").textContent = "User Name";
-document.getElementById("employeeId").textContent = "Employee ID : EMP00001";
-document.getElementById("userRole").textContent = "Project Manager";
-
-
-/*=====================================================
-
-SAMPLE KPI VALUES
-
-=====================================================*/
-
-document.getElementById("totalManpower").textContent = "248";
-document.getElementById("readyManpower").textContent = "36";
-document.getElementById("deployedManpower").textContent = "198";
-document.getElementById("leaveManpower").textContent = "14";
-
-
-/*=====================================================
-
-EMPLOYEE COUNT
-
-=====================================================*/
-
-document.getElementById("employeeCount").textContent = "248";
-
 </script>
 
 </body>
