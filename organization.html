@@ -1,7 +1,4 @@
 
-
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12826,1225 +12823,254 @@ console.log(
     "Organization.html Part 10 loaded successfully."
 );
 <!-- ============================================================
-     PART 11 — FINAL INTEGRATION & EXISTING JS CONNECTION
-
-     FINAL CONTINUATION OF PART 10
+     PART 11 — FINAL JAVASCRIPT CONNECTION & PAGE CLOSING
+     
+     THIS IS THE FINAL PART OF organization.html
 ============================================================ -->
 
 
-<style>
+<!-- ============================================================
+     EXISTING PROJECT JAVASCRIPT FILES
+     
+     These files are in the same GitHub folder as organization.html
+============================================================ -->
 
-/* ============================================================
-   FINAL INTEGRATION STATUS
-============================================================ */
+<script src="config.js"></script>
 
-.organization-integration-status{
+<script src="employeeData.js"></script>
 
-    display:flex;
+<script src="kpiEngine.js"></script>
 
-    align-items:center;
+<script src="efficiencyEngine.js"></script>
 
-    justify-content:space-between;
+<script src="authentication.js"></script>
 
-    gap:10px;
+<script src="deploymentManager.js"></script>
 
-    margin-top:14px;
+<script src="dashboardManager.js"></script>
 
-    padding:8px 10px;
+<script src="uiManager.js"></script>
 
-    border:
-        1px solid
-        #DCEBED;
 
-    border-radius:7px;
-
-    background:
-        #F8FCFC;
-
-}
-
-
-.organization-integration-status-left{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:6px;
-
-}
-
-
-.organization-integration-status-icon{
-
-    color:
-        var(--serentica-teal);
-
-    font-size:8px;
-
-}
-
-
-.organization-integration-status-text{
-
-    color:
-        var(--serentica-muted);
-
-    font-size:6px;
-
-}
-
-
-.organization-integration-status-value{
-
-    color:
-        #31865B;
-
-    font-size:6px;
-
-    font-weight:900;
-
-}
-
-
-/* ============================================================
-   FINAL PAGE FOOTER
-============================================================ */
-
-.organization-page-footer{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:10px;
-
-    margin-top:16px;
-
-    padding:
-        10px 2px;
-
-    color:
-        var(--serentica-muted);
-
-    font-size:5.8px;
-
-}
-
-
-.organization-page-footer-brand{
-
-    font-weight:800;
-
-}
-
-
-.organization-page-footer-system{
-
-    text-align:right;
-
-}
-
-
-/* ============================================================
-   ERROR NOTICE
-============================================================ */
-
-.organization-integration-warning{
-
-    display:none;
-
-    margin-top:10px;
-
-    padding:
-        8px 10px;
-
-    border:
-        1px solid
-        #E8D4D4;
-
-    border-radius:7px;
-
-    background:
-        #FFF9F9;
-
-    color:
-        #8C5050;
-
-    font-size:6px;
-
-    line-height:1.5;
-
-}
-
-
-.organization-integration-warning.is-visible{
-
-    display:block;
-
-}
-
-
-/* ============================================================
-   RESPONSIVE
-============================================================ */
-
-@media(
-    max-width:550px
-){
-
-    .organization-integration-status{
-
-        align-items:flex-start;
-
-        flex-direction:column;
-
-    }
-
-
-    .organization-page-footer{
-
-        align-items:flex-start;
-
-        flex-direction:column;
-
-    }
-
-
-    .organization-page-footer-system{
-
-        text-align:left;
-
-    }
-
-}
-
-</style>
-
+<!-- ============================================================
+     ORGANIZATION PAGE FINAL INITIALIZATION
+============================================================ -->
 
 <script>
 
-/* ============================================================
-   PART 11 — FINAL INTEGRATION CONTROLLER
-============================================================ */
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
+        console.log(
+            "Serentica Organization Module: Initializing..."
+        );
 
-/*
-   DO NOT duplicate the existing application modules here.
 
-   The organization page already contains its own UI layer.
-   This integration controller only connects the page to the
-   shared application state when those modules are available.
-*/
+        /* ========================================================
+           VERIFY ORGANIZATION DATA
+        ======================================================== */
 
+        if (
+            typeof organizationData !== "undefined"
+        ) {
 
-const organizationIntegration = {
-
-    initialized:
-        false,
-
-    modules:
-        {},
-
-    ready:
-        false
-
-};
-
-
-/* ============================================================
-   KNOWN EXISTING MODULES
-============================================================ */
-
-const organizationExistingModules = [
-
-    "employeeData",
-
-    "kpiEngine",
-
-    "efficiencyEngine",
-
-    "dashboardManager",
-
-    "deploymentManager",
-
-    "authentication",
-
-    "uiManager"
-
-];
-
-
-/* ============================================================
-   FIND EXISTING GLOBAL MODULE
-============================================================ */
-
-function findOrganizationExistingModule(
-    moduleName
-){
-
-    /*
-       Check common naming patterns.
-
-       This allows the page to work whether the existing
-       JS file exposes:
-
-       employeeData
-       EmployeeData
-       window.employeeData
-       window.EmployeeData
-
-       etc.
-    */
-
-
-    const possibleNames = [
-
-        moduleName,
-
-        moduleName.charAt(0).toUpperCase() +
-            moduleName.slice(1),
-
-        moduleName.replace(
-            /(^|_)(.)/g,
-            (
-                match,
-                separator,
-                character
-            ) =>
-                character.toUpperCase()
-        )
-
-    ];
-
-
-    for(
-        const name of possibleNames
-    ){
-
-        if(
-            typeof window[name] !==
-            "undefined"
-        ){
-
-            return window[name];
-
-        }
-
-    }
-
-
-    return null;
-
-}
-
-
-/* ============================================================
-   DETECT EXISTING MODULES
-============================================================ */
-
-function detectOrganizationExistingModules(){
-
-    organizationExistingModules.forEach(
-        moduleName => {
-
-            const module =
-                findOrganizationExistingModule(
-                    moduleName
-                );
-
-
-            if(module){
-
-                organizationIntegration.modules[
-                    moduleName
-                ] =
-                    module;
-
-            }
-
-        }
-    );
-
-
-    organizationIntegration.ready =
-        Object.keys(
-            organizationIntegration.modules
-        ).length > 0;
-
-}
-
-
-/* ============================================================
-   EMPLOYEE DATA INTEGRATION
-============================================================ */
-
-function integrateOrganizationEmployeeData(){
-
-    const employeeDataModule =
-        organizationIntegration.modules
-            .employeeData;
-
-
-    if(
-        !employeeDataModule
-    ){
-
-        return;
-
-    }
-
-
-    /*
-       Supported data patterns.
-
-       The existing employeeData.js can expose data
-       in different structures. We do not overwrite
-       organizationData unless a usable employee list
-       is available.
-    */
-
-    let employees = null;
-
-
-    if(
-        Array.isArray(
-            employeeDataModule
-        )
-    ){
-
-        employees =
-            employeeDataModule;
-
-    }
-
-
-    else if(
-        Array.isArray(
-            employeeDataModule.employees
-        )
-    ){
-
-        employees =
-            employeeDataModule.employees;
-
-    }
-
-
-    else if(
-        Array.isArray(
-            employeeDataModule.data
-        )
-    ){
-
-        employees =
-            employeeDataModule.data;
-
-    }
-
-
-    else if(
-        typeof employeeDataModule
-            .getEmployees ===
-        "function"
-    ){
-
-        employees =
-            employeeDataModule.getEmployees();
-
-    }
-
-
-    if(
-        !Array.isArray(
-            employees
-        )
-    ){
-
-        return;
-
-    }
-
-
-    /*
-       Keep the current organization structure intact
-       and synchronize employee records where matching
-       IDs exist.
-    */
-
-    employees.forEach(
-        employee => {
-
-            const employeeId =
-                employee.id ||
-                employee.employeeId;
-
-
-            if(!employeeId){
-
-                return;
-
-            }
-
-
-            organizationData.clusters.forEach(
-                cluster => {
-
-                    cluster.departments.forEach(
-                        department => {
-
-                            const departmentEmployees =
-                                getOrganizationDepartmentEmployees(
-                                    department
-                                );
-
-
-                            const existingEmployee =
-                                departmentEmployees.find(
-                                    item =>
-                                        String(
-                                            item.id ||
-                                            item.employeeId ||
-                                            ""
-                                        ) ===
-                                        String(
-                                            employeeId
-                                        )
-                                );
-
-
-                            if(
-                                existingEmployee
-                            ){
-
-                                Object.assign(
-                                    existingEmployee,
-                                    employee
-                                );
-
-                            }
-
-                        }
-                    );
-
-                }
+            console.log(
+                "✓ Organization data loaded."
             );
 
-        }
-    );
-
-}
-
-
-/* ============================================================
-   AUTHENTICATION INTEGRATION
-============================================================ */
-
-function integrateOrganizationAuthentication(){
-
-    const authenticationModule =
-        organizationIntegration.modules
-            .authentication;
-
-
-    if(
-        !authenticationModule
-    ){
-
-        return;
-
-    }
-
-
-    /*
-       We do not replace the authentication module.
-
-       We only use its available current-user information
-       when exposed by the existing implementation.
-    */
-
-    let currentUser = null;
-
-
-    if(
-        typeof authenticationModule
-            .getCurrentUser ===
-        "function"
-    ){
-
-        currentUser =
-            authenticationModule.getCurrentUser();
-
-    }
-
-
-    else if(
-        typeof authenticationModule
-            .getUser ===
-        "function"
-    ){
-
-        currentUser =
-            authenticationModule.getUser();
-
-    }
-
-
-    if(
-        currentUser
-    ){
-
-        if(
-            currentUser.role
-        ){
-
-            localStorage.setItem(
-                "serenticaUserRole",
-                currentUser.role
-            );
-
-        }
-
-
-        if(
-            currentUser.id ||
-            currentUser.employeeId
-        ){
-
-            localStorage.setItem(
-                "serenticaCurrentUserId",
-
-                currentUser.id ||
-                currentUser.employeeId
-            );
-
-        }
-
-    }
-
-}
-
-
-/* ============================================================
-   DASHBOARD INTEGRATION
-============================================================ */
-
-function integrateOrganizationDashboard(){
-
-    const dashboardModule =
-        organizationIntegration.modules
-            .dashboardManager;
-
-
-    if(
-        !dashboardModule
-    ){
-
-        return;
-
-    }
-
-
-    /*
-       We only notify the dashboard module if it exposes
-       a safe refresh/update method.
-    */
-
-    const refreshMethods = [
-
-        "refresh",
-
-        "update",
-
-        "refreshDashboard",
-
-        "updateDashboard"
-
-    ];
-
-
-    for(
-        const method of refreshMethods
-    ){
-
-        if(
-            typeof dashboardModule[
-                method
-            ] ===
-            "function"
-        ){
-
-            try{
-
-                dashboardModule[
-                    method
-                ]();
-
-            }
-            catch(error){
-
-                console.warn(
-                    "Dashboard refresh skipped:",
-                    error
-                );
-
-            }
-
-
-            break;
-
-        }
-
-    }
-
-}
-
-
-/* ============================================================
-   DEPLOYMENT INTEGRATION
-============================================================ */
-
-function integrateOrganizationDeployment(){
-
-    const deploymentModule =
-        organizationIntegration.modules
-            .deploymentManager;
-
-
-    if(
-        !deploymentModule
-    ){
-
-        return;
-
-    }
-
-
-    /*
-       Deployment functionality remains controlled by
-       deploymentManager.js.
-
-       organization.html only reads employee status.
-    */
-
-    if(
-        typeof deploymentModule
-            .getDeployments ===
-        "function"
-    ){
-
-        try{
-
-            const deployments =
-                deploymentModule.getDeployments();
-
-
-            if(
-                Array.isArray(
-                    deployments
-                )
-            ){
-
-                deployments.forEach(
-                    deployment => {
-
-                        const employee =
-                            findOrganizationEmployee(
-                                deployment.employeeId
-                            );
-
-
-                        if(
-                            employee
-                        ){
-
-                            employee.status =
-                                "deployed";
-
-                        }
-
-                    }
-                );
-
-            }
-
-        }
-        catch(error){
+        } else {
 
             console.warn(
-                "Deployment synchronization skipped:",
-                error
+                "⚠ organizationData was not detected."
             );
 
         }
 
-    }
 
-}
+        /* ========================================================
+           REFRESH ORGANIZATION STATUS SUMMARY
+        ======================================================== */
 
-
-/* ============================================================
-   UI MANAGER INTEGRATION
-============================================================ */
-
-function integrateOrganizationUIManager(){
-
-    const uiModule =
-        organizationIntegration.modules
-            .uiManager;
-
-
-    if(
-        !uiModule
-    ){
-
-        return;
-
-    }
-
-
-    /*
-       Do not duplicate UI initialization.
-
-       If uiManager provides a page-ready hook,
-       notify it that organization.html is active.
-    */
-
-    const methods = [
-
-        "pageReady",
-
-        "initializePage",
-
-        "setCurrentPage"
-
-    ];
-
-
-    for(
-        const method of methods
-    ){
-
-        if(
-            typeof uiModule[
-                method
-            ] ===
+        if (
+            typeof renderOrganizationStatusSummary ===
             "function"
-        ){
+        ) {
 
-            try{
+            try {
 
-                if(
-                    method ===
-                    "setCurrentPage"
-                ){
+                renderOrganizationStatusSummary();
 
-                    uiModule[
-                        method
-                    ](
-                        "organization"
-                    );
-
-                }
-                else{
-
-                    uiModule[
-                        method
-                    ](
-                        "organization"
-                    );
-
-                }
-
-            }
-            catch(error){
+            } catch (error) {
 
                 console.warn(
-                    "UI manager integration skipped:",
+                    "Status summary refresh skipped:",
                     error
                 );
 
             }
 
+        }
 
-            break;
+
+        /* ========================================================
+           REFRESH DEPARTMENT STATUS
+        ======================================================== */
+
+        if (
+            typeof renderOrganizationDepartmentStatus ===
+            "function"
+        ) {
+
+            try {
+
+                renderOrganizationDepartmentStatus();
+
+            } catch (error) {
+
+                console.warn(
+                    "Department status refresh skipped:",
+                    error
+                );
+
+            }
 
         }
 
-    }
 
-}
+        /* ========================================================
+           REFRESH EMPLOYEE STATUS
+        ======================================================== */
 
+        if (
+            typeof renderOrganizationEmployeeStatusBadges ===
+            "function"
+        ) {
 
-/* ============================================================
-   REBUILD DYNAMIC STATUS
-============================================================ */
+            try {
 
-function refreshOrganizationDynamicLayers(){
+                renderOrganizationEmployeeStatusBadges();
 
-    /*
-       Refresh status counters after external data
-       synchronization.
-    */
+            } catch (error) {
 
-    const statusSummary =
-        document.getElementById(
-            "organizationStatusSummary"
-        );
+                console.warn(
+                    "Employee status refresh skipped:",
+                    error
+                );
 
+            }
 
-    if(
-        statusSummary
-    ){
-
-        statusSummary.outerHTML =
-            createOrganizationStatusSummaryHTML();
-
-    }
-
-
-    renderOrganizationDepartmentStatus();
-
-    renderOrganizationEmployeeStatusBadges();
-
-    applyOrganizationFilters();
-
-    applyOrganizationRolePermissions();
-
-}
-
-
-/* ============================================================
-   FINAL INTEGRATION STATUS UI
-============================================================ */
-
-function renderOrganizationIntegrationStatus(){
-
-    const container =
-        document.getElementById(
-            "organizationContent"
-        );
-
-
-    if(!container){
-
-        return;
-
-    }
-
-
-    if(
-        document.getElementById(
-            "organizationIntegrationStatus"
-        )
-    ){
-
-        return;
-
-    }
-
-
-    const statusHTML = `
-
-        <div
-            class="organization-integration-status"
-            id="organizationIntegrationStatus"
-        >
-
-            <div
-                class="organization-integration-status-left"
-            >
-
-                <i
-                    class="
-                        fa-solid
-                        fa-circle-check
-                        organization-integration-status-icon
-                    "
-                ></i>
-
-
-                <span
-                    class="organization-integration-status-text"
-                >
-
-                    Organization module ready
-
-                </span>
-
-            </div>
-
-
-            <span
-                class="organization-integration-status-value"
-            >
-
-                ${organizationIntegration.ready
-                    ? "CONNECTED"
-                    : "LOCAL MODE"
-                }
-
-            </span>
-
-        </div>
-
-
-        <div
-            class="
-                organization-integration-warning
-                ${organizationIntegration.ready
-                    ? ""
-                    : "is-visible"
-                }
-            "
-            id="organizationIntegrationWarning"
-        >
-
-            <i
-                class="fa-solid fa-circle-info"
-            ></i>
-
-            Shared application modules have not been
-            detected on this page yet. The organization
-            view is running in local mode. Existing
-            modules can be connected through the site's
-            central script loader.
-
-        </div>
-
-    `;
-
-
-    const footer =
-        document.getElementById(
-            "organizationPageFooter"
-        );
-
-
-    if(footer){
-
-        footer.insertAdjacentHTML(
-            "beforebegin",
-            statusHTML
-        );
-
-    }
-    else{
-
-        container.insertAdjacentHTML(
-            "beforeend",
-            statusHTML
-        );
-
-    }
-
-}
-
-
-/* ============================================================
-   FINAL PAGE FOOTER
-============================================================ */
-
-function renderOrganizationPageFooter(){
-
-    const container =
-        document.getElementById(
-            "organizationContent"
-        );
-
-
-    if(!container){
-
-        return;
-
-    }
-
-
-    if(
-        document.getElementById(
-            "organizationPageFooter"
-        )
-    ){
-
-        return;
-
-    }
-
-
-    container.insertAdjacentHTML(
-        "beforeend",
-
-        `
-
-            <footer
-                class="organization-page-footer"
-                id="organizationPageFooter"
-            >
-
-                <div
-                    class="organization-page-footer-brand"
-                >
-
-                    Serentica Site Manpower Management System
-
-                </div>
-
-
-                <div
-                    class="organization-page-footer-system"
-                >
-
-                    Organization Module
-                    &nbsp;•&nbsp;
-                    Koppal Site
-
-                </div>
-
-            </footer>
-
-        `
-
-    );
-
-}
-
-
-/* ============================================================
-   PREVENT DUPLICATE INITIALIZATION
-============================================================ */
-
-function organizationFinalInitialization(){
-
-    if(
-        organizationIntegration.initialized
-    ){
-
-        return;
-
-    }
-
-
-    organizationIntegration.initialized =
-        true;
-
-
-    /*
-       1. Detect shared JS modules
-    */
-
-    detectOrganizationExistingModules();
-
-
-    /*
-       2. Synchronize employee data
-    */
-
-    integrateOrganizationEmployeeData();
-
-
-    /*
-       3. Synchronize authentication
-    */
-
-    integrateOrganizationAuthentication();
-
-
-    /*
-       4. Synchronize deployment status
-    */
-
-    integrateOrganizationDeployment();
-
-
-    /*
-       5. Notify dashboard module
-    */
-
-    integrateOrganizationDashboard();
-
-
-    /*
-       6. Notify UI manager
-    */
-
-    integrateOrganizationUIManager();
-
-
-    /*
-       7. Refresh dynamic organization layers
-    */
-
-    refreshOrganizationDynamicLayers();
-
-
-    /*
-       8. Add final integration indicator
-    */
-
-    renderOrganizationIntegrationStatus();
-
-
-    /*
-       9. Add final footer
-    */
-
-    renderOrganizationPageFooter();
-
-
-    console.log(
-        "=========================================="
-    );
-
-    console.log(
-        "Serentica Organization Module"
-    );
-
-    console.log(
-        "Final integration completed."
-    );
-
-    console.log(
-        "Detected modules:",
-        Object.keys(
-            organizationIntegration.modules
-        )
-    );
-
-    console.log(
-        "=========================================="
-    );
-
-}
-
-
-/* ============================================================
-   SAFE PAGE INITIALIZATION
-============================================================ */
-
-if(
-    document.readyState ===
-    "loading"
-){
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        organizationFinalInitialization,
-        {
-            once:true
         }
-    );
 
-}
-else{
 
-    organizationFinalInitialization();
+        /* ========================================================
+           APPLY ROLE PERMISSIONS
+        ======================================================== */
 
-}
+        if (
+            typeof applyOrganizationRolePermissions ===
+            "function"
+        ) {
+
+            try {
+
+                applyOrganizationRolePermissions();
+
+            } catch (error) {
+
+                console.warn(
+                    "Role permission refresh skipped:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* ========================================================
+           INITIALIZE ACTION EVENTS
+        ======================================================== */
+
+        if (
+            typeof initializeOrganizationActionEvents ===
+            "function"
+        ) {
+
+            try {
+
+                initializeOrganizationActionEvents();
+
+            } catch (error) {
+
+                console.warn(
+                    "Organization action initialization skipped:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* ========================================================
+           FINAL READY MESSAGE
+        ======================================================== */
+
+        console.log(
+            "✓ Serentica Organization Module ready."
+        );
+
+        console.log(
+            "✓ Existing JS modules connected."
+        );
+
+    },
+    {
+        once: true
+    }
+);
 
 </script>
+
+
+<!-- ============================================================
+     ORGANIZATION PAGE FOOTER
+============================================================ -->
+
+<footer
+    id="organizationPageFooter"
+    class="organization-page-footer"
+>
+
+    <div
+        class="organization-page-footer-brand"
+    >
+
+        Serentica Site Manpower Management System
+
+    </div>
+
+
+    <div
+        class="organization-page-footer-system"
+    >
+
+        Organization Module
+        &nbsp;•&nbsp;
+        Koppal Site
+
+    </div>
+
+</footer>
+
+
+<!-- ============================================================
+     FINAL HTML CLOSING
+============================================================ -->
+
 </body>
+
 </html>
 
 
