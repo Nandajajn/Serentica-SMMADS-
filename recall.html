@@ -1,0 +1,11488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- ========================================================
+         META INFORMATION
+    ========================================================= -->
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Serentica Site Manpower Management System - Recall Manpower"
+    >
+
+    <meta
+        name="author"
+        content="Serentica Renewables"
+    >
+
+    <title>
+        Recall Manpower | Serentica Site Manpower Management System
+    </title>
+
+
+    <!-- ========================================================
+         FONT AWESOME
+    ========================================================= -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- ========================================================
+         BASE SERENTICA STYLING
+    ========================================================= -->
+
+    <style>
+
+        /* ====================================================
+           ROOT VARIABLES
+        ==================================================== */
+
+        :root{
+
+            --serentica-teal:
+                #33A7B5;
+
+            --serentica-dark:
+                #173E43;
+
+            --serentica-dark-2:
+                #24545A;
+
+            --serentica-muted:
+                #708487;
+
+            --serentica-light:
+                #F3FAFA;
+
+            --serentica-border:
+                #DCEBED;
+
+            --white:
+                #FFFFFF;
+
+            --success:
+                #31865B;
+
+            --warning:
+                #B47A25;
+
+            --danger:
+                #B65353;
+
+            --shadow-sm:
+                0 2px 8px
+                rgba(
+                    29,
+                    85,
+                    93,
+                    .06
+                );
+
+            --shadow-md:
+                0 6px 20px
+                rgba(
+                    29,
+                    85,
+                    93,
+                    .08
+                );
+
+        }
+
+
+        /* ====================================================
+           GLOBAL RESET
+        ==================================================== */
+
+        *{
+
+            box-sizing:
+                border-box;
+
+            margin:
+                0;
+
+            padding:
+                0;
+
+        }
+
+
+        html{
+
+            scroll-behavior:
+                smooth;
+
+        }
+
+
+        body{
+
+            min-height:
+                100vh;
+
+            background:
+                #F6F9F9;
+
+            color:
+                var(--serentica-dark);
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                Helvetica,
+                sans-serif;
+
+        }
+
+
+        button,
+        input,
+        select{
+
+            font-family:
+                inherit;
+
+        }
+
+
+        button{
+
+            border:
+                none;
+
+            outline:
+                none;
+
+        }
+
+
+        /* ====================================================
+           APPLICATION WRAPPER
+        ==================================================== */
+
+        .recall-app{
+
+            min-height:
+                100vh;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+        }
+
+
+        /* ====================================================
+           TOP HEADER
+        ==================================================== */
+
+        .recall-header{
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            z-index:
+                1000;
+
+            height:
+                62px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                0 22px;
+
+            background:
+                var(--white);
+
+            border-bottom:
+                1px solid
+                var(--serentica-border);
+
+            box-shadow:
+                var(--shadow-sm);
+
+        }
+
+
+        /* ====================================================
+           HEADER BRAND
+        ==================================================== */
+
+        .recall-brand{
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+        }
+
+
+        .recall-brand-logo{
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                7px;
+
+            background:
+                var(--serentica-teal);
+
+            color:
+                var(--white);
+
+            font-size:
+                15px;
+
+            font-weight:
+                900;
+
+        }
+
+
+        .recall-brand-text{
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                2px;
+
+        }
+
+
+        .recall-brand-title{
+
+            color:
+                var(--serentica-dark);
+
+            font-size:
+                11px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                .1px;
+
+        }
+
+
+        .recall-brand-subtitle{
+
+            color:
+                var(--serentica-muted);
+
+            font-size:
+                6px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        /* ====================================================
+           HEADER RIGHT
+        ==================================================== */
+
+        .recall-header-right{
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+        }
+
+
+        .recall-site-badge{
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                5px;
+
+            padding:
+                6px 9px;
+
+            border:
+                1px solid
+                var(--serentica-border);
+
+            border-radius:
+                6px;
+
+            background:
+                #F8FCFC;
+
+            color:
+                var(--serentica-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .recall-site-badge i{
+
+            color:
+                var(--serentica-teal);
+
+        }
+
+
+        .recall-user-badge{
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                6px;
+
+            padding:
+                5px 8px;
+
+            border-radius:
+                6px;
+
+            background:
+                var(--serentica-light);
+
+            color:
+                var(--serentica-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .recall-user-icon{
+
+            width:
+                22px;
+
+            height:
+                22px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--serentica-teal);
+
+            color:
+                var(--white);
+
+            font-size:
+                7px;
+
+        }
+
+
+        /* ====================================================
+           MAIN CONTENT
+        ==================================================== */
+
+        .recall-main{
+
+            width:
+                min(
+                    1180px,
+                    calc(
+                        100% - 32px
+                    )
+                );
+
+            margin:
+                0 auto;
+
+            padding:
+                22px 0 35px;
+
+        }
+
+
+        /* ====================================================
+           PAGE INTRO
+        ==================================================== */
+
+        .recall-page-intro{
+
+            display:
+                flex;
+
+            align-items:
+                flex-end;
+
+            justify-content:
+                space-between;
+
+            gap:
+                18px;
+
+            margin-bottom:
+                18px;
+
+        }
+
+
+        .recall-page-title{
+
+            color:
+                var(--serentica-dark);
+
+            font-size:
+                22px;
+
+            font-weight:
+                900;
+
+            line-height:
+                1.15;
+
+        }
+
+
+        .recall-page-description{
+
+            max-width:
+                650px;
+
+            margin-top:
+                6px;
+
+            color:
+                var(--serentica-muted);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .recall-page-action{
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                7px;
+
+            padding:
+                8px 12px;
+
+            border:
+                1px solid
+                var(--serentica-border);
+
+            border-radius:
+                7px;
+
+            background:
+                var(--white);
+
+            color:
+                var(--serentica-dark);
+
+            font-size:
+                7px;
+
+            font-weight:
+                800;
+
+            cursor:
+                pointer;
+
+            transition:
+                .18s ease;
+
+        }
+
+
+        .recall-page-action:hover{
+
+            border-color:
+                var(--serentica-teal);
+
+            color:
+                var(--serentica-teal);
+
+        }
+
+
+        /* ====================================================
+           SUMMARY CARDS
+        ==================================================== */
+
+        .recall-summary-grid{
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(
+                    4,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap:
+                10px;
+
+            margin-bottom:
+                16px;
+
+        }
+
+
+        .recall-summary-card{
+
+            position:
+                relative;
+
+            padding:
+                13px;
+
+            min-height:
+                86px;
+
+            background:
+                var(--white);
+
+            border:
+                1px solid
+                var(--serentica-border);
+
+            border-radius:
+                9px;
+
+            box-shadow:
+                var(--shadow-sm);
+
+        }
+
+
+        .recall-summary-card::before{
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            left:
+                0;
+
+            top:
+                12px;
+
+            bottom:
+                12px;
+
+            width:
+                3px;
+
+            border-radius:
+                0 3px 3px 0;
+
+            background:
+                var(--serentica-teal);
+
+        }
+
+
+        .recall-summary-icon{
+
+            width:
+                26px;
+
+            height:
+                26px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            margin-bottom:
+                8px;
+
+            border-radius:
+                6px;
+
+            background:
+                var(--serentica-light);
+
+            color:
+                var(--serentica-teal);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .recall-summary-label{
+
+            color:
+                var(--serentica-muted);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .recall-summary-value{
+
+            margin-top:
+                2px;
+
+            color:
+                var(--serentica-dark);
+
+            font-size:
+                18px;
+
+            font-weight:
+                900;
+
+            line-height:
+                1;
+
+        }
+
+
+        .recall-summary-secondary{
+
+            margin-top:
+                4px;
+
+            color:
+                var(--serentica-muted);
+
+            font-size:
+                5.5px;
+
+        }
+
+
+        /* ====================================================
+           MAIN RECALL PANEL
+        ==================================================== */
+
+        .recall-panel{
+
+            background:
+                var(--white);
+
+            border:
+                1px solid
+                var(--serentica-border);
+
+            border-radius:
+                10px;
+
+            box-shadow:
+                var(--shadow-sm);
+
+        }
+
+
+        .recall-panel-header{
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+            padding:
+                13px 14px;
+
+            border-bottom:
+                1px solid
+                var(--serentica-border);
+
+        }
+
+
+        .recall-panel-title{
+
+            color:
+                var(--serentica-dark);
+
+            font-size:
+                10px;
+
+            font-weight:
+                900;
+
+        }
+
+
+        .recall-panel-subtitle{
+
+            margin-top:
+                3px;
+
+            color:
+                var(--serentica-muted);
+
+            font-size:
+                6px;
+
+        }
+
+
+        .recall-status-indicator{
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                5px;
+
+            padding:
+                5px 8px;
+
+            border-radius:
+                5px;
+
+            background:
+                #FFF8ED;
+
+            color:
+                var(--warning);
+
+            font-size:
+                6px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .recall-status-indicator i{
+
+            font-size:
+                6px;
+
+        }
+
+
+        /* ====================================================
+           RESPONSIVE
+        ==================================================== */
+
+        @media(
+            max-width:900px
+        ){
+
+            .recall-summary-grid{
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(
+                            0,
+                            1fr
+                        )
+                    );
+
+            }
+
+
+            .recall-page-intro{
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+            }
+
+        }
+
+
+        @media(
+            max-width:550px
+        ){
+
+            .recall-header{
+
+                padding:
+                    0 12px;
+
+            }
+
+
+            .recall-brand-subtitle{
+
+                display:
+                    none;
+
+            }
+
+
+            .recall-site-badge{
+
+                display:
+                    none;
+
+            }
+
+
+            .recall-main{
+
+                width:
+                    calc(
+                        100% - 20px
+                    );
+
+            }
+
+
+            .recall-summary-grid{
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .recall-page-title{
+
+                font-size:
+                    19px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div
+    class="recall-app"
+    id="recallApp"
+>
+
+
+    <!-- ========================================================
+         HEADER
+    ========================================================= -->
+
+    <header
+        class="recall-header"
+    >
+
+        <div
+            class="recall-brand"
+        >
+
+            <div
+                class="recall-brand-logo"
+            >
+
+                <i
+                    class="fa-solid fa-s"
+                ></i>
+
+            </div>
+
+
+            <div
+                class="recall-brand-text"
+            >
+
+                <div
+                    class="recall-brand-title"
+                >
+
+                    Serentica Site Manpower Management System
+
+                </div>
+
+
+                <div
+                    class="recall-brand-subtitle"
+                >
+
+                    Site Workforce Deployment & Control
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="recall-header-right"
+        >
+
+            <div
+                class="recall-site-badge"
+            >
+
+                <i
+                    class="fa-solid fa-location-dot"
+                ></i>
+
+                Koppal Site
+
+            </div>
+
+
+            <div
+                class="recall-user-badge"
+                id="recallUserBadge"
+            >
+
+                <div
+                    class="recall-user-icon"
+                >
+
+                    <i
+                        class="fa-solid fa-user"
+                    ></i>
+
+                </div>
+
+
+                <span
+                    id="recallUserRole"
+                >
+
+                    User
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ========================================================
+         MAIN CONTENT
+    ========================================================= -->
+
+    <main
+        class="recall-main"
+        id="recallMain"
+    >
+
+
+        <!-- ====================================================
+             PAGE INTRODUCTION
+        ==================================================== -->
+
+        <section
+            class="recall-page-intro"
+        >
+
+            <div>
+
+                <h1
+                    class="recall-page-title"
+                >
+
+                    Recall Manpower
+
+                </h1>
+
+
+                <p
+                    class="recall-page-description"
+                >
+
+                    Review currently deployed manpower and
+                    initiate the controlled recall of employees
+                    from their assigned site activities.
+
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="recall-page-action"
+                id="recallBackButton"
+            >
+
+                <i
+                    class="fa-solid fa-arrow-left"
+                ></i>
+
+                Back to Organization
+
+            </button>
+
+        </section>
+
+
+        <!-- ====================================================
+             SUMMARY CARDS
+        ==================================================== -->
+
+        <section
+            class="recall-summary-grid"
+            id="recallSummaryGrid"
+        >
+
+
+            <!-- TOTAL DEPLOYED -->
+
+            <article
+                class="recall-summary-card"
+            >
+
+                <div
+                    class="recall-summary-icon"
+                >
+
+                    <i
+                        class="fa-solid fa-users"
+                    ></i>
+
+                </div>
+
+
+                <div
+                    class="recall-summary-label"
+                >
+
+                    Total Deployed
+
+                </div>
+
+
+                <div
+                    class="recall-summary-value"
+                    id="recallTotalDeployed"
+                >
+
+                    0
+
+                </div>
+
+
+                <div
+                    class="recall-summary-secondary"
+                >
+
+                    Currently deployed employees
+
+                </div>
+
+            </article>
+
+
+            <!-- RECALL ELIGIBLE -->
+
+            <article
+                class="recall-summary-card"
+            >
+
+                <div
+                    class="recall-summary-icon"
+                >
+
+                    <i
+                        class="fa-solid fa-user-check"
+                    ></i>
+
+                </div>
+
+
+                <div
+                    class="recall-summary-label"
+                >
+
+                    Recall Eligible
+
+                </div>
+
+
+                <div
+                    class="recall-summary-value"
+                    id="recallEligible"
+                >
+
+                    0
+
+                </div>
+
+
+                <div
+                    class="recall-summary-secondary"
+                >
+
+                    Employees available for recall
+
+                </div>
+
+            </article>
+
+
+            <!-- PENDING -->
+
+            <article
+                class="recall-summary-card"
+            >
+
+                <div
+                    class="recall-summary-icon"
+                >
+
+                    <i
+                        class="fa-solid fa-clock"
+                    ></i>
+
+                </div>
+
+
+                <div
+                    class="recall-summary-label"
+                >
+
+                    Recall Pending
+
+                </div>
+
+
+                <div
+                    class="recall-summary-value"
+                    id="recallPending"
+                >
+
+                    0
+
+                </div>
+
+
+                <div
+                    class="recall-summary-secondary"
+                >
+
+                    Requests awaiting confirmation
+
+                </div>
+
+            </article>
+
+
+            <!-- RETURNED -->
+
+            <article
+                class="recall-summary-card"
+            >
+
+                <div
+                    class="recall-summary-icon"
+                >
+
+                    <i
+                        class="fa-solid fa-user-clock"
+                    ></i>
+
+                </div>
+
+
+                <div
+                    class="recall-summary-label"
+                >
+
+                    Returned
+
+                </div>
+
+
+                <div
+                    class="recall-summary-value"
+                    id="recallReturned"
+                >
+
+                    0
+
+                </div>
+
+
+                <div
+                    class="recall-summary-secondary"
+                >
+
+                    Employees returned to available pool
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- ====================================================
+             RECALL PANEL
+        ==================================================== -->
+
+        <section
+            class="recall-panel"
+            id="recallPanel"
+        >
+
+            <div
+                class="recall-panel-header"
+            >
+
+                <div>
+
+                    <div
+                        class="recall-panel-title"
+                    >
+
+                        Deployed Manpower
+
+                    </div>
+
+
+                    <div
+                        class="recall-panel-subtitle"
+                    >
+
+                        Select deployed employees to initiate
+                        the recall workflow.
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="recall-status-indicator"
+                >
+
+                    <i
+                        class="fa-solid fa-circle"
+                    ></i>
+
+                    Recall Management
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 PART 1 CONTENT AREA
+            =================================================== -->
+
+            <div
+                id="recallContent"
+            >
+
+                <!--
+                    Part 2 will continue here.
+
+                    The deployed employee list, filters,
+                    recall selection and confirmation workflow
+                    will be added in the next part.
+                -->
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- ============================================================
+     PART 1 JAVASCRIPT FOUNDATION
+============================================================ -->
+
+<script>
+
+const recallState = {
+
+    selectedEmployees: [],
+
+    searchTerm: "",
+
+    selectedCluster: "ALL",
+
+    selectedDepartment: "ALL",
+
+    statusFilter: "DEPLOYED",
+
+    currentUserRole: "VIEWER",
+
+    initialized: false
+
+};
+
+
+/* ============================================================
+   NORMALIZE ROLE
+============================================================ */
+
+function normalizeRecallRole(
+    role
+){
+
+    const normalized =
+        String(
+            role ||
+            ""
+        )
+        .trim()
+        .toUpperCase()
+        .replace(
+            /[\s-]+/g,
+            "_"
+        );
+
+
+    if(
+        normalized.includes(
+            "ADMIN"
+        )
+    ){
+
+        return "ADMIN";
+
+    }
+
+
+    if(
+        normalized === "PM" ||
+        normalized.includes(
+            "PROJECT_MANAGER"
+        )
+    ){
+
+        return "PROJECT_MANAGER";
+
+    }
+
+
+    if(
+        normalized.includes(
+            "LEAD"
+        )
+    ){
+
+        return "LEAD";
+
+    }
+
+
+    return "VIEWER";
+
+}
+
+
+/* ============================================================
+   GET CURRENT ROLE
+============================================================ */
+
+function getRecallCurrentRole(){
+
+    const roleKeys = [
+
+        "serenticaUserRole",
+
+        "userRole",
+
+        "role",
+
+        "loggedInRole",
+
+        "currentRole"
+
+    ];
+
+
+    for(
+        const key of roleKeys
+    ){
+
+        const value =
+            localStorage.getItem(
+                key
+            );
+
+
+        if(
+            value
+        ){
+
+            return normalizeRecallRole(
+                value
+            );
+
+        }
+
+    }
+
+
+    return "VIEWER";
+
+}
+
+
+/* ============================================================
+   UPDATE USER ROLE DISPLAY
+============================================================ */
+
+function updateRecallUserRole(){
+
+    const role =
+        getRecallCurrentRole();
+
+
+    recallState.currentUserRole =
+        role;
+
+
+    const roleElement =
+        document.getElementById(
+            "recallUserRole"
+        );
+
+
+    if(!roleElement){
+
+        return;
+
+    }
+
+
+    const displayNames = {
+
+        ADMIN:
+            "Administrator",
+
+        PROJECT_MANAGER:
+            "Project Manager",
+
+        LEAD:
+            "Department Lead",
+
+        VIEWER:
+            "Viewer"
+
+    };
+
+
+    roleElement.textContent =
+        displayNames[
+            role
+        ] ||
+        "Viewer";
+
+}
+
+
+/* ============================================================
+   BACK TO ORGANIZATION
+============================================================ */
+
+function initializeRecallBackButton(){
+
+    const button =
+        document.getElementById(
+            "recallBackButton"
+        );
+
+
+    if(!button){
+
+        return;
+
+    }
+
+
+    button.addEventListener(
+        "click",
+        function(){
+
+            window.location.href =
+                "organization.html";
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   PART 1 INITIALIZATION
+============================================================ */
+
+function initializeRecallPartOne(){
+
+    if(
+        recallState.initialized
+    ){
+
+        return;
+
+    }
+
+
+    recallState.initialized =
+        true;
+
+
+    updateRecallUserRole();
+
+    initializeRecallBackButton();
+
+
+    console.log(
+        "Recall.html Part 1 loaded successfully."
+    );
+
+}
+
+
+if(
+    document.readyState ===
+    "loading"
+){
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeRecallPartOne,
+        {
+            once:true
+        }
+    );
+
+}
+else{
+
+    initializeRecallPartOne();
+
+}
+
+</script>
+<!-- ============================================================
+     PART 2 — DEPLOYED MANPOWER LIST
+     
+     Adds:
+     • Search
+     • Cluster filter
+     • Department filter
+     • Select all
+     • Deployed employee table
+     • Recall selection counter
+============================================================ -->
+
+
+<style>
+
+    /* ========================================================
+       RECALL FILTER BAR
+    ========================================================= */
+
+    .recall-filter-bar{
+
+        display:
+            grid;
+
+        grid-template-columns:
+            minmax(220px, 1.6fr)
+            minmax(150px, .8fr)
+            minmax(150px, .8fr)
+            auto;
+
+        gap:
+            8px;
+
+        padding:
+            12px 14px;
+
+        background:
+            #FAFCFC;
+
+        border-bottom:
+            1px solid
+            var(--serentica-border);
+
+    }
+
+
+    .recall-search-box{
+
+        position:
+            relative;
+
+    }
+
+
+    .recall-search-box i{
+
+        position:
+            absolute;
+
+        left:
+            10px;
+
+        top:
+            50%;
+
+        transform:
+            translateY(-50%);
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            7px;
+
+    }
+
+
+    .recall-search-input,
+    .recall-filter-select{
+
+        width:
+            100%;
+
+        height:
+            31px;
+
+        padding:
+            0 9px;
+
+        border:
+            1px solid
+            var(--serentica-border);
+
+        border-radius:
+            6px;
+
+        background:
+            var(--white);
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            7px;
+
+        outline:
+            none;
+
+    }
+
+
+    .recall-search-input{
+
+        padding-left:
+            26px;
+
+    }
+
+
+    .recall-search-input:focus,
+    .recall-filter-select:focus{
+
+        border-color:
+            var(--serentica-teal);
+
+        box-shadow:
+            0 0 0 2px
+            rgba(
+                51,
+                167,
+                181,
+                .08
+            );
+
+    }
+
+
+    .recall-reset-button{
+
+        height:
+            31px;
+
+        padding:
+            0 11px;
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        gap:
+            5px;
+
+        border:
+            1px solid
+            var(--serentica-border);
+
+        border-radius:
+            6px;
+
+        background:
+            var(--white);
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            7px;
+
+        font-weight:
+            800;
+
+        cursor:
+            pointer;
+
+        transition:
+            .18s ease;
+
+    }
+
+
+    .recall-reset-button:hover{
+
+        border-color:
+            var(--serentica-teal);
+
+        color:
+            var(--serentica-teal);
+
+    }
+
+
+    /* ========================================================
+       SELECTION TOOLBAR
+    ========================================================= */
+
+    .recall-selection-toolbar{
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            space-between;
+
+        gap:
+            10px;
+
+        padding:
+            9px 14px;
+
+        border-bottom:
+            1px solid
+            var(--serentica-border);
+
+    }
+
+
+    .recall-selection-info{
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            8px;
+
+    }
+
+
+    .recall-selection-count{
+
+        padding:
+            5px 8px;
+
+        border-radius:
+            5px;
+
+        background:
+            var(--serentica-light);
+
+        color:
+            var(--serentica-teal);
+
+        font-size:
+            6px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-selection-description{
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            6px;
+
+    }
+
+
+    .recall-select-all{
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        gap:
+            5px;
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            6px;
+
+        font-weight:
+            800;
+
+        cursor:
+            pointer;
+
+        user-select:
+            none;
+
+    }
+
+
+    .recall-select-all input{
+
+        width:
+            12px;
+
+        height:
+            12px;
+
+        accent-color:
+            var(--serentica-teal);
+
+        cursor:
+            pointer;
+
+    }
+
+
+    /* ========================================================
+       TABLE WRAPPER
+    ========================================================= */
+
+    .recall-table-wrapper{
+
+        width:
+            100%;
+
+        overflow-x:
+            auto;
+
+    }
+
+
+    .recall-table{
+
+        width:
+            100%;
+
+        min-width:
+            920px;
+
+        border-collapse:
+            collapse;
+
+    }
+
+
+    .recall-table th{
+
+        padding:
+            9px 10px;
+
+        background:
+            #F7FAFA;
+
+        border-bottom:
+            1px solid
+            var(--serentica-border);
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            5.5px;
+
+        font-weight:
+            900;
+
+        letter-spacing:
+            .25px;
+
+        text-align:
+            left;
+
+        white-space:
+            nowrap;
+
+    }
+
+
+    .recall-table td{
+
+        padding:
+            9px 10px;
+
+        border-bottom:
+            1px solid
+            #EDF3F3;
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            6.5px;
+
+        vertical-align:
+            middle;
+
+    }
+
+
+    .recall-table tbody tr{
+
+        transition:
+            background
+            .15s ease;
+
+    }
+
+
+    .recall-table tbody tr:hover{
+
+        background:
+            #FBFEFE;
+
+    }
+
+
+    .recall-table tbody tr.selected{
+
+        background:
+            #F0FAFB;
+
+    }
+
+
+    /* ========================================================
+       EMPLOYEE CHECKBOX
+    ========================================================= */
+
+    .recall-employee-checkbox{
+
+        width:
+            13px;
+
+        height:
+            13px;
+
+        accent-color:
+            var(--serentica-teal);
+
+        cursor:
+            pointer;
+
+    }
+
+
+    /* ========================================================
+       EMPLOYEE IDENTITY
+    ========================================================= */
+
+    .recall-employee-info{
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            8px;
+
+    }
+
+
+    .recall-employee-avatar{
+
+        width:
+            28px;
+
+        height:
+            28px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        flex-shrink:
+            0;
+
+        border-radius:
+            50%;
+
+        background:
+            var(--serentica-light);
+
+        color:
+            var(--serentica-teal);
+
+        font-size:
+            8px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-employee-name{
+
+        font-size:
+            7px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-employee-id{
+
+        margin-top:
+            2px;
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            5.5px;
+
+    }
+
+
+    /* ========================================================
+       DEPARTMENT / CLUSTER
+    ========================================================= */
+
+    .recall-cell-primary{
+
+        font-weight:
+            800;
+
+    }
+
+
+    .recall-cell-secondary{
+
+        margin-top:
+            2px;
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            5.5px;
+
+    }
+
+
+    /* ========================================================
+       STATUS BADGE
+    ========================================================= */
+
+    .recall-status-badge{
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        gap:
+            4px;
+
+        padding:
+            4px 7px;
+
+        border-radius:
+            5px;
+
+        background:
+            #EEF8F1;
+
+        color:
+            var(--success);
+
+        font-size:
+            5.5px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-status-dot{
+
+        width:
+            5px;
+
+        height:
+            5px;
+
+        border-radius:
+            50%;
+
+        background:
+            currentColor;
+
+    }
+
+
+    /* ========================================================
+       EMPTY STATE
+    ========================================================= */
+
+    .recall-empty-state{
+
+        display:
+            none;
+
+        padding:
+            40px 20px;
+
+        text-align:
+            center;
+
+    }
+
+
+    .recall-empty-icon{
+
+        width:
+            42px;
+
+        height:
+            42px;
+
+        margin:
+            0 auto 10px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        border-radius:
+            50%;
+
+        background:
+            var(--serentica-light);
+
+        color:
+            var(--serentica-teal);
+
+        font-size:
+            13px;
+
+    }
+
+
+    .recall-empty-title{
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            9px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-empty-description{
+
+        max-width:
+            380px;
+
+        margin:
+            5px auto 0;
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            6px;
+
+        line-height:
+            1.5;
+
+    }
+
+
+    /* ========================================================
+       RESPONSIVE FILTERS
+    ========================================================= */
+
+    @media(
+        max-width:800px
+    ){
+
+        .recall-filter-bar{
+
+            grid-template-columns:
+                1fr 1fr;
+
+        }
+
+
+        .recall-search-box{
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .recall-reset-button{
+
+            width:
+                100%;
+
+        }
+
+    }
+
+
+    @media(
+        max-width:500px
+    ){
+
+        .recall-filter-bar{
+
+            grid-template-columns:
+                1fr;
+
+        }
+
+
+        .recall-search-box{
+
+            grid-column:
+                auto;
+
+        }
+
+
+        .recall-selection-toolbar{
+
+            align-items:
+                flex-start;
+
+            flex-direction:
+                column;
+
+        }
+
+    }
+
+</style>
+
+
+<!-- ============================================================
+     FILTER BAR
+============================================================ -->
+
+<div
+    class="recall-filter-bar"
+    id="recallFilterBar"
+>
+
+
+    <!-- SEARCH -->
+
+    <div
+        class="recall-search-box"
+    >
+
+        <i
+            class="fa-solid fa-magnifying-glass"
+        ></i>
+
+
+        <input
+            type="search"
+            id="recallSearchInput"
+            class="recall-search-input"
+            placeholder="Search employee, ID, department or task..."
+            autocomplete="off"
+        >
+
+    </div>
+
+
+    <!-- CLUSTER -->
+
+    <select
+        id="recallClusterFilter"
+        class="recall-filter-select"
+        aria-label="Filter by cluster"
+    >
+
+        <option value="ALL">
+            All Clusters
+        </option>
+
+    </select>
+
+
+    <!-- DEPARTMENT -->
+
+    <select
+        id="recallDepartmentFilter"
+        class="recall-filter-select"
+        aria-label="Filter by department"
+    >
+
+        <option value="ALL">
+            All Departments
+        </option>
+
+    </select>
+
+
+    <!-- RESET -->
+
+    <button
+        type="button"
+        class="recall-reset-button"
+        id="recallResetFilters"
+    >
+
+        <i
+            class="fa-solid fa-rotate-left"
+        ></i>
+
+        Reset
+
+    </button>
+
+</div>
+
+
+<!-- ============================================================
+     SELECTION TOOLBAR
+============================================================ -->
+
+<div
+    class="recall-selection-toolbar"
+    id="recallSelectionToolbar"
+>
+
+    <div
+        class="recall-selection-info"
+    >
+
+        <span
+            class="recall-selection-count"
+            id="recallSelectionCount"
+        >
+
+            0 selected
+
+        </span>
+
+
+        <span
+            class="recall-selection-description"
+        >
+
+            Select employees to begin the recall process.
+
+        </span>
+
+    </div>
+
+
+    <label
+        class="recall-select-all"
+    >
+
+        <input
+            type="checkbox"
+            id="recallSelectAll"
+        >
+
+        Select all visible
+
+    </label>
+
+</div>
+
+
+<!-- ============================================================
+     DEPLOYED EMPLOYEE TABLE
+============================================================ -->
+
+<div
+    class="recall-table-wrapper"
+    id="recallTableWrapper"
+>
+
+    <table
+        class="recall-table"
+        id="recallEmployeeTable"
+    >
+
+        <thead>
+
+            <tr>
+
+                <th
+                    style="width:35px;"
+                >
+
+                    <span
+                        class="sr-only"
+                    >
+                        Select
+                    </span>
+
+                </th>
+
+
+                <th>
+                    EMPLOYEE
+                </th>
+
+
+                <th>
+                    DEPARTMENT
+                </th>
+
+
+                <th>
+                    CLUSTER
+                </th>
+
+
+                <th>
+                    CURRENT TASK
+                </th>
+
+
+                <th>
+                    DEPLOYED ON
+                </th>
+
+
+                <th>
+                    DEPLOYED BY
+                </th>
+
+
+                <th>
+                    STATUS
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody
+            id="recallEmployeeTableBody"
+        >
+
+            <!--
+                Employee rows will be generated dynamically
+                from the existing manpower data.
+            -->
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<!-- ============================================================
+     EMPTY STATE
+============================================================ -->
+
+<div
+    class="recall-empty-state"
+    id="recallEmptyState"
+>
+
+    <div
+        class="recall-empty-icon"
+    >
+
+        <i
+            class="fa-solid fa-users-slash"
+        ></i>
+
+    </div>
+
+
+    <div
+        class="recall-empty-title"
+    >
+
+        No deployed manpower found
+
+    </div>
+
+
+    <div
+        class="recall-empty-description"
+    >
+
+        No employees match the current search or filter
+        criteria.
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     PART 2 JAVASCRIPT
+============================================================ -->
+
+<script>
+
+    
+/* ============================================================
+   RECALL DATA HELPERS
+============================================================ */
+
+
+/*
+ * Converts any value into a safe display string.
+ */
+
+function recallSafeText(
+    value
+){
+
+    if(
+        value === null ||
+        value === undefined
+    ){
+
+        return "";
+
+    }
+
+
+    return String(
+        value
+    );
+
+}
+
+
+/*
+ * Creates initials for employee avatar.
+ */
+
+function getRecallInitials(
+    name
+){
+
+    const text =
+        recallSafeText(
+            name
+        )
+        .trim();
+
+
+    if(
+        !text
+    ){
+
+        return "NA";
+
+    }
+
+
+    const parts =
+        text
+        .split(
+            /\s+/
+        )
+        .filter(
+            Boolean
+        );
+
+
+    if(
+        parts.length === 1
+    ){
+
+        return parts[0]
+            .substring(
+                0,
+                2
+            )
+            .toUpperCase();
+
+    }
+
+
+    return (
+        parts[0][0] +
+        parts[parts.length - 1][0]
+    )
+    .toUpperCase();
+
+}
+
+
+/*
+ * Attempts to retrieve the existing employee collection.
+ *
+ * We deliberately do not create fake employee records.
+ */
+
+function getRecallEmployeeCollection(){
+
+    const possibleSources = [
+
+        window.employeeData,
+
+        window.EmployeeData,
+
+        window.employees,
+
+        window.employeesData,
+
+        window.manpowerData,
+
+        window.siteEmployees
+
+    ];
+
+
+    for(
+        const source of possibleSources
+    ){
+
+        if(
+            Array.isArray(source)
+        ){
+
+            return source;
+
+        }
+
+
+        if(
+            source &&
+            Array.isArray(
+                source.employees
+            )
+        ){
+
+            return source.employees;
+
+        }
+
+
+        if(
+            source &&
+            Array.isArray(
+                source.data
+            )
+        ){
+
+            return source.data;
+
+        }
+
+    }
+
+
+    return [];
+
+}
+
+
+/*
+ * Determines whether an employee is currently deployed.
+ */
+
+function isRecallDeployedEmployee(
+    employee
+){
+
+    if(
+        !employee
+    ){
+
+        return false;
+
+    }
+
+
+    const deploymentStatus =
+        String(
+            employee.deploymentStatus ||
+            employee.status ||
+            employee.deployedStatus ||
+            ""
+        )
+        .trim()
+        .toUpperCase();
+
+
+    if(
+        employee.deployed === true ||
+        employee.isDeployed === true
+    ){
+
+        return true;
+
+    }
+
+
+    return (
+
+        deploymentStatus ===
+        "DEPLOYED"
+
+    ) || (
+
+        deploymentStatus ===
+        "ACTIVE_DEPLOYMENT"
+
+    ) || (
+
+        deploymentStatus ===
+        "ON_DEPLOYMENT"
+
+    );
+
+}
+
+
+/*
+ * Normalizes employee data for this page.
+ */
+
+function normalizeRecallEmployee(
+    employee
+){
+
+    return {
+
+        id:
+            employee.id ||
+            employee.employeeId ||
+            employee.empId ||
+            employee.employeeCode ||
+            "",
+
+        name:
+            employee.name ||
+            employee.employeeName ||
+            employee.fullName ||
+            "Unnamed Employee",
+
+        department:
+            employee.department ||
+            employee.departmentName ||
+            "Unassigned",
+
+        cluster:
+            employee.cluster ||
+            employee.clusterName ||
+            "Unassigned",
+
+        task:
+            employee.task ||
+            employee.currentTask ||
+            employee.taskAssigned ||
+            employee.tasksGiven ||
+            "Not specified",
+
+        deployedOn:
+            employee.deployedOn ||
+            employee.deploymentDate ||
+            employee.deployedDate ||
+            "—",
+
+        deployedBy:
+            employee.deployedBy ||
+            employee.deployedByName ||
+            employee.deployedByUser ||
+            "—",
+
+        status:
+            "DEPLOYED"
+
+    };
+
+}
+
+
+/* ============================================================
+   GET DEPLOYED EMPLOYEES
+============================================================ */
+
+function getRecallDeployedEmployees(){
+
+    const employees =
+        getRecallEmployeeCollection();
+
+
+    return employees
+        .filter(
+            isRecallDeployedEmployee
+        )
+        .map(
+            normalizeRecallEmployee
+        );
+
+}
+
+
+/* ============================================================
+   FILTER OPTIONS
+============================================================ */
+
+function populateRecallFilterOptions(){
+
+    const employees =
+        getRecallDeployedEmployees();
+
+
+    const clusterSelect =
+        document.getElementById(
+            "recallClusterFilter"
+        );
+
+
+    const departmentSelect =
+        document.getElementById(
+            "recallDepartmentFilter"
+        );
+
+
+    if(
+        !clusterSelect ||
+        !departmentSelect
+    ){
+
+        return;
+
+    }
+
+
+    const clusters =
+        [
+            ...new Set(
+                employees
+                    .map(
+                        employee =>
+                            employee.cluster
+                    )
+                    .filter(
+                        Boolean
+                    )
+            )
+        ]
+        .sort();
+
+
+    const departments =
+        [
+            ...new Set(
+                employees
+                    .map(
+                        employee =>
+                            employee.department
+                    )
+                    .filter(
+                        Boolean
+                    )
+            )
+        ]
+        .sort();
+
+
+    clusterSelect.innerHTML =
+        `
+            <option value="ALL">
+                All Clusters
+            </option>
+        `;
+
+
+    departmentSelect.innerHTML =
+        `
+            <option value="ALL">
+                All Departments
+            </option>
+        `;
+
+
+    clusters.forEach(
+        cluster => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                cluster;
+
+
+            option.textContent =
+                cluster;
+
+
+            clusterSelect.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    departments.forEach(
+        department => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                department;
+
+
+            option.textContent =
+                department;
+
+
+            departmentSelect.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   APPLY FILTERS
+============================================================ */
+
+function getFilteredRecallEmployees(){
+
+    const employees =
+        getRecallDeployedEmployees();
+
+
+    const searchInput =
+        document.getElementById(
+            "recallSearchInput"
+        );
+
+
+    const clusterSelect =
+        document.getElementById(
+            "recallClusterFilter"
+        );
+
+
+    const departmentSelect =
+        document.getElementById(
+            "recallDepartmentFilter"
+        );
+
+
+    const searchTerm =
+        recallSafeText(
+            searchInput?.value
+        )
+        .trim()
+        .toLowerCase();
+
+
+    const cluster =
+        clusterSelect?.value ||
+        "ALL";
+
+
+    const department =
+        departmentSelect?.value ||
+        "ALL";
+
+
+    return employees.filter(
+        employee => {
+
+            const searchableText = [
+
+                employee.name,
+
+                employee.id,
+
+                employee.department,
+
+                employee.cluster,
+
+                employee.task,
+
+                employee.deployedBy
+
+            ]
+            .join(
+                " "
+            )
+            .toLowerCase();
+
+
+            const matchesSearch =
+                !searchTerm ||
+                searchableText.includes(
+                    searchTerm
+                );
+
+
+            const matchesCluster =
+                cluster === "ALL" ||
+                employee.cluster ===
+                cluster;
+
+
+            const matchesDepartment =
+                department === "ALL" ||
+                employee.department ===
+                department;
+
+
+            return (
+                matchesSearch &&
+                matchesCluster &&
+                matchesDepartment
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   RENDER EMPLOYEE TABLE
+============================================================ */
+
+function renderRecallEmployeeTable(){
+
+    const tableBody =
+        document.getElementById(
+            "recallEmployeeTableBody"
+        );
+
+
+    const tableWrapper =
+        document.getElementById(
+            "recallTableWrapper"
+        );
+
+
+    const emptyState =
+        document.getElementById(
+            "recallEmptyState"
+        );
+
+
+    if(
+        !tableBody
+    ){
+
+        return;
+
+    }
+
+
+    const employees =
+        getFilteredRecallEmployees();
+
+
+    tableBody.innerHTML =
+        "";
+
+
+    if(
+        !employees.length
+    ){
+
+        if(
+            tableWrapper
+        ){
+
+            tableWrapper.style.display =
+                "none";
+
+        }
+
+
+        if(
+            emptyState
+        ){
+
+            emptyState.style.display =
+                "block";
+
+        }
+
+
+        updateRecallSelectionCount();
+
+        return;
+
+    }
+
+
+    if(
+        tableWrapper
+    ){
+
+        tableWrapper.style.display =
+            "block";
+
+    }
+
+
+    if(
+        emptyState
+    ){
+
+        emptyState.style.display =
+            "none";
+
+    }
+
+
+    employees.forEach(
+        employee => {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const employeeKey =
+                String(
+                    employee.id
+                );
+
+
+            const isSelected =
+                recallState.selectedEmployees
+                    .includes(
+                        employeeKey
+                    );
+
+
+            if(
+                isSelected
+            ){
+
+                row.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            row.innerHTML =
+                `
+
+                    <td>
+
+                        <input
+                            type="checkbox"
+                            class="recall-employee-checkbox"
+                            data-employee-id="${employeeKey}"
+                            ${isSelected ? "checked" : ""}
+                            aria-label="Select ${recallSafeText(employee.name)}"
+                        >
+
+                    </td>
+
+
+                    <td>
+
+                        <div
+                            class="recall-employee-info"
+                        >
+
+                            <div
+                                class="recall-employee-avatar"
+                            >
+
+                                ${getRecallInitials(employee.name)}
+
+                            </div>
+
+
+                            <div>
+
+                                <div
+                                    class="recall-employee-name"
+                                >
+
+                                    ${recallSafeText(employee.name)}
+
+                                </div>
+
+
+                                <div
+                                    class="recall-employee-id"
+                                >
+
+                                    ${recallSafeText(employee.id)}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div
+                            class="recall-cell-primary"
+                        >
+
+                            ${recallSafeText(employee.department)}
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div
+                            class="recall-cell-primary"
+                        >
+
+                            ${recallSafeText(employee.cluster)}
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div
+                            class="recall-cell-primary"
+                        >
+
+                            ${recallSafeText(employee.task)}
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        ${recallSafeText(employee.deployedOn)}
+
+                    </td>
+
+
+                    <td>
+
+                        ${recallSafeText(employee.deployedBy)}
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="recall-status-badge"
+                        >
+
+                            <span
+                                class="recall-status-dot"
+                            ></span>
+
+                            Deployed
+
+                        </span>
+
+                    </td>
+
+                `;
+
+
+            const checkbox =
+                row.querySelector(
+                    ".recall-employee-checkbox"
+                );
+
+
+            if(
+                checkbox
+            ){
+
+                checkbox.addEventListener(
+                    "change",
+                    function(){
+
+                        toggleRecallEmployee(
+                            employeeKey,
+                            checkbox.checked
+                        );
+
+                    }
+                );
+
+            }
+
+
+            tableBody.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    updateRecallSelectionCount();
+
+}
+
+
+/* ============================================================
+   TOGGLE EMPLOYEE SELECTION
+============================================================ */
+
+function toggleRecallEmployee(
+    employeeId,
+    selected
+){
+
+    const id =
+        String(
+            employeeId
+        );
+
+
+    if(
+        selected
+    ){
+
+        if(
+            !recallState.selectedEmployees
+                .includes(
+                    id
+                )
+        ){
+
+            recallState.selectedEmployees
+                .push(
+                    id
+                );
+
+        }
+
+    }
+    else{
+
+        recallState.selectedEmployees =
+            recallState.selectedEmployees
+                .filter(
+                    selectedId =>
+                        selectedId !== id
+                );
+
+    }
+
+
+    updateRecallSelectionCount();
+
+    updateRecallSelectAllState();
+
+}
+
+
+/* ============================================================
+   UPDATE SELECTION COUNT
+============================================================ */
+
+function updateRecallSelectionCount(){
+
+    const counter =
+        document.getElementById(
+            "recallSelectionCount"
+        );
+
+
+    if(
+        !counter
+    ){
+
+        return;
+
+    }
+
+
+    const count =
+        recallState.selectedEmployees.length;
+
+
+    counter.textContent =
+        `${count} selected`;
+
+}
+
+
+/* ============================================================
+   SELECT ALL VISIBLE
+============================================================ */
+
+function toggleSelectAllRecallEmployees(
+    checked
+){
+
+    const visibleEmployees =
+        getFilteredRecallEmployees();
+
+
+    const visibleIds =
+        visibleEmployees.map(
+            employee =>
+                String(
+                    employee.id
+                )
+        );
+
+
+    if(
+        checked
+    ){
+
+        visibleIds.forEach(
+            id => {
+
+                if(
+                    !recallState.selectedEmployees
+                        .includes(
+                            id
+                        )
+                ){
+
+                    recallState.selectedEmployees
+                        .push(
+                            id
+                        );
+
+                }
+
+            }
+        );
+
+    }
+    else{
+
+        recallState.selectedEmployees =
+            recallState.selectedEmployees
+                .filter(
+                    id =>
+                        !visibleIds.includes(
+                            id
+                        )
+                );
+
+    }
+
+
+    renderRecallEmployeeTable();
+
+}
+
+
+/* ============================================================
+   UPDATE SELECT-ALL STATE
+============================================================ */
+
+function updateRecallSelectAllState(){
+
+    const selectAll =
+        document.getElementById(
+            "recallSelectAll"
+        );
+
+
+    if(
+        !selectAll
+    ){
+
+        return;
+
+    }
+
+
+    const visibleEmployees =
+        getFilteredRecallEmployees();
+
+
+    if(
+        !visibleEmployees.length
+    ){
+
+        selectAll.checked =
+            false;
+
+        selectAll.indeterminate =
+            false;
+
+        return;
+
+    }
+
+
+    const visibleIds =
+        visibleEmployees.map(
+            employee =>
+                String(
+                    employee.id
+                )
+        );
+
+
+    const selectedVisibleCount =
+        visibleIds.filter(
+            id =>
+                recallState.selectedEmployees
+                    .includes(
+                        id
+                    )
+        ).length;
+
+
+    selectAll.checked =
+        selectedVisibleCount ===
+        visibleIds.length;
+
+
+    selectAll.indeterminate =
+        selectedVisibleCount > 0 &&
+        selectedVisibleCount <
+        visibleIds.length;
+
+}
+
+
+/* ============================================================
+   RESET FILTERS
+============================================================ */
+
+function resetRecallFilters(){
+
+    const searchInput =
+        document.getElementById(
+            "recallSearchInput"
+        );
+
+
+    const clusterSelect =
+        document.getElementById(
+            "recallClusterFilter"
+        );
+
+
+    const departmentSelect =
+        document.getElementById(
+            "recallDepartmentFilter"
+        );
+
+
+    if(
+        searchInput
+    ){
+
+        searchInput.value =
+            "";
+
+    }
+
+
+    if(
+        clusterSelect
+    ){
+
+        clusterSelect.value =
+            "ALL";
+
+    }
+
+
+    if(
+        departmentSelect
+    ){
+
+        departmentSelect.value =
+            "ALL";
+
+    }
+
+
+    renderRecallEmployeeTable();
+
+}
+
+
+/* ============================================================
+   FILTER EVENT INITIALIZATION
+============================================================ */
+
+function initializeRecallFilterEvents(){
+
+    const searchInput =
+        document.getElementById(
+            "recallSearchInput"
+        );
+
+
+    const clusterSelect =
+        document.getElementById(
+            "recallClusterFilter"
+        );
+
+
+    const departmentSelect =
+        document.getElementById(
+            "recallDepartmentFilter"
+        );
+
+
+    const resetButton =
+        document.getElementById(
+            "recallResetFilters"
+        );
+
+
+    const selectAll =
+        document.getElementById(
+            "recallSelectAll"
+        );
+
+
+    if(
+        searchInput
+    ){
+
+        searchInput.addEventListener(
+            "input",
+            renderRecallEmployeeTable
+        );
+
+    }
+
+
+    if(
+        clusterSelect
+    ){
+
+        clusterSelect.addEventListener(
+            "change",
+            renderRecallEmployeeTable
+        );
+
+    }
+
+
+    if(
+        departmentSelect
+    ){
+
+        departmentSelect.addEventListener(
+            "change",
+            renderRecallEmployeeTable
+        );
+
+    }
+
+
+    if(
+        resetButton
+    ){
+
+        resetButton.addEventListener(
+            "click",
+            resetRecallFilters
+        );
+
+    }
+
+
+    if(
+        selectAll
+    ){
+
+        selectAll.addEventListener(
+            "change",
+            function(){
+
+                toggleSelectAllRecallEmployees(
+                    selectAll.checked
+                );
+
+            }
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   UPDATE SUMMARY COUNTS
+============================================================ */
+
+function updateRecallSummaryCounts(){
+
+    const deployed =
+        getRecallDeployedEmployees();
+
+
+    const totalDeployed =
+        document.getElementById(
+            "recallTotalDeployed"
+        );
+
+
+    const eligible =
+        document.getElementById(
+            "recallEligible"
+        );
+
+
+    if(
+        totalDeployed
+    ){
+
+        totalDeployed.textContent =
+            deployed.length;
+
+    }
+
+
+    if(
+        eligible
+    ){
+
+        eligible.textContent =
+            deployed.length;
+
+    }
+
+}
+
+
+/* ============================================================
+   PART 2 INITIALIZATION
+============================================================ */
+
+function initializeRecallPartTwo(){
+
+    populateRecallFilterOptions();
+
+    initializeRecallFilterEvents();
+
+    updateRecallSummaryCounts();
+
+    renderRecallEmployeeTable();
+
+    updateRecallSelectAllState();
+
+
+    console.log(
+        "Recall.html Part 2 loaded successfully."
+    );
+
+}
+
+
+if(
+    document.readyState ===
+    "loading"
+){
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeRecallPartTwo,
+        {
+            once:true
+        }
+    );
+
+}
+else{
+
+    initializeRecallPartTwo();
+
+}
+
+</script>
+<!-- ============================================================
+     PART 3 — RECALL ACTION & CONFIRMATION WORKFLOW
+============================================================ -->
+
+
+<style>
+
+    /* ========================================================
+       RECALL ACTION FOOTER
+    ========================================================= */
+
+    .recall-action-footer{
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            space-between;
+
+        gap:
+            12px;
+
+        padding:
+            12px 14px;
+
+        background:
+            #FAFCFC;
+
+        border-top:
+            1px solid
+            var(--serentica-border);
+
+    }
+
+
+    .recall-action-summary{
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            9px;
+
+    }
+
+
+    .recall-action-icon{
+
+        width:
+            31px;
+
+        height:
+            31px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        border-radius:
+            7px;
+
+        background:
+            #FFF6E8;
+
+        color:
+            var(--warning);
+
+        font-size:
+            9px;
+
+    }
+
+
+    .recall-action-title{
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            7px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-action-description{
+
+        margin-top:
+            3px;
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            5.5px;
+
+    }
+
+
+    .recall-action-button{
+
+        min-width:
+            135px;
+
+        height:
+            34px;
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        gap:
+            6px;
+
+        padding:
+            0 13px;
+
+        border-radius:
+            6px;
+
+        background:
+            var(--warning);
+
+        color:
+            var(--white);
+
+        font-size:
+            7px;
+
+        font-weight:
+            900;
+
+        cursor:
+            pointer;
+
+        transition:
+            .18s ease;
+
+    }
+
+
+    .recall-action-button:hover{
+
+        filter:
+            brightness(
+                .94
+            );
+
+        transform:
+            translateY(
+                -1px
+            );
+
+    }
+
+
+    .recall-action-button:disabled{
+
+        background:
+            #D7DEDE;
+
+        color:
+            #FFFFFF;
+
+        cursor:
+            not-allowed;
+
+        transform:
+            none;
+
+        filter:
+            none;
+
+    }
+
+
+    /* ========================================================
+       MODAL OVERLAY
+    ========================================================= */
+
+    .recall-modal-overlay{
+
+        position:
+            fixed;
+
+        inset:
+            0;
+
+        z-index:
+            5000;
+
+        display:
+            none;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        padding:
+            18px;
+
+        background:
+            rgba(
+                17,
+                42,
+                45,
+                .46
+            );
+
+        backdrop-filter:
+            blur(
+                3px
+            );
+
+    }
+
+
+    .recall-modal-overlay.active{
+
+        display:
+            flex;
+
+    }
+
+
+    /* ========================================================
+       MODAL
+    ========================================================= */
+
+    .recall-modal{
+
+        width:
+            min(
+                500px,
+                100%
+            );
+
+        max-height:
+            calc(
+                100vh - 36px
+            );
+
+        overflow:
+            hidden;
+
+        background:
+            var(--white);
+
+        border:
+            1px solid
+            var(--serentica-border);
+
+        border-radius:
+            12px;
+
+        box-shadow:
+            0 20px 60px
+            rgba(
+                20,
+                60,
+                65,
+                .20
+            );
+
+        animation:
+            recallModalIn
+            .18s
+            ease;
+
+    }
+
+
+    @keyframes recallModalIn{
+
+        from{
+
+            opacity:
+                0;
+
+            transform:
+                translateY(
+                    8px
+                )
+                scale(
+                    .985
+                );
+
+        }
+
+        to{
+
+            opacity:
+                1;
+
+            transform:
+                translateY(
+                    0
+                )
+                scale(
+                    1
+                );
+
+        }
+
+    }
+
+
+    /* ========================================================
+       MODAL HEADER
+    ========================================================= */
+
+    .recall-modal-header{
+
+        display:
+            flex;
+
+        align-items:
+            flex-start;
+
+        justify-content:
+            space-between;
+
+        gap:
+            12px;
+
+        padding:
+            16px;
+
+        border-bottom:
+            1px solid
+            var(--serentica-border);
+
+    }
+
+
+    .recall-modal-heading{
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            9px;
+
+    }
+
+
+    .recall-modal-icon{
+
+        width:
+            34px;
+
+        height:
+            34px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        border-radius:
+            8px;
+
+        background:
+            #FFF6E8;
+
+        color:
+            var(--warning);
+
+        font-size:
+            10px;
+
+    }
+
+
+    .recall-modal-title{
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            10px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-modal-subtitle{
+
+        margin-top:
+            3px;
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            6px;
+
+        line-height:
+            1.45;
+
+    }
+
+
+    .recall-modal-close{
+
+        width:
+            27px;
+
+        height:
+            27px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        border-radius:
+            6px;
+
+        background:
+            #F5F8F8;
+
+        color:
+            var(--serentica-muted);
+
+        cursor:
+            pointer;
+
+        font-size:
+            8px;
+
+    }
+
+
+    .recall-modal-close:hover{
+
+        background:
+            #EDF3F3;
+
+        color:
+            var(--serentica-dark);
+
+    }
+
+
+    /* ========================================================
+       MODAL BODY
+    ========================================================= */
+
+    .recall-modal-body{
+
+        padding:
+            15px 16px;
+
+        max-height:
+            410px;
+
+        overflow-y:
+            auto;
+
+    }
+
+
+    .recall-warning-box{
+
+        display:
+            flex;
+
+        align-items:
+            flex-start;
+
+        gap:
+            8px;
+
+        padding:
+            10px;
+
+        margin-bottom:
+            13px;
+
+        border:
+            1px solid
+            #F0DDBA;
+
+        border-radius:
+            7px;
+
+        background:
+            #FFFBF3;
+
+        color:
+            #785A24;
+
+    }
+
+
+    .recall-warning-box i{
+
+        margin-top:
+            1px;
+
+        font-size:
+            8px;
+
+    }
+
+
+    .recall-warning-text{
+
+        font-size:
+            6px;
+
+        line-height:
+            1.5;
+
+    }
+
+
+    .recall-warning-text strong{
+
+        font-weight:
+            900;
+
+    }
+
+
+    /* ========================================================
+       SELECTED EMPLOYEE SUMMARY
+    ========================================================= */
+
+    .recall-confirmation-heading{
+
+        margin-bottom:
+            7px;
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            7px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-confirmation-list{
+
+        display:
+            flex;
+
+        flex-direction:
+            column;
+
+        gap:
+            5px;
+
+    }
+
+
+    .recall-confirmation-item{
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            space-between;
+
+        gap:
+            8px;
+
+        padding:
+            8px 9px;
+
+        border:
+            1px solid
+            var(--serentica-border);
+
+        border-radius:
+            6px;
+
+        background:
+            #FBFDFD;
+
+    }
+
+
+    .recall-confirmation-employee{
+
+        min-width:
+            0;
+
+    }
+
+
+    .recall-confirmation-name{
+
+        overflow:
+            hidden;
+
+        text-overflow:
+            ellipsis;
+
+        white-space:
+            nowrap;
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            6.5px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-confirmation-details{
+
+        margin-top:
+            2px;
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            5.5px;
+
+    }
+
+
+    .recall-confirmation-status{
+
+        flex-shrink:
+            0;
+
+        padding:
+            4px 6px;
+
+        border-radius:
+            5px;
+
+        background:
+            #EEF8F1;
+
+        color:
+            var(--success);
+
+        font-size:
+            5px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    /* ========================================================
+       RECALL REASON
+    ========================================================= */
+
+    .recall-form-group{
+
+        margin-top:
+            14px;
+
+    }
+
+
+    .recall-form-label{
+
+        display:
+            block;
+
+        margin-bottom:
+            5px;
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            6.5px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-required{
+
+        color:
+            var(--danger);
+
+    }
+
+
+    .recall-form-select,
+    .recall-form-textarea{
+
+        width:
+            100%;
+
+        border:
+            1px solid
+            var(--serentica-border);
+
+        border-radius:
+            6px;
+
+        background:
+            var(--white);
+
+        color:
+            var(--serentica-dark);
+
+        outline:
+            none;
+
+        font-size:
+            6.5px;
+
+    }
+
+
+    .recall-form-select{
+
+        height:
+            32px;
+
+        padding:
+            0 8px;
+
+    }
+
+
+    .recall-form-textarea{
+
+        min-height:
+            68px;
+
+        resize:
+            vertical;
+
+        padding:
+            8px;
+
+        line-height:
+            1.45;
+
+    }
+
+
+    .recall-form-select:focus,
+    .recall-form-textarea:focus{
+
+        border-color:
+            var(--serentica-teal);
+
+        box-shadow:
+            0 0 0 2px
+            rgba(
+                51,
+                167,
+                181,
+                .08
+            );
+
+    }
+
+
+    .recall-form-help{
+
+        margin-top:
+            4px;
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            5px;
+
+    }
+
+
+    /* ========================================================
+       MODAL FOOTER
+    ========================================================= */
+
+    .recall-modal-footer{
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            flex-end;
+
+        gap:
+            7px;
+
+        padding:
+            11px 16px;
+
+        border-top:
+            1px solid
+            var(--serentica-border);
+
+        background:
+            #FAFCFC;
+
+    }
+
+
+    .recall-modal-button{
+
+        height:
+            31px;
+
+        padding:
+            0 11px;
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        gap:
+            5px;
+
+        border:
+            1px solid
+            var(--serentica-border);
+
+        border-radius:
+            6px;
+
+        font-size:
+            6.5px;
+
+        font-weight:
+            900;
+
+        cursor:
+            pointer;
+
+    }
+
+
+    .recall-modal-cancel{
+
+        background:
+            var(--white);
+
+        color:
+            var(--serentica-dark);
+
+    }
+
+
+    .recall-modal-confirm{
+
+        background:
+            var(--warning);
+
+        border-color:
+            var(--warning);
+
+        color:
+            var(--white);
+
+    }
+
+
+    .recall-modal-confirm:disabled{
+
+        background:
+            #D7DEDE;
+
+        border-color:
+            #D7DEDE;
+
+        cursor:
+            not-allowed;
+
+    }
+
+
+    /* ========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media(
+        max-width:600px
+    ){
+
+        .recall-action-footer{
+
+            align-items:
+                stretch;
+
+            flex-direction:
+                column;
+
+        }
+
+
+        .recall-action-button{
+
+            width:
+                100%;
+
+        }
+
+
+        .recall-modal-footer{
+
+            flex-direction:
+                column-reverse;
+
+        }
+
+
+        .recall-modal-button{
+
+            width:
+                100%;
+
+        }
+
+    }
+
+</style>
+
+
+<!-- ============================================================
+     RECALL ACTION FOOTER
+============================================================ -->
+
+<div
+    class="recall-action-footer"
+    id="recallActionFooter"
+>
+
+    <div
+        class="recall-action-summary"
+    >
+
+        <div
+            class="recall-action-icon"
+        >
+
+            <i
+                class="fa-solid fa-arrow-rotate-left"
+            ></i>
+
+        </div>
+
+
+        <div>
+
+            <div
+                class="recall-action-title"
+            >
+
+                Recall selected manpower
+
+            </div>
+
+
+            <div
+                class="recall-action-description"
+            >
+
+                Selected employees will move to the recall
+                confirmation workflow.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <button
+        type="button"
+        class="recall-action-button"
+        id="recallInitiateButton"
+        disabled
+    >
+
+        <i
+            class="fa-solid fa-arrow-rotate-left"
+        ></i>
+
+        Initiate Recall
+
+    </button>
+
+</div>
+
+
+<!-- ============================================================
+     RECALL CONFIRMATION MODAL
+============================================================ -->
+
+<div
+    class="recall-modal-overlay"
+    id="recallConfirmationModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="recallModalTitle"
+>
+
+    <div
+        class="recall-modal"
+    >
+
+
+        <!-- ====================================================
+             MODAL HEADER
+        ===================================================== -->
+
+        <div
+            class="recall-modal-header"
+        >
+
+            <div
+                class="recall-modal-heading"
+            >
+
+                <div
+                    class="recall-modal-icon"
+                >
+
+                    <i
+                        class="fa-solid fa-arrow-rotate-left"
+                    ></i>
+
+                </div>
+
+
+                <div>
+
+                    <div
+                        class="recall-modal-title"
+                        id="recallModalTitle"
+                    >
+
+                        Confirm Manpower Recall
+
+                    </div>
+
+
+                    <div
+                        class="recall-modal-subtitle"
+                    >
+
+                        Review the selected employees before
+                        submitting the recall request.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="recall-modal-close"
+                id="recallModalClose"
+                aria-label="Close recall confirmation"
+            >
+
+                <i
+                    class="fa-solid fa-xmark"
+                ></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- ====================================================
+             MODAL BODY
+        ===================================================== -->
+
+        <div
+            class="recall-modal-body"
+        >
+
+
+            <div
+                class="recall-warning-box"
+            >
+
+                <i
+                    class="fa-solid fa-triangle-exclamation"
+                ></i>
+
+
+                <div
+                    class="recall-warning-text"
+                >
+
+                    <strong>
+                        Please verify before confirming.
+                    </strong>
+
+                    The selected employees will be submitted
+                    for recall and their deployment status will
+                    require confirmation before they return to
+                    the available manpower pool.
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="recall-confirmation-heading"
+            >
+
+                Selected Employees
+
+            </div>
+
+
+            <div
+                class="recall-confirmation-list"
+                id="recallConfirmationList"
+            >
+
+                <!-- Selected employees generated here -->
+
+            </div>
+
+
+            <!-- =================================================
+                 RECALL REASON
+            ================================================== -->
+
+            <div
+                class="recall-form-group"
+            >
+
+                <label
+                    class="recall-form-label"
+                    for="recallReason"
+                >
+
+                    Recall Reason
+                    <span
+                        class="recall-required"
+                    >
+                        *
+                    </span>
+
+                </label>
+
+
+                <select
+                    id="recallReason"
+                    class="recall-form-select"
+                >
+
+                    <option value="">
+                        Select recall reason
+                    </option>
+
+                    <option value="TASK_COMPLETED">
+                        Task Completed
+                    </option>
+
+                    <option value="PROJECT_REQUIREMENT">
+                        Project Requirement Changed
+                    </option>
+
+                    <option value="RESOURCE_REALLOCATION">
+                        Resource Reallocation
+                    </option>
+
+                    <option value="PERFORMANCE_REVIEW">
+                        Performance Review
+                    </option>
+
+                    <option value="SITE_REQUIREMENT">
+                        Site Requirement
+                    </option>
+
+                    <option value="OTHER">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- =================================================
+                 REMARKS
+            ================================================== -->
+
+            <div
+                class="recall-form-group"
+            >
+
+                <label
+                    class="recall-form-label"
+                    for="recallRemarks"
+                >
+
+                    Remarks
+
+                </label>
+
+
+                <textarea
+                    id="recallRemarks"
+                    class="recall-form-textarea"
+                    placeholder="Enter any additional information..."
+                ></textarea>
+
+
+                <div
+                    class="recall-form-help"
+                >
+
+                    Optional remarks for the approving Lead
+                    or Project Manager.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ====================================================
+             MODAL FOOTER
+        ===================================================== -->
+
+        <div
+            class="recall-modal-footer"
+        >
+
+            <button
+                type="button"
+                class="recall-modal-button recall-modal-cancel"
+                id="recallModalCancel"
+            >
+
+                Cancel
+
+            </button>
+
+
+            <button
+                type="button"
+                class="recall-modal-button recall-modal-confirm"
+                id="recallConfirmButton"
+                disabled
+            >
+
+                <i
+                    class="fa-solid fa-check"
+                ></i>
+
+                Submit Recall Request
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     PART 3 JAVASCRIPT
+============================================================ -->
+
+<script>
+
+/* ============================================================
+   RECALL PERMISSION
+============================================================ */
+
+function canInitiateRecall(){
+
+    const role =
+        recallState.currentUserRole;
+
+
+    return (
+
+        role === "ADMIN" ||
+
+        role === "PROJECT_MANAGER" ||
+
+        role === "LEAD"
+
+    );
+
+}
+
+
+/* ============================================================
+   UPDATE RECALL ACTION BUTTON
+============================================================ */
+
+function updateRecallActionButton(){
+
+    const button =
+        document.getElementById(
+            "recallInitiateButton"
+        );
+
+
+    if(
+        !button
+    ){
+
+        return;
+
+    }
+
+
+    const selectedCount =
+        recallState.selectedEmployees.length;
+
+
+    const permitted =
+        canInitiateRecall();
+
+
+    button.disabled =
+        selectedCount === 0 ||
+        !permitted;
+
+
+    if(
+        !permitted
+    ){
+
+        button.title =
+            "Only Admin, Project Manager or Lead can initiate a recall.";
+
+    }
+    else{
+
+        button.title =
+            selectedCount
+                ? "Initiate recall for selected employees."
+                : "Select at least one employee.";
+
+    }
+
+}
+
+
+/* ============================================================
+   GET SELECTED EMPLOYEES
+============================================================ */
+
+function getSelectedRecallEmployees(){
+
+    const employees =
+        getRecallDeployedEmployees();
+
+
+    return employees.filter(
+        employee =>
+            recallState.selectedEmployees
+                .includes(
+                    String(
+                        employee.id
+                    )
+                )
+    );
+
+}
+
+
+/* ============================================================
+   RENDER CONFIRMATION LIST
+============================================================ */
+
+function renderRecallConfirmationList(){
+
+    const container =
+        document.getElementById(
+            "recallConfirmationList"
+        );
+
+
+    if(
+        !container
+    ){
+
+        return;
+
+    }
+
+
+    const selected =
+        getSelectedRecallEmployees();
+
+
+    container.innerHTML =
+        "";
+
+
+    if(
+        !selected.length
+    ){
+
+        container.innerHTML =
+            `
+                <div
+                    class="recall-empty-description"
+                >
+
+                    No employees selected.
+
+                </div>
+            `;
+
+        return;
+
+    }
+
+
+    selected.forEach(
+        employee => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "recall-confirmation-item";
+
+
+            item.innerHTML =
+                `
+
+                    <div
+                        class="recall-confirmation-employee"
+                    >
+
+                        <div
+                            class="recall-confirmation-name"
+                        >
+
+                            ${recallSafeText(employee.name)}
+
+                        </div>
+
+
+                        <div
+                            class="recall-confirmation-details"
+                        >
+
+                            ${recallSafeText(employee.id)}
+                            •
+                            ${recallSafeText(employee.department)}
+                            •
+                            ${recallSafeText(employee.cluster)}
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="recall-confirmation-status"
+                    >
+
+                        Deployed
+
+                    </div>
+
+                `;
+
+
+            container.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   OPEN CONFIRMATION MODAL
+============================================================ */
+
+function openRecallConfirmationModal(){
+
+    if(
+        !canInitiateRecall()
+    ){
+
+        return;
+
+    }
+
+
+    if(
+        recallState.selectedEmployees.length === 0
+    ){
+
+        return;
+
+    }
+
+
+    renderRecallConfirmationList();
+
+
+    const reason =
+        document.getElementById(
+            "recallReason"
+        );
+
+
+    const remarks =
+        document.getElementById(
+            "recallRemarks"
+        );
+
+
+    if(
+        reason
+    ){
+
+        reason.value =
+            "";
+
+    }
+
+
+    if(
+        remarks
+    ){
+
+        remarks.value =
+            "";
+
+    }
+
+
+    updateRecallConfirmButton();
+
+
+    const modal =
+        document.getElementById(
+            "recallConfirmationModal"
+        );
+
+
+    if(
+        modal
+    ){
+
+        modal.classList.add(
+            "active"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+
+}
+
+
+/* ============================================================
+   CLOSE CONFIRMATION MODAL
+============================================================ */
+
+function closeRecallConfirmationModal(){
+
+    const modal =
+        document.getElementById(
+            "recallConfirmationModal"
+        );
+
+
+    if(
+        modal
+    ){
+
+        modal.classList.remove(
+            "active"
+        );
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+}
+
+
+/* ============================================================
+   UPDATE CONFIRM BUTTON
+============================================================ */
+
+function updateRecallConfirmButton(){
+
+    const button =
+        document.getElementById(
+            "recallConfirmButton"
+        );
+
+
+    const reason =
+        document.getElementById(
+            "recallReason"
+        );
+
+
+    if(
+        !button
+    ){
+
+        return;
+
+    }
+
+
+    button.disabled =
+        !reason ||
+        !reason.value ||
+        recallState.selectedEmployees.length === 0;
+
+}
+
+
+/* ============================================================
+   INITIALIZE MODAL EVENTS
+============================================================ */
+
+function initializeRecallModalEvents(){
+
+    const initiateButton =
+        document.getElementById(
+            "recallInitiateButton"
+        );
+
+
+    const closeButton =
+        document.getElementById(
+            "recallModalClose"
+        );
+
+
+    const cancelButton =
+        document.getElementById(
+            "recallModalCancel"
+        );
+
+
+    const confirmButton =
+        document.getElementById(
+            "recallConfirmButton"
+        );
+
+
+    const reason =
+        document.getElementById(
+            "recallReason"
+        );
+
+
+    if(
+        initiateButton
+    ){
+
+        initiateButton.addEventListener(
+            "click",
+            openRecallConfirmationModal
+        );
+
+    }
+
+
+    if(
+        closeButton
+    ){
+
+        closeButton.addEventListener(
+            "click",
+            closeRecallConfirmationModal
+        );
+
+    }
+
+
+    if(
+        cancelButton
+    ){
+
+        cancelButton.addEventListener(
+            "click",
+            closeRecallConfirmationModal
+        );
+
+    }
+
+
+    if(
+        reason
+    ){
+
+        reason.addEventListener(
+            "change",
+            updateRecallConfirmButton
+        );
+
+    }
+
+
+    if(
+        confirmButton
+    ){
+
+        confirmButton.addEventListener(
+            "click",
+            submitRecallRequest
+        );
+
+    }
+
+
+    const modal =
+        document.getElementById(
+            "recallConfirmationModal"
+        );
+
+
+    if(
+        modal
+    ){
+
+        modal.addEventListener(
+            "click",
+            function(event){
+
+                if(
+                    event.target ===
+                    modal
+                ){
+
+                    closeRecallConfirmationModal();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    document.addEventListener(
+        "keydown",
+        function(event){
+
+            if(
+                event.key === "Escape"
+            ){
+
+                closeRecallConfirmationModal();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   SUBMIT RECALL REQUEST
+============================================================ */
+
+function submitRecallRequest(){
+
+    const selected =
+        getSelectedRecallEmployees();
+
+
+    const reasonElement =
+        document.getElementById(
+            "recallReason"
+        );
+
+
+    const remarksElement =
+        document.getElementById(
+            "recallRemarks"
+        );
+
+
+    if(
+        !selected.length
+    ){
+
+        return;
+
+    }
+
+
+    if(
+        !reasonElement ||
+        !reasonElement.value
+    ){
+
+        return;
+
+    }
+
+
+    const recallRequest = {
+
+        requestId:
+            `RR-${Date.now()}`,
+
+        employeeIds:
+            selected.map(
+                employee =>
+                    String(
+                        employee.id
+                    )
+            ),
+
+        employeeCount:
+            selected.length,
+
+        reason:
+            reasonElement.value,
+
+        remarks:
+            remarksElement
+                ? remarksElement.value.trim()
+                : "",
+
+        requestedBy:
+            recallState.currentUserRole,
+
+        requestedAt:
+            new Date()
+                .toISOString(),
+
+        status:
+            "PENDING"
+
+    };
+
+
+    /*
+     * Store the request locally for now.
+     *
+     * This keeps the workflow ready for later integration
+     * with deploymentManager.js / backend storage.
+     */
+
+    const existingRequests =
+        JSON.parse(
+            localStorage.getItem(
+                "serenticaRecallRequests"
+            ) ||
+            "[]"
+        );
+
+
+    existingRequests.push(
+        recallRequest
+    );
+
+
+    localStorage.setItem(
+        "serenticaRecallRequests",
+        JSON.stringify(
+            existingRequests
+        )
+    );
+
+
+    closeRecallConfirmationModal();
+
+
+    recallState.selectedEmployees =
+        [];
+
+
+    renderRecallEmployeeTable();
+
+    updateRecallActionButton();
+
+    updateRecallSelectAllState();
+
+
+    const pending =
+        document.getElementById(
+            "recallPending"
+        );
+
+
+    if(
+        pending
+    ){
+
+        const currentPending =
+            Number(
+                pending.textContent
+            ) || 0;
+
+
+        pending.textContent =
+            currentPending + 1;
+
+    }
+
+
+    alert(
+        `Recall request ${recallRequest.requestId} submitted successfully.`
+    );
+
+
+    console.log(
+        "Recall request created:",
+        recallRequest
+    );
+
+}
+
+
+/* ============================================================
+   EXTEND PART 2 SELECTION LOGIC
+============================================================ */
+
+const originalUpdateRecallSelectionCount =
+    updateRecallSelectionCount;
+
+
+updateRecallSelectionCount =
+    function(){
+
+        originalUpdateRecallSelectionCount();
+
+        updateRecallActionButton();
+
+    };
+
+
+/* ============================================================
+   PART 3 INITIALIZATION
+============================================================ */
+
+function initializeRecallPartThree(){
+
+    initializeRecallModalEvents();
+
+    updateRecallActionButton();
+
+    updateRecallSelectAllState();
+
+
+    console.log(
+        "Recall.html Part 3 loaded successfully."
+    );
+
+}
+
+
+if(
+    document.readyState ===
+    "loading"
+){
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeRecallPartThree,
+        {
+            once:true
+        }
+    );
+
+}
+else{
+
+    initializeRecallPartThree();
+
+}
+
+</script>
+<!-- ============================================================
+     PART 4 — RECALL REQUEST HISTORY & STATUS
+============================================================ -->
+
+
+<style>
+
+    /* ========================================================
+       REQUEST HISTORY SECTION
+    ========================================================= */
+
+    .recall-history-section{
+
+        margin-top:
+            14px;
+
+        border:
+            1px solid
+            var(--serentica-border);
+
+        border-radius:
+            8px;
+
+        background:
+            var(--white);
+
+        overflow:
+            hidden;
+
+    }
+
+
+    .recall-history-header{
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            space-between;
+
+        gap:
+            10px;
+
+        padding:
+            11px 14px;
+
+        border-bottom:
+            1px solid
+            var(--serentica-border);
+
+    }
+
+
+    .recall-history-heading{
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            8px;
+
+    }
+
+
+    .recall-history-icon{
+
+        width:
+            27px;
+
+        height:
+            27px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        border-radius:
+            6px;
+
+        background:
+            var(--serentica-light);
+
+        color:
+            var(--serentica-teal);
+
+        font-size:
+            8px;
+
+    }
+
+
+    .recall-history-title{
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            8px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-history-subtitle{
+
+        margin-top:
+            2px;
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            5.5px;
+
+    }
+
+
+    .recall-history-refresh{
+
+        height:
+            28px;
+
+        padding:
+            0 9px;
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        gap:
+            5px;
+
+        border:
+            1px solid
+            var(--serentica-border);
+
+        border-radius:
+            6px;
+
+        background:
+            var(--white);
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            6px;
+
+        font-weight:
+            800;
+
+        cursor:
+            pointer;
+
+    }
+
+
+    .recall-history-refresh:hover{
+
+        border-color:
+            var(--serentica-teal);
+
+        color:
+            var(--serentica-teal);
+
+    }
+
+
+    /* ========================================================
+       HISTORY FILTERS
+    ========================================================= */
+
+    .recall-history-filters{
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            7px;
+
+        padding:
+            9px 14px;
+
+        background:
+            #FAFCFC;
+
+        border-bottom:
+            1px solid
+            var(--serentica-border);
+
+    }
+
+
+    .recall-history-filter{
+
+        height:
+            28px;
+
+        padding:
+            0 8px;
+
+        border:
+            1px solid
+            var(--serentica-border);
+
+        border-radius:
+            5px;
+
+        background:
+            var(--white);
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            6px;
+
+        outline:
+            none;
+
+    }
+
+
+    .recall-history-filter:focus{
+
+        border-color:
+            var(--serentica-teal);
+
+    }
+
+
+    /* ========================================================
+       HISTORY TABLE
+    ========================================================= */
+
+    .recall-history-table-wrapper{
+
+        width:
+            100%;
+
+        overflow-x:
+            auto;
+
+    }
+
+
+    .recall-history-table{
+
+        width:
+            100%;
+
+        min-width:
+            850px;
+
+        border-collapse:
+            collapse;
+
+    }
+
+
+    .recall-history-table th{
+
+        padding:
+            8px 10px;
+
+        background:
+            #F7FAFA;
+
+        border-bottom:
+            1px solid
+            var(--serentica-border);
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            5px;
+
+        font-weight:
+            900;
+
+        text-align:
+            left;
+
+        white-space:
+            nowrap;
+
+    }
+
+
+    .recall-history-table td{
+
+        padding:
+            8px 10px;
+
+        border-bottom:
+            1px solid
+            #EDF3F3;
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            5.8px;
+
+        vertical-align:
+            middle;
+
+    }
+
+
+    .recall-history-table tbody tr:hover{
+
+        background:
+            #FBFEFE;
+
+    }
+
+
+    .recall-request-id{
+
+        color:
+            var(--serentica-teal);
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-history-count{
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        min-width:
+            22px;
+
+        padding:
+            3px 5px;
+
+        border-radius:
+            4px;
+
+        background:
+            var(--serentica-light);
+
+        color:
+            var(--serentica-teal);
+
+        font-size:
+            5px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    /* ========================================================
+       REQUEST STATUS
+    ========================================================= */
+
+    .recall-request-status{
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        gap:
+            4px;
+
+        padding:
+            4px 6px;
+
+        border-radius:
+            5px;
+
+        font-size:
+            5px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-request-status.pending{
+
+        background:
+            #FFF6E8;
+
+        color:
+            var(--warning);
+
+    }
+
+
+    .recall-request-status.approved{
+
+        background:
+            #EEF8F1;
+
+        color:
+            var(--success);
+
+    }
+
+
+    .recall-request-status.rejected{
+
+        background:
+            #FFF0F0;
+
+        color:
+            var(--danger);
+
+    }
+
+
+    .recall-request-status.completed{
+
+        background:
+            var(--serentica-light);
+
+        color:
+            var(--serentica-teal);
+
+    }
+
+
+    .recall-request-status-dot{
+
+        width:
+            4px;
+
+        height:
+            4px;
+
+        border-radius:
+            50%;
+
+        background:
+            currentColor;
+
+    }
+
+
+    /* ========================================================
+       HISTORY EMPTY STATE
+    ========================================================= */
+
+    .recall-history-empty{
+
+        display:
+            none;
+
+        padding:
+            30px 15px;
+
+        text-align:
+            center;
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            6px;
+
+    }
+
+
+    .recall-history-empty i{
+
+        display:
+            block;
+
+        margin-bottom:
+            7px;
+
+        color:
+            var(--serentica-teal);
+
+        font-size:
+            15px;
+
+    }
+
+
+    /* ========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media(
+        max-width:650px
+    ){
+
+        .recall-history-header{
+
+            align-items:
+                flex-start;
+
+            flex-direction:
+                column;
+
+        }
+
+
+        .recall-history-refresh{
+
+            width:
+                100%;
+
+        }
+
+
+        .recall-history-filters{
+
+            flex-wrap:
+                wrap;
+
+        }
+
+    }
+
+</style>
+
+
+<!-- ============================================================
+     REQUEST HISTORY
+============================================================ -->
+
+<section
+    class="recall-history-section"
+    id="recallHistorySection"
+>
+
+
+    <!-- ========================================================
+         HEADER
+    ========================================================= -->
+
+    <div
+        class="recall-history-header"
+    >
+
+        <div
+            class="recall-history-heading"
+        >
+
+            <div
+                class="recall-history-icon"
+            >
+
+                <i
+                    class="fa-solid fa-clock-rotate-left"
+                ></i>
+
+            </div>
+
+
+            <div>
+
+                <div
+                    class="recall-history-title"
+                >
+
+                    Recall Request History
+
+                </div>
+
+
+                <div
+                    class="recall-history-subtitle"
+                >
+
+                    Track submitted manpower recall requests
+                    and their current approval status.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="recall-history-refresh"
+            id="recallHistoryRefresh"
+        >
+
+            <i
+                class="fa-solid fa-rotate"
+            ></i>
+
+            Refresh
+
+        </button>
+
+    </div>
+
+
+    <!-- ========================================================
+         HISTORY FILTERS
+    ========================================================= -->
+
+    <div
+        class="recall-history-filters"
+    >
+
+        <select
+            class="recall-history-filter"
+            id="recallHistoryStatusFilter"
+        >
+
+            <option value="ALL">
+                All Status
+            </option>
+
+            <option value="PENDING">
+                Pending
+            </option>
+
+            <option value="APPROVED">
+                Approved
+            </option>
+
+            <option value="REJECTED">
+                Rejected
+            </option>
+
+            <option value="COMPLETED">
+                Completed
+            </option>
+
+        </select>
+
+
+        <select
+            class="recall-history-filter"
+            id="recallHistoryReasonFilter"
+        >
+
+            <option value="ALL">
+                All Reasons
+            </option>
+
+            <option value="TASK_COMPLETED">
+                Task Completed
+            </option>
+
+            <option value="PROJECT_REQUIREMENT">
+                Project Requirement Changed
+            </option>
+
+            <option value="RESOURCE_REALLOCATION">
+                Resource Reallocation
+            </option>
+
+            <option value="PERFORMANCE_REVIEW">
+                Performance Review
+            </option>
+
+            <option value="SITE_REQUIREMENT">
+                Site Requirement
+            </option>
+
+            <option value="OTHER">
+                Other
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- ========================================================
+         HISTORY TABLE
+    ========================================================= -->
+
+    <div
+        class="recall-history-table-wrapper"
+        id="recallHistoryTableWrapper"
+    >
+
+        <table
+            class="recall-history-table"
+        >
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        REQUEST ID
+                    </th>
+
+                    <th>
+                        EMPLOYEES
+                    </th>
+
+                    <th>
+                        REASON
+                    </th>
+
+                    <th>
+                        REQUESTED BY
+                    </th>
+
+                    <th>
+                        REQUESTED ON
+                    </th>
+
+                    <th>
+                        STATUS
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody
+                id="recallHistoryTableBody"
+            >
+
+                <!-- Requests generated dynamically -->
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================
+         EMPTY HISTORY
+    ========================================================= -->
+
+    <div
+        class="recall-history-empty"
+        id="recallHistoryEmpty"
+    >
+
+        <i
+            class="fa-solid fa-clock-rotate-left"
+        ></i>
+
+        No recall requests found.
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     PART 4 JAVASCRIPT
+============================================================ -->
+
+<script>
+
+/* ============================================================
+   RECALL REQUEST STORAGE
+============================================================ */
+
+function getRecallRequests(){
+
+    try{
+
+        const storedRequests =
+            localStorage.getItem(
+                "serenticaRecallRequests"
+            );
+
+
+        if(
+            !storedRequests
+        ){
+
+            return [];
+
+        }
+
+
+        const parsedRequests =
+            JSON.parse(
+                storedRequests
+            );
+
+
+        return Array.isArray(
+            parsedRequests
+        )
+            ? parsedRequests
+            : [];
+
+    }
+    catch(
+        error
+    ){
+
+        console.error(
+            "Unable to read recall requests:",
+            error
+        );
+
+
+        return [];
+
+    }
+
+}
+
+
+/* ============================================================
+   SAVE RECALL REQUESTS
+============================================================ */
+
+function saveRecallRequests(
+    requests
+){
+
+    localStorage.setItem(
+        "serenticaRecallRequests",
+        JSON.stringify(
+            requests
+        )
+    );
+
+}
+
+
+/* ============================================================
+   FORMAT DATE
+============================================================ */
+
+function formatRecallRequestDate(
+    value
+){
+
+    if(
+        !value
+    ){
+
+        return "—";
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return recallSafeText(
+            value
+        );
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day:
+                "2-digit",
+
+            month:
+                "short",
+
+            year:
+                "numeric"
+        }
+    );
+
+}
+
+
+/* ============================================================
+   REASON LABEL
+============================================================ */
+
+function getRecallReasonLabel(
+    reason
+){
+
+    const labels = {
+
+        TASK_COMPLETED:
+            "Task Completed",
+
+        PROJECT_REQUIREMENT:
+            "Project Requirement Changed",
+
+        RESOURCE_REALLOCATION:
+            "Resource Reallocation",
+
+        PERFORMANCE_REVIEW:
+            "Performance Review",
+
+        SITE_REQUIREMENT:
+            "Site Requirement",
+
+        OTHER:
+            "Other"
+
+    };
+
+
+    return labels[
+        reason
+    ] ||
+        recallSafeText(
+            reason
+        ) ||
+        "—";
+
+}
+
+
+/* ============================================================
+   STATUS LABEL
+============================================================ */
+
+function getRecallStatusLabel(
+    status
+){
+
+    const labels = {
+
+        PENDING:
+            "Pending",
+
+        APPROVED:
+            "Approved",
+
+        REJECTED:
+            "Rejected",
+
+        COMPLETED:
+            "Completed"
+
+    };
+
+
+    return labels[
+        status
+    ] ||
+        "Pending";
+
+}
+
+
+/* ============================================================
+   STATUS CLASS
+============================================================ */
+
+function getRecallStatusClass(
+    status
+){
+
+    const normalized =
+        recallSafeText(
+            status
+        )
+        .toUpperCase();
+
+
+    if(
+        normalized ===
+        "APPROVED"
+    ){
+
+        return "approved";
+
+    }
+
+
+    if(
+        normalized ===
+        "REJECTED"
+    ){
+
+        return "rejected";
+
+    }
+
+
+    if(
+        normalized ===
+        "COMPLETED"
+    ){
+
+        return "completed";
+
+    }
+
+
+    return "pending";
+
+}
+
+
+/* ============================================================
+   FILTER REQUEST HISTORY
+============================================================ */
+
+function getFilteredRecallRequests(){
+
+    const requests =
+        getRecallRequests();
+
+
+    const statusFilter =
+        document.getElementById(
+            "recallHistoryStatusFilter"
+        );
+
+
+    const reasonFilter =
+        document.getElementById(
+            "recallHistoryReasonFilter"
+        );
+
+
+    const selectedStatus =
+        statusFilter?.value ||
+        "ALL";
+
+
+    const selectedReason =
+        reasonFilter?.value ||
+        "ALL";
+
+
+    return requests.filter(
+        request => {
+
+            const requestStatus =
+                recallSafeText(
+                    request.status
+                )
+                .toUpperCase();
+
+
+            const requestReason =
+                recallSafeText(
+                    request.reason
+                );
+
+
+            const matchesStatus =
+                selectedStatus ===
+                "ALL" ||
+                requestStatus ===
+                selectedStatus;
+
+
+            const matchesReason =
+                selectedReason ===
+                "ALL" ||
+                requestReason ===
+                selectedReason;
+
+
+            return (
+                matchesStatus &&
+                matchesReason
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   RENDER HISTORY
+============================================================ */
+
+function renderRecallHistory(){
+
+    const tableBody =
+        document.getElementById(
+            "recallHistoryTableBody"
+        );
+
+
+    const tableWrapper =
+        document.getElementById(
+            "recallHistoryTableWrapper"
+        );
+
+
+    const emptyState =
+        document.getElementById(
+            "recallHistoryEmpty"
+        );
+
+
+    if(
+        !tableBody
+    ){
+
+        return;
+
+    }
+
+
+    const requests =
+        getFilteredRecallRequests();
+
+
+    tableBody.innerHTML =
+        "";
+
+
+    if(
+        !requests.length
+    ){
+
+        if(
+            tableWrapper
+        ){
+
+            tableWrapper.style.display =
+                "none";
+
+        }
+
+
+        if(
+            emptyState
+        ){
+
+            emptyState.style.display =
+                "block";
+
+        }
+
+
+        return;
+
+    }
+
+
+    if(
+        tableWrapper
+    ){
+
+        tableWrapper.style.display =
+            "block";
+
+    }
+
+
+    if(
+        emptyState
+    ){
+
+        emptyState.style.display =
+            "none";
+
+    }
+
+
+    /*
+     * Show newest requests first.
+     */
+
+    const orderedRequests =
+        [...requests]
+            .reverse();
+
+
+    orderedRequests.forEach(
+        request => {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const status =
+                recallSafeText(
+                    request.status
+                )
+                .toUpperCase() ||
+                "PENDING";
+
+
+            row.innerHTML =
+                `
+
+                    <td>
+
+                        <span
+                            class="recall-request-id"
+                        >
+
+                            ${recallSafeText(request.requestId)}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="recall-history-count"
+                        >
+
+                            ${Number(request.employeeCount) || 0}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        ${getRecallReasonLabel(request.reason)}
+
+                    </td>
+
+
+                    <td>
+
+                        ${recallSafeText(request.requestedBy)}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatRecallRequestDate(request.requestedAt)}
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="recall-request-status ${getRecallStatusClass(status)}"
+                        >
+
+                            <span
+                                class="recall-request-status-dot"
+                            ></span>
+
+                            ${getRecallStatusLabel(status)}
+
+                        </span>
+
+                    </td>
+
+                `;
+
+
+            tableBody.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   UPDATE PENDING COUNT
+============================================================ */
+
+function updateRecallPendingCount(){
+
+    const pendingElement =
+        document.getElementById(
+            "recallPending"
+        );
+
+
+    if(
+        !pendingElement
+    ){
+
+        return;
+
+    }
+
+
+    const requests =
+        getRecallRequests();
+
+
+    const pendingCount =
+        requests.filter(
+            request =>
+                String(
+                    request.status
+                )
+                .toUpperCase() ===
+                "PENDING"
+        ).length;
+
+
+    pendingElement.textContent =
+        pendingCount;
+
+}
+
+
+/* ============================================================
+   REFRESH HISTORY
+============================================================ */
+
+function refreshRecallHistory(){
+
+    renderRecallHistory();
+
+    updateRecallPendingCount();
+
+}
+
+
+/* ============================================================
+   INITIALIZE HISTORY EVENTS
+============================================================ */
+
+function initializeRecallHistoryEvents(){
+
+    const refreshButton =
+        document.getElementById(
+            "recallHistoryRefresh"
+        );
+
+
+    const statusFilter =
+        document.getElementById(
+            "recallHistoryStatusFilter"
+        );
+
+
+    const reasonFilter =
+        document.getElementById(
+            "recallHistoryReasonFilter"
+        );
+
+
+    if(
+        refreshButton
+    ){
+
+        refreshButton.addEventListener(
+            "click",
+            refreshRecallHistory
+        );
+
+    }
+
+
+    if(
+        statusFilter
+    ){
+
+        statusFilter.addEventListener(
+            "change",
+            renderRecallHistory
+        );
+
+    }
+
+
+    if(
+        reasonFilter
+    ){
+
+        reasonFilter.addEventListener(
+            "change",
+            renderRecallHistory
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   PART 4 INITIALIZATION
+============================================================ */
+
+function initializeRecallPartFour(){
+
+    initializeRecallHistoryEvents();
+
+    renderRecallHistory();
+
+    updateRecallPendingCount();
+
+
+    console.log(
+        "Recall.html Part 4 loaded successfully."
+    );
+
+}
+
+
+if(
+    document.readyState ===
+    "loading"
+){
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeRecallPartFour,
+        {
+            once:true
+        }
+    );
+
+}
+else{
+
+    initializeRecallPartFour();
+
+}
+
+</script>
+<!-- ============================================================
+     PART 5 — RECALL APPROVAL / REJECTION WORKFLOW
+============================================================ -->
+
+<style>
+
+    .recall-approval-actions{
+
+        display:flex;
+        align-items:center;
+        gap:5px;
+
+    }
+
+    .recall-approval-btn{
+
+        height:25px;
+        padding:0 7px;
+
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        gap:4px;
+
+        border:1px solid
+            var(--serentica-border);
+
+        border-radius:5px;
+
+        font-size:5.5px;
+        font-weight:900;
+
+        cursor:pointer;
+
+    }
+
+    .recall-approve-btn{
+
+        background:#EEF8F1;
+        color:var(--success);
+        border-color:#CDE8D4;
+
+    }
+
+    .recall-reject-btn{
+
+        background:#FFF0F0;
+        color:var(--danger);
+        border-color:#F0CCCC;
+
+    }
+
+    .recall-approval-btn:hover{
+
+        filter:brightness(.96);
+
+        transform:translateY(-1px);
+
+    }
+
+
+    .recall-history-action-header{
+
+        text-align:center !important;
+
+    }
+
+
+    .recall-decision-modal
+    .recall-modal{
+
+        width:min(
+            440px,
+            100%
+        );
+
+    }
+
+
+    .recall-decision-message{
+
+        padding:10px;
+
+        border-radius:7px;
+
+        background:#F7FAFA;
+
+        border:1px solid
+            var(--serentica-border);
+
+        color:var(--serentica-dark);
+
+        font-size:6.5px;
+
+        line-height:1.5;
+
+    }
+
+
+    .recall-decision-request-id{
+
+        margin-top:5px;
+
+        color:var(--serentica-teal);
+
+        font-size:6px;
+
+        font-weight:900;
+
+    }
+
+
+    .recall-decision-textarea{
+
+        width:100%;
+
+        min-height:65px;
+
+        padding:8px;
+
+        resize:vertical;
+
+        border:1px solid
+            var(--serentica-border);
+
+        border-radius:6px;
+
+        outline:none;
+
+        font-size:6.5px;
+
+        color:var(--serentica-dark);
+
+    }
+
+
+    .recall-decision-textarea:focus{
+
+        border-color:
+            var(--serentica-teal);
+
+        box-shadow:
+            0 0 0 2px
+            rgba(
+                51,
+                167,
+                181,
+                .08
+            );
+
+    }
+
+</style>
+
+
+<!-- ============================================================
+     DECISION MODAL
+============================================================ -->
+
+<div
+    class="recall-modal-overlay recall-decision-modal"
+    id="recallDecisionModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="recallDecisionTitle"
+>
+
+    <div class="recall-modal">
+
+        <div class="recall-modal-header">
+
+            <div class="recall-modal-heading">
+
+                <div
+                    class="recall-modal-icon"
+                >
+
+                    <i
+                        id="recallDecisionIcon"
+                        class="fa-solid fa-check"
+                    ></i>
+
+                </div>
+
+
+                <div>
+
+                    <div
+                        class="recall-modal-title"
+                        id="recallDecisionTitle"
+                    >
+
+                        Review Recall Request
+
+                    </div>
+
+
+                    <div
+                        class="recall-modal-subtitle"
+                        id="recallDecisionSubtitle"
+                    >
+
+                        Review the request before making
+                        a decision.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="recall-modal-close"
+                id="recallDecisionClose"
+                aria-label="Close"
+            >
+
+                <i
+                    class="fa-solid fa-xmark"
+                ></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="recall-modal-body">
+
+            <div
+                class="recall-decision-message"
+                id="recallDecisionMessage"
+            >
+
+                <!-- Generated dynamically -->
+
+            </div>
+
+
+            <div
+                class="recall-form-group"
+            >
+
+                <label
+                    class="recall-form-label"
+                    for="recallDecisionRemarks"
+                >
+
+                    Decision Remarks
+
+                </label>
+
+
+                <textarea
+                    id="recallDecisionRemarks"
+                    class="recall-decision-textarea"
+                    placeholder="Enter remarks for this decision..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <div class="recall-modal-footer">
+
+            <button
+                type="button"
+                class="recall-modal-button recall-modal-cancel"
+                id="recallDecisionCancel"
+            >
+
+                Cancel
+
+            </button>
+
+
+            <button
+                type="button"
+                class="recall-modal-button recall-modal-confirm"
+                id="recallDecisionConfirm"
+            >
+
+                <i
+                    class="fa-solid fa-check"
+                ></i>
+
+                Confirm Decision
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     PART 5 JAVASCRIPT
+============================================================ -->
+
+<script>
+
+/* ============================================================
+   CURRENT DECISION STATE
+============================================================ */
+
+const recallDecisionState = {
+
+    requestId:
+        null,
+
+    decision:
+        null
+
+};
+
+
+/* ============================================================
+   CHECK APPROVAL PERMISSION
+============================================================ */
+
+function canApproveRecall(){
+
+    const role =
+        String(
+            recallState.currentUserRole || ""
+        )
+        .toUpperCase();
+
+
+    return (
+
+        role === "ADMIN" ||
+
+        role === "PROJECT_MANAGER"
+
+    );
+
+}
+
+
+/* ============================================================
+   OPEN DECISION MODAL
+============================================================ */
+
+function openRecallDecisionModal(
+    requestId,
+    decision
+){
+
+    if(
+        !canApproveRecall()
+    ){
+
+        alert(
+            "You do not have permission to approve or reject recall requests."
+        );
+
+        return;
+
+    }
+
+
+    const requests =
+        getRecallRequests();
+
+
+    const request =
+        requests.find(
+            item =>
+                String(
+                    item.requestId
+                ) ===
+                String(
+                    requestId
+                )
+        );
+
+
+    if(
+        !request
+    ){
+
+        return;
+
+    }
+
+
+    if(
+        String(
+            request.status
+        ).toUpperCase() !==
+        "PENDING"
+    ){
+
+        alert(
+            "This recall request has already been processed."
+        );
+
+        return;
+
+    }
+
+
+    recallDecisionState.requestId =
+        requestId;
+
+
+    recallDecisionState.decision =
+        decision;
+
+
+    const title =
+        document.getElementById(
+            "recallDecisionTitle"
+        );
+
+
+    const subtitle =
+        document.getElementById(
+            "recallDecisionSubtitle"
+        );
+
+
+    const icon =
+        document.getElementById(
+            "recallDecisionIcon"
+        );
+
+
+    const message =
+        document.getElementById(
+            "recallDecisionMessage"
+        );
+
+
+    const remarks =
+        document.getElementById(
+            "recallDecisionRemarks"
+        );
+
+
+    if(
+        decision ===
+        "APPROVED"
+    ){
+
+        title.textContent =
+            "Approve Recall Request";
+
+
+        subtitle.textContent =
+            "Confirm that this manpower recall request should proceed.";
+
+
+        icon.className =
+            "fa-solid fa-check";
+
+
+        icon.style.color =
+            "var(--success)";
+
+    }
+    else{
+
+        title.textContent =
+            "Reject Recall Request";
+
+
+        subtitle.textContent =
+            "Confirm that this manpower recall request should be rejected.";
+
+
+        icon.className =
+            "fa-solid fa-xmark";
+
+
+        icon.style.color =
+            "var(--danger)";
+
+    }
+
+
+    message.innerHTML =
+        `
+
+            <strong>
+                Recall Request
+            </strong>
+
+            <div
+                class="recall-decision-request-id"
+            >
+
+                ${recallSafeText(request.requestId)}
+
+            </div>
+
+
+            <div style="margin-top:6px;">
+
+                Employees:
+                <strong>
+                    ${Number(request.employeeCount) || 0}
+                </strong>
+
+                <br>
+
+                Reason:
+                <strong>
+                    ${getRecallReasonLabel(request.reason)}
+                </strong>
+
+                <br>
+
+                Requested By:
+                <strong>
+                    ${recallSafeText(request.requestedBy)}
+                </strong>
+
+            </div>
+
+        `;
+
+
+    if(
+        remarks
+    ){
+
+        remarks.value =
+            "";
+
+    }
+
+
+    const modal =
+        document.getElementById(
+            "recallDecisionModal"
+        );
+
+
+    if(
+        modal
+    ){
+
+        modal.classList.add(
+            "active"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+
+}
+
+
+/* ============================================================
+   CLOSE DECISION MODAL
+============================================================ */
+
+function closeRecallDecisionModal(){
+
+    const modal =
+        document.getElementById(
+            "recallDecisionModal"
+        );
+
+
+    if(
+        modal
+    ){
+
+        modal.classList.remove(
+            "active"
+        );
+
+    }
+
+
+    recallDecisionState.requestId =
+        null;
+
+
+    recallDecisionState.decision =
+        null;
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* ============================================================
+   PROCESS DECISION
+============================================================ */
+
+function processRecallDecision(){
+
+    const requestId =
+        recallDecisionState.requestId;
+
+
+    const decision =
+        recallDecisionState.decision;
+
+
+    if(
+        !requestId ||
+        !decision
+    ){
+
+        return;
+
+    }
+
+
+    const requests =
+        getRecallRequests();
+
+
+    const requestIndex =
+        requests.findIndex(
+            request =>
+                String(
+                    request.requestId
+                ) ===
+                String(
+                    requestId
+                )
+        );
+
+
+    if(
+        requestIndex === -1
+    ){
+
+        return;
+
+    }
+
+
+    const request =
+        requests[
+            requestIndex
+        ];
+
+
+    if(
+        String(
+            request.status
+        ).toUpperCase() !==
+        "PENDING"
+    ){
+
+        closeRecallDecisionModal();
+
+        renderRecallHistory();
+
+        return;
+
+    }
+
+
+    const remarksElement =
+        document.getElementById(
+            "recallDecisionRemarks"
+        );
+
+
+    const decisionRemarks =
+        remarksElement
+            ? remarksElement.value.trim()
+            : "";
+
+
+    request.status =
+        decision;
+
+
+    request.decisionBy =
+        recallState.currentUserRole;
+
+
+    request.decisionAt =
+        new Date()
+            .toISOString();
+
+
+    request.decisionRemarks =
+        decisionRemarks;
+
+
+    requests[
+        requestIndex
+    ] =
+        request;
+
+
+    saveRecallRequests(
+        requests
+    );
+
+
+    closeRecallDecisionModal();
+
+
+    renderRecallHistory();
+
+    updateRecallPendingCount();
+
+
+    /*
+     * Do not directly modify employee deployment data here.
+     *
+     * The actual deployment-state update will be connected
+     * through the existing deployment manager in the next
+     * integration stage.
+     */
+
+
+    if(
+        decision ===
+        "APPROVED"
+    ){
+
+        alert(
+            `Recall request ${requestId} has been approved.`
+        );
+
+    }
+    else{
+
+        alert(
+            `Recall request ${requestId} has been rejected.`
+        );
+
+    }
+
+
+    console.log(
+        "Recall decision processed:",
+        request
+    );
+
+}
+
+
+/* ============================================================
+   CREATE APPROVAL ACTIONS
+============================================================ */
+
+function getRecallHistoryActionCell(
+    request
+){
+
+    const cell =
+        document.createElement(
+            "td"
+        );
+
+
+    const status =
+        String(
+            request.status || ""
+        )
+        .toUpperCase();
+
+
+    if(
+        status !==
+        "PENDING" ||
+        !canApproveRecall()
+    ){
+
+        cell.innerHTML =
+            `<span style="color:var(--serentica-muted);">
+                —
+            </span>`;
+
+        return cell;
+
+    }
+
+
+    const wrapper =
+        document.createElement(
+            "div"
+        );
+
+
+    wrapper.className =
+        "recall-approval-actions";
+
+
+    const approve =
+        document.createElement(
+            "button"
+        );
+
+
+    approve.type =
+        "button";
+
+
+    approve.className =
+        "recall-approval-btn recall-approve-btn";
+
+
+    approve.innerHTML =
+        `
+            <i class="fa-solid fa-check"></i>
+            Approve
+        `;
+
+
+    approve.addEventListener(
+        "click",
+        function(){
+
+            openRecallDecisionModal(
+                request.requestId,
+                "APPROVED"
+            );
+
+        }
+    );
+
+
+    const reject =
+        document.createElement(
+            "button"
+        );
+
+
+    reject.type =
+        "button";
+
+
+    reject.className =
+        "recall-approval-btn recall-reject-btn";
+
+
+    reject.innerHTML =
+        `
+            <i class="fa-solid fa-xmark"></i>
+            Reject
+        `;
+
+
+    reject.addEventListener(
+        "click",
+        function(){
+
+            openRecallDecisionModal(
+                request.requestId,
+                "REJECTED"
+            );
+
+        }
+    );
+
+
+    wrapper.appendChild(
+        approve
+    );
+
+
+    wrapper.appendChild(
+        reject
+    );
+
+
+    cell.appendChild(
+        wrapper
+    );
+
+
+    return cell;
+
+}
+
+
+/* ============================================================
+   OVERRIDE HISTORY RENDERER
+============================================================ */
+
+const originalRenderRecallHistory =
+    renderRecallHistory;
+
+
+renderRecallHistory =
+    function(){
+
+        originalRenderRecallHistory();
+
+
+        const tableBody =
+            document.getElementById(
+                "recallHistoryTableBody"
+            );
+
+
+        if(
+            !tableBody
+        ){
+
+            return;
+
+        }
+
+
+        /*
+         * Add Actions header only once.
+         */
+
+        const table =
+            document.querySelector(
+                ".recall-history-table"
+            );
+
+
+        const headerRow =
+            table
+                ? table.querySelector(
+                    "thead tr"
+                )
+                : null;
+
+
+        if(
+            headerRow &&
+            !headerRow.querySelector(
+                ".recall-history-action-header"
+            )
+        ){
+
+            const actionHeader =
+                document.createElement(
+                    "th"
+                );
+
+
+            actionHeader.className =
+                "recall-history-action-header";
+
+
+            actionHeader.textContent =
+                "ACTION";
+
+
+            headerRow.appendChild(
+                actionHeader
+            );
+
+        }
+
+
+        const rows =
+            Array.from(
+                tableBody.querySelectorAll(
+                    "tr"
+                )
+            );
+
+
+        const requests =
+            getFilteredRecallRequests()
+                .reverse();
+
+
+        rows.forEach(
+            (
+                row,
+                index
+            ) => {
+
+                const request =
+                    requests[index];
+
+
+                if(
+                    request
+                ){
+
+                    row.appendChild(
+                        getRecallHistoryActionCell(
+                            request
+                        )
+                    );
+
+                }
+
+            }
+        );
+
+    };
+
+
+/* ============================================================
+   INITIALIZE PART 5
+============================================================ */
+
+function initializeRecallPartFive(){
+
+    const closeButton =
+        document.getElementById(
+            "recallDecisionClose"
+        );
+
+
+    const cancelButton =
+        document.getElementById(
+            "recallDecisionCancel"
+        );
+
+
+    const confirmButton =
+        document.getElementById(
+            "recallDecisionConfirm"
+        );
+
+
+    const modal =
+        document.getElementById(
+            "recallDecisionModal"
+        );
+
+
+    if(
+        closeButton
+    ){
+
+        closeButton.addEventListener(
+            "click",
+            closeRecallDecisionModal
+        );
+
+    }
+
+
+    if(
+        cancelButton
+    ){
+
+        cancelButton.addEventListener(
+            "click",
+            closeRecallDecisionModal
+        );
+
+    }
+
+
+    if(
+        confirmButton
+    ){
+
+        confirmButton.addEventListener(
+            "click",
+            processRecallDecision
+        );
+
+    }
+
+
+    if(
+        modal
+    ){
+
+        modal.addEventListener(
+            "click",
+            function(event){
+
+                if(
+                    event.target ===
+                    modal
+                ){
+
+                    closeRecallDecisionModal();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    document.addEventListener(
+        "keydown",
+        function(event){
+
+            if(
+                event.key ===
+                "Escape"
+            ){
+
+                closeRecallDecisionModal();
+
+            }
+
+        }
+    );
+
+
+    /*
+     * Re-render the history after all Part 5
+     * functions are available.
+     */
+
+    renderRecallHistory();
+
+
+    console.log(
+        "Recall.html Part 5 loaded successfully."
+    );
+
+}
+
+
+if(
+    document.readyState ===
+    "loading"
+){
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeRecallPartFive,
+        {
+            once:true
+        }
+    );
+
+}
+else{
+
+    initializeRecallPartFive();
+
+}
+
+</script>
+<!-- ============================================================
+     PART 6 — APPROVED RECALL & DEPLOYMENT STATUS INTEGRATION
+============================================================ -->
+
+<style>
+
+    /* ========================================================
+       COMPLETION NOTIFICATION
+    ========================================================= */
+
+    .recall-notification{
+
+        position:fixed;
+
+        top:18px;
+        right:18px;
+
+        z-index:9000;
+
+        width:min(
+            330px,
+            calc(100vw - 36px)
+        );
+
+        display:flex;
+
+        align-items:flex-start;
+
+        gap:9px;
+
+        padding:11px 12px;
+
+        background:
+            var(--white);
+
+        border:
+            1px solid
+            var(--serentica-border);
+
+        border-left:
+            4px solid
+            var(--serentica-teal);
+
+        border-radius:8px;
+
+        box-shadow:
+            0 12px 35px
+            rgba(
+                20,
+                60,
+                65,
+                .16
+            );
+
+        opacity:0;
+
+        transform:
+            translateY(
+                -8px
+            );
+
+        pointer-events:none;
+
+        transition:
+            .2s ease;
+
+    }
+
+
+    .recall-notification.show{
+
+        opacity:1;
+
+        transform:
+            translateY(
+                0
+            );
+
+    }
+
+
+    .recall-notification.success{
+
+        border-left-color:
+            var(--success);
+
+    }
+
+
+    .recall-notification.error{
+
+        border-left-color:
+            var(--danger);
+
+    }
+
+
+    .recall-notification-icon{
+
+        width:25px;
+        height:25px;
+
+        display:flex;
+
+        align-items:center;
+        justify-content:center;
+
+        flex-shrink:0;
+
+        border-radius:6px;
+
+        background:
+            var(--serentica-light);
+
+        color:
+            var(--serentica-teal);
+
+        font-size:7px;
+
+    }
+
+
+    .recall-notification.success
+    .recall-notification-icon{
+
+        background:#EEF8F1;
+
+        color:var(--success);
+
+    }
+
+
+    .recall-notification.error
+    .recall-notification-icon{
+
+        background:#FFF0F0;
+
+        color:var(--danger);
+
+    }
+
+
+    .recall-notification-title{
+
+        color:
+            var(--serentica-dark);
+
+        font-size:6.5px;
+
+        font-weight:900;
+
+    }
+
+
+    .recall-notification-message{
+
+        margin-top:3px;
+
+        color:
+            var(--serentica-muted);
+
+        font-size:5.5px;
+
+        line-height:1.45;
+
+    }
+
+
+    /* ========================================================
+       RECALLED STATUS
+    ========================================================= */
+
+    .recall-status-recalled{
+
+        display:inline-flex;
+
+        align-items:center;
+
+        gap:4px;
+
+        padding:4px 6px;
+
+        border-radius:5px;
+
+        background:#EEF8F1;
+
+        color:var(--success);
+
+        font-size:5px;
+
+        font-weight:900;
+
+    }
+
+
+    .recall-status-recalled i{
+
+        font-size:4.5px;
+
+    }
+
+</style>
+
+
+<!-- ============================================================
+     NOTIFICATION CONTAINER
+============================================================ -->
+
+<div
+    id="recallNotification"
+    class="recall-notification"
+    aria-live="polite"
+>
+
+    <div
+        class="recall-notification-icon"
+        id="recallNotificationIcon"
+    >
+
+        <i
+            class="fa-solid fa-check"
+        ></i>
+
+    </div>
+
+
+    <div>
+
+        <div
+            class="recall-notification-title"
+            id="recallNotificationTitle"
+        >
+
+            Recall Updated
+
+        </div>
+
+
+        <div
+            class="recall-notification-message"
+            id="recallNotificationMessage"
+        >
+
+            Recall information has been updated.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     PART 6 JAVASCRIPT
+============================================================ -->
+
+<script>
+
+/* ============================================================
+   DEPLOYMENT DATA STORAGE KEY
+============================================================ */
+
+const RECALL_DEPLOYMENT_STORAGE_KEY =
+    "serenticaSiteManpowerData";
+
+
+/* ============================================================
+   SHOW NOTIFICATION
+============================================================ */
+
+function showRecallNotification(
+    title,
+    message,
+    type = "success"
+){
+
+    const notification =
+        document.getElementById(
+            "recallNotification"
+        );
+
+
+    const titleElement =
+        document.getElementById(
+            "recallNotificationTitle"
+        );
+
+
+    const messageElement =
+        document.getElementById(
+            "recallNotificationMessage"
+        );
+
+
+    const icon =
+        document.getElementById(
+            "recallNotificationIcon"
+        );
+
+
+    if(
+        !notification
+    ){
+
+        return;
+
+    }
+
+
+    if(
+        titleElement
+    ){
+
+        titleElement.textContent =
+            title;
+
+    }
+
+
+    if(
+        messageElement
+    ){
+
+        messageElement.textContent =
+            message;
+
+    }
+
+
+    notification.classList.remove(
+        "success",
+        "error"
+    );
+
+
+    notification.classList.add(
+        type
+    );
+
+
+    if(
+        icon
+    ){
+
+        icon.innerHTML =
+            type === "error"
+                ? `<i class="fa-solid fa-xmark"></i>`
+                : `<i class="fa-solid fa-check"></i>`;
+
+    }
+
+
+    notification.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        window.recallNotificationTimer
+    );
+
+
+    window.recallNotificationTimer =
+        setTimeout(
+            function(){
+
+                notification.classList.remove(
+                    "show"
+                );
+
+            },
+            3500
+        );
+
+}
+
+
+/* ============================================================
+   NORMALIZE EMPLOYEE OBJECT
+============================================================ */
+
+function normalizeRecallEmployee(
+    employee
+){
+
+    if(
+        !employee ||
+        typeof employee !== "object"
+    ){
+
+        return null;
+
+    }
+
+
+    const normalized =
+        {
+            ...employee
+        };
+
+
+    normalized.id =
+        String(
+            employee.id ??
+            employee.employeeId ??
+            employee.empId ??
+            ""
+        );
+
+
+    normalized.name =
+        String(
+            employee.name ??
+            employee.employeeName ??
+            ""
+        );
+
+
+    normalized.department =
+        String(
+            employee.department ??
+            ""
+        );
+
+
+    normalized.cluster =
+        String(
+            employee.cluster ??
+            ""
+        );
+
+
+    return normalized;
+
+}
+
+
+/* ============================================================
+   FIND EMPLOYEE IN EXISTING DATA
+============================================================ */
+
+function findEmployeeInRecallData(
+    employeeId
+){
+
+    const normalizedId =
+        String(
+            employeeId
+        );
+
+
+    /*
+     * First try the existing deployed employee
+     * data used by recall.html.
+     */
+
+    const deployedEmployees =
+        getRecallDeployedEmployees();
+
+
+    const deployedEmployee =
+        deployedEmployees.find(
+            employee =>
+                String(
+                    employee.id
+                ) ===
+                normalizedId
+        );
+
+
+    if(
+        deployedEmployee
+    ){
+
+        return {
+            employee:
+                deployedEmployee,
+
+            source:
+                "recallState"
+
+        };
+
+    }
+
+
+    /*
+     * Then check common localStorage structures.
+     * This does not overwrite anything.
+     */
+
+    const possibleKeys = [
+
+        "serenticaSiteManpowerData",
+
+        "serenticaManpowerData",
+
+        "siteManpowerData",
+
+        "manpowerData",
+
+        "employees",
+
+        "serenticaEmployees"
+
+    ];
+
+
+    for(
+        const key of possibleKeys
+    ){
+
+        try{
+
+            const stored =
+                localStorage.getItem(
+                    key
+                );
+
+
+            if(
+                !stored
+            ){
+
+                continue;
+
+            }
+
+
+            const parsed =
+                JSON.parse(
+                    stored
+                );
+
+
+            let employees = [];
+
+
+            if(
+                Array.isArray(
+                    parsed
+                )
+            ){
+
+                employees =
+                    parsed;
+
+            }
+            else if(
+                Array.isArray(
+                    parsed.employees
+                )
+            ){
+
+                employees =
+                    parsed.employees;
+
+            }
+            else if(
+                Array.isArray(
+                    parsed.data
+                )
+            ){
+
+                employees =
+                    parsed.data;
+
+            }
+            else if(
+                Array.isArray(
+                    parsed.manpower
+                )
+            ){
+
+                employees =
+                    parsed.manpower;
+
+            }
+
+
+            const match =
+                employees.find(
+                    employee =>
+                        String(
+                            employee.id ??
+                            employee.employeeId ??
+                            employee.empId ??
+                            ""
+                        ) ===
+                        normalizedId
+                );
+
+
+            if(
+                match
+            ){
+
+                return {
+
+                    employee:
+                        normalizeRecallEmployee(
+                            match
+                        ),
+
+                    source:
+                        key
+
+                };
+
+            }
+
+        }
+        catch(
+            error
+        ){
+
+            console.warn(
+                `Unable to inspect ${key}:`,
+                error
+            );
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* ============================================================
+   UPDATE EMPLOYEE IN EXISTING LOCAL STORAGE
+============================================================ */
+
+function updateRecallEmployeeInStorage(
+    employeeId,
+    updates
+){
+
+    const normalizedId =
+        String(
+            employeeId
+        );
+
+
+    const possibleKeys = [
+
+        "serenticaSiteManpowerData",
+
+        "serenticaManpowerData",
+
+        "siteManpowerData",
+
+        "manpowerData",
+
+        "employees",
+
+        "serenticaEmployees"
+
+    ];
+
+
+    let updated =
+        false;
+
+
+    for(
+        const key of possibleKeys
+    ){
+
+        try{
+
+            const stored =
+                localStorage.getItem(
+                    key
+                );
+
+
+            if(
+                !stored
+            ){
+
+                continue;
+
+            }
+
+
+            const parsed =
+                JSON.parse(
+                    stored
+                );
+
+
+            if(
+                Array.isArray(
+                    parsed
+                )
+            ){
+
+                const index =
+                    parsed.findIndex(
+                        employee =>
+                            String(
+                                employee.id ??
+                                employee.employeeId ??
+                                employee.empId ??
+                                ""
+                            ) ===
+                            normalizedId
+                    );
+
+
+                if(
+                    index !== -1
+                ){
+
+                    parsed[index] =
+                        {
+                            ...parsed[index],
+                            ...updates
+                        };
+
+
+                    localStorage.setItem(
+                        key,
+                        JSON.stringify(
+                            parsed
+                        )
+                    );
+
+
+                    updated =
+                        true;
+
+                    break;
+
+                }
+
+            }
+
+
+            if(
+                Array.isArray(
+                    parsed.employees
+                )
+            ){
+
+                const index =
+                    parsed.employees.findIndex(
+                        employee =>
+                            String(
+                                employee.id ??
+                                employee.employeeId ??
+                                employee.empId ??
+                                ""
+                            ) ===
+                            normalizedId
+                    );
+
+
+                if(
+                    index !== -1
+                ){
+
+                    parsed.employees[index] =
+                        {
+                            ...parsed.employees[index],
+                            ...updates
+                        };
+
+
+                    localStorage.setItem(
+                        key,
+                        JSON.stringify(
+                            parsed
+                        )
+                    );
+
+
+                    updated =
+                        true;
+
+                    break;
+
+                }
+
+            }
+
+        }
+        catch(
+            error
+        ){
+
+            console.warn(
+                `Unable to update ${key}:`,
+                error
+            );
+
+        }
+
+    }
+
+
+    return updated;
+
+}
+
+
+/* ============================================================
+   UPDATE RECALL STATE
+============================================================ */
+
+function markRecallEmployeeAvailable(
+    employeeId
+){
+
+    const normalizedId =
+        String(
+            employeeId
+        );
+
+
+    /*
+     * Keep recallState synchronized.
+     */
+
+    if(
+        Array.isArray(
+            recallState.deployedEmployees
+        )
+    ){
+
+        const index =
+            recallState.deployedEmployees.findIndex(
+                employee =>
+                    String(
+                        employee.id
+                    ) ===
+                    normalizedId
+            );
+
+
+        if(
+            index !== -1
+        ){
+
+            recallState.deployedEmployees[
+                index
+            ] =
+                {
+                    ...recallState.deployedEmployees[
+                        index
+                    ],
+
+                    deployed:
+                        false,
+
+                    status:
+                        "AVAILABLE",
+
+                    deploymentStatus:
+                        "AVAILABLE",
+
+                    recallStatus:
+                        "COMPLETED",
+
+                    recalledAt:
+                        new Date()
+                            .toISOString()
+
+                };
+
+        }
+
+    }
+
+
+    /*
+     * Remove the employee from the currently deployed
+     * selection list.
+     */
+
+    if(
+        Array.isArray(
+            recallState.selectedEmployees
+        )
+    ){
+
+        recallState.selectedEmployees =
+            recallState.selectedEmployees.filter(
+                id =>
+                    String(
+                        id
+                    ) !==
+                    normalizedId
+            );
+
+    }
+
+}
+
+
+/* ============================================================
+   PROCESS APPROVED RECALL EMPLOYEES
+============================================================ */
+
+function processApprovedRecallEmployees(
+    request
+){
+
+    if(
+        !request ||
+        !Array.isArray(
+            request.employeeIds
+        )
+    ){
+
+        return 0;
+
+    }
+
+
+    let processedCount =
+        0;
+
+
+    request.employeeIds.forEach(
+        employeeId => {
+
+            const result =
+                findEmployeeInRecallData(
+                    employeeId
+                );
+
+
+            const updates = {
+
+                deployed:
+                    false,
+
+                deploymentStatus:
+                    "AVAILABLE",
+
+                status:
+                    "AVAILABLE",
+
+                recallStatus:
+                    "COMPLETED",
+
+                recalledAt:
+                    new Date()
+                        .toISOString(),
+
+                currentDeployment:
+                    null
+
+            };
+
+
+            const updatedStorage =
+                updateRecallEmployeeInStorage(
+                    employeeId,
+                    updates
+                );
+
+
+            markRecallEmployeeAvailable(
+                employeeId
+            );
+
+
+            /*
+             * Even when no existing storage structure
+             * is found, recallState remains synchronized.
+             */
+
+            if(
+                updatedStorage ||
+                result
+            ){
+
+                processedCount++;
+
+            }
+
+        }
+    );
+
+
+    return processedCount;
+
+}
+
+
+/* ============================================================
+   COMPLETE APPROVED RECALL REQUEST
+============================================================ */
+
+function completeApprovedRecallRequest(
+    request
+){
+
+    if(
+        !request
+    ){
+
+        return false;
+
+    }
+
+
+    if(
+        String(
+            request.status
+        ).toUpperCase() !==
+        "APPROVED"
+    ){
+
+        return false;
+
+    }
+
+
+    const processedCount =
+        processApprovedRecallEmployees(
+            request
+        );
+
+
+    const requests =
+        getRecallRequests();
+
+
+    const requestIndex =
+        requests.findIndex(
+            item =>
+                String(
+                    item.requestId
+                ) ===
+                String(
+                    request.requestId
+                )
+        );
+
+
+    if(
+        requestIndex === -1
+    ){
+
+        return false;
+
+    }
+
+
+    requests[
+        requestIndex
+    ] =
+        {
+
+            ...requests[
+                requestIndex
+            ],
+
+            status:
+                "COMPLETED",
+
+            completedAt:
+                new Date()
+                    .toISOString(),
+
+            completedBy:
+                recallState.currentUserRole,
+
+            processedEmployeeCount:
+                processedCount
+
+        };
+
+
+    saveRecallRequests(
+        requests
+    );
+
+
+    return true;
+
+}
+
+
+/* ============================================================
+   FIND NEWLY APPROVED REQUESTS
+============================================================ */
+
+function processApprovedRecallRequests(){
+
+    const requests =
+        getRecallRequests();
+
+
+    let completed =
+        0;
+
+
+    requests.forEach(
+        request => {
+
+            if(
+                String(
+                    request.status
+                ).toUpperCase() !==
+                "APPROVED"
+            ){
+
+                return;
+
+            }
+
+
+            if(
+                request.completedAt
+            ){
+
+                return;
+
+            }
+
+
+            if(
+                completeApprovedRecallRequest(
+                    request
+                )
+            ){
+
+                completed++;
+
+            }
+
+        }
+    );
+
+
+    if(
+        completed > 0
+    ){
+
+        renderRecallHistory();
+
+        updateRecallPendingCount();
+
+        renderRecallEmployeeTable();
+
+        updateRecallActionButton();
+
+        updateRecallSelectAllState();
+
+        showRecallNotification(
+            "Recall Completed",
+            `${completed} approved recall request${completed > 1 ? "s" : ""} processed successfully.`,
+            "success"
+        );
+
+    }
+
+
+    return completed;
+
+}
+
+
+/* ============================================================
+   INTEGRATE WITH EXISTING DEPLOYMENT MANAGER
+============================================================ */
+
+function notifyExistingDeploymentManager(
+    employeeId
+){
+
+    /*
+     * This intentionally does NOT assume a function name
+     * inside deploymentManager.js.
+     *
+     * If deploymentManager.js exposes one of these standard
+     * functions, it will be notified automatically.
+     */
+
+    const possibleFunctions = [
+
+        "handleEmployeeRecall",
+
+        "recallEmployee",
+
+        "markEmployeeAvailable",
+
+        "updateEmployeeDeploymentStatus"
+
+    ];
+
+
+    for(
+        const functionName of possibleFunctions
+    ){
+
+        if(
+            typeof window[
+                functionName
+            ] ===
+            "function"
+        ){
+
+            try{
+
+                window[
+                    functionName
+                ](
+                    employeeId,
+                    "AVAILABLE"
+                );
+
+
+                console.log(
+                    `deploymentManager.js notified through ${functionName}()`
+                );
+
+
+                return true;
+
+            }
+            catch(
+                error
+            ){
+
+                console.warn(
+                    `${functionName}() could not process recall:`,
+                    error
+                );
+
+            }
+
+        }
+
+    }
+
+
+    return false;
+
+}
+
+
+/* ============================================================
+   PATCH APPROVED RECALL PROCESS
+============================================================ */
+
+const originalProcessApprovedRecallEmployees =
+    processApprovedRecallEmployees;
+
+
+processApprovedRecallEmployees =
+    function(
+        request
+    ){
+
+        if(
+            request &&
+            Array.isArray(
+                request.employeeIds
+            )
+        ){
+
+            request.employeeIds.forEach(
+                employeeId => {
+
+                    notifyExistingDeploymentManager(
+                        employeeId
+                    );
+
+                }
+            );
+
+        }
+
+
+        return originalProcessApprovedRecallEmployees(
+            request
+        );
+
+    };
+
+
+/* ============================================================
+   PART 6 INITIALIZATION
+============================================================ */
+
+function initializeRecallPartSix(){
+
+    /*
+     * Process any approved requests left pending from
+     * the previous session.
+     */
+
+    processApprovedRecallRequests();
+
+
+    console.log(
+        "Recall.html Part 6 loaded successfully."
+    );
+
+}
+
+
+if(
+    document.readyState ===
+    "loading"
+){
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeRecallPartSix,
+        {
+            once:true
+        }
+    );
+
+}
+else{
+
+    initializeRecallPartSix();
+
+}
+
+</script>
+<!-- ============================================================
+     PART 7 — COMPLETED RECALL DETAILS & RETURN-TO-POOL VIEW
+============================================================ -->
+
+<style>
+
+    /* ========================================================
+       COMPLETED RECALL SECTION
+    ======================================================== */
+
+    .recall-completed-section{
+
+        margin-top:
+            14px;
+
+        border:
+            1px solid
+            var(--serentica-border);
+
+        border-radius:
+            8px;
+
+        background:
+            var(--white);
+
+        overflow:
+            hidden;
+
+    }
+
+
+    .recall-completed-header{
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            space-between;
+
+        gap:
+            10px;
+
+        padding:
+            11px 14px;
+
+        border-bottom:
+            1px solid
+            var(--serentica-border);
+
+    }
+
+
+    .recall-completed-heading{
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            8px;
+
+    }
+
+
+    .recall-completed-icon{
+
+        width:
+            27px;
+
+        height:
+            27px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        border-radius:
+            6px;
+
+        background:
+            #EEF8F1;
+
+        color:
+            var(--success);
+
+        font-size:
+            8px;
+
+    }
+
+
+    .recall-completed-title{
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            8px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-completed-subtitle{
+
+        margin-top:
+            2px;
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            5.5px;
+
+    }
+
+
+    .recall-completed-count{
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        min-width:
+            27px;
+
+        height:
+            27px;
+
+        padding:
+            0 7px;
+
+        border-radius:
+            6px;
+
+        background:
+            #EEF8F1;
+
+        color:
+            var(--success);
+
+        font-size:
+            7px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    /* ========================================================
+       COMPLETED RECALL TABLE
+    ======================================================== */
+
+    .recall-completed-table-wrapper{
+
+        width:
+            100%;
+
+        overflow-x:
+            auto;
+
+    }
+
+
+    .recall-completed-table{
+
+        width:
+            100%;
+
+        min-width:
+            850px;
+
+        border-collapse:
+            collapse;
+
+    }
+
+
+    .recall-completed-table th{
+
+        padding:
+            8px 10px;
+
+        background:
+            #F7FAFA;
+
+        border-bottom:
+            1px solid
+            var(--serentica-border);
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            5px;
+
+        font-weight:
+            900;
+
+        text-align:
+            left;
+
+        white-space:
+            nowrap;
+
+    }
+
+
+    .recall-completed-table td{
+
+        padding:
+            8px 10px;
+
+        border-bottom:
+            1px solid
+            #EDF3F3;
+
+        color:
+            var(--serentica-dark);
+
+        font-size:
+            5.8px;
+
+        vertical-align:
+            middle;
+
+    }
+
+
+    .recall-completed-table tbody tr:hover{
+
+        background:
+            #FBFEFE;
+
+    }
+
+
+    .recall-completed-employee{
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-completed-id{
+
+        color:
+            var(--serentica-teal);
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-completed-status{
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        gap:
+            4px;
+
+        padding:
+            4px 6px;
+
+        border-radius:
+            5px;
+
+        background:
+            #EEF8F1;
+
+        color:
+            var(--success);
+
+        font-size:
+            5px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    .recall-completed-status-dot{
+
+        width:
+            4px;
+
+        height:
+            4px;
+
+        border-radius:
+            50%;
+
+        background:
+            currentColor;
+
+    }
+
+
+    .recall-completed-empty{
+
+        display:
+            none;
+
+        padding:
+            28px 15px;
+
+        text-align:
+            center;
+
+        color:
+            var(--serentica-muted);
+
+        font-size:
+            6px;
+
+    }
+
+
+    .recall-completed-empty i{
+
+        display:
+            block;
+
+        margin-bottom:
+            7px;
+
+        color:
+            var(--success);
+
+        font-size:
+            15px;
+
+    }
+
+
+    /* ========================================================
+       RETURN TO POOL LABEL
+    ======================================================== */
+
+    .recall-pool-badge{
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        gap:
+            4px;
+
+        padding:
+            4px 6px;
+
+        border-radius:
+            5px;
+
+        background:
+            var(--serentica-light);
+
+        color:
+            var(--serentica-teal);
+
+        font-size:
+            5px;
+
+        font-weight:
+            900;
+
+    }
+
+
+    /* ========================================================
+       RESPONSIVE
+    ======================================================== */
+
+    @media(
+        max-width:650px
+    ){
+
+        .recall-completed-header{
+
+            align-items:
+                flex-start;
+
+        }
+
+    }
+
+</style>
+
+
+<!-- ============================================================
+     COMPLETED RECALL SECTION
+============================================================ -->
+
+<section
+    class="recall-completed-section"
+    id="recallCompletedSection"
+>
+
+
+    <!-- ========================================================
+         HEADER
+    ========================================================= -->
+
+    <div
+        class="recall-completed-header"
+    >
+
+        <div
+            class="recall-completed-heading"
+        >
+
+            <div
+                class="recall-completed-icon"
+            >
+
+                <i
+                    class="fa-solid fa-circle-check"
+                ></i>
+
+            </div>
+
+
+            <div>
+
+                <div
+                    class="recall-completed-title"
+                >
+
+                    Employees Returned to Available Pool
+
+                </div>
+
+
+                <div
+                    class="recall-completed-subtitle"
+                >
+
+                    Employees whose approved recall has been
+                    completed and who are available for
+                    future deployment.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="recall-completed-count"
+            id="recallCompletedCount"
+        >
+
+            0
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================
+         COMPLETED RECALL TABLE
+    ========================================================= -->
+
+    <div
+        class="recall-completed-table-wrapper"
+        id="recallCompletedTableWrapper"
+    >
+
+        <table
+            class="recall-completed-table"
+        >
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        EMPLOYEE
+                    </th>
+
+                    <th>
+                        EMPLOYEE ID
+                    </th>
+
+                    <th>
+                        DEPARTMENT
+                    </th>
+
+                    <th>
+                        CLUSTER
+                    </th>
+
+                    <th>
+                        RECALLED ON
+                    </th>
+
+                    <th>
+                        STATUS
+                    </th>
+
+                    <th>
+                        AVAILABILITY
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody
+                id="recallCompletedTableBody"
+            >
+
+                <!-- Generated dynamically -->
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================
+         EMPTY STATE
+    ========================================================= -->
+
+    <div
+        class="recall-completed-empty"
+        id="recallCompletedEmpty"
+    >
+
+        <i
+            class="fa-solid fa-user-check"
+        ></i>
+
+        No completed recalls available.
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     PART 7 JAVASCRIPT
+============================================================ -->
+
+<script>
+
+/* ============================================================
+   GET COMPLETED RECALL EMPLOYEES
+============================================================ */
+
+function getCompletedRecallEmployees(){
+
+    const requests =
+        getRecallRequests();
+
+
+    const completedRequests =
+        requests.filter(
+            request =>
+                String(
+                    request.status
+                ).toUpperCase() ===
+                "COMPLETED"
+        );
+
+
+    const employeeMap =
+        new Map();
+
+
+    completedRequests.forEach(
+        request => {
+
+            if(
+                !Array.isArray(
+                    request.employeeIds
+                )
+            ){
+
+                return;
+
+            }
+
+
+            request.employeeIds.forEach(
+                employeeId => {
+
+                    const result =
+                        findEmployeeInRecallData(
+                            employeeId
+                        );
+
+
+                    let employee =
+                        result
+                            ? result.employee
+                            : null;
+
+
+                    /*
+                     * If the employee is no longer available
+                     * in the current deployed list, construct
+                     * the minimum information from the request.
+                     */
+
+                    if(
+                        !employee
+                    ){
+
+                        employee = {
+
+                            id:
+                                String(
+                                    employeeId
+                                ),
+
+                            name:
+                                "Employee",
+
+                            department:
+                                "—",
+
+                            cluster:
+                                "—"
+
+                        };
+
+                    }
+
+
+                    employee =
+                        normalizeRecallEmployee(
+                            employee
+                        );
+
+
+                    employee.recalledAt =
+                        request.completedAt ||
+                        request.decisionAt ||
+                        request.requestedAt;
+
+
+                    employee.recallRequestId =
+                        request.requestId;
+
+
+                    employeeMap.set(
+                        String(
+                            employee.id
+                        ),
+                        employee
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    return Array.from(
+        employeeMap.values()
+    );
+
+}
+
+
+/* ============================================================
+   RENDER COMPLETED RECALL TABLE
+============================================================ */
+
+function renderCompletedRecallEmployees(){
+
+    const tableBody =
+        document.getElementById(
+            "recallCompletedTableBody"
+        );
+
+
+    const tableWrapper =
+        document.getElementById(
+            "recallCompletedTableWrapper"
+        );
+
+
+    const emptyState =
+        document.getElementById(
+            "recallCompletedEmpty"
+        );
+
+
+    const countElement =
+        document.getElementById(
+            "recallCompletedCount"
+        );
+
+
+    if(
+        !tableBody
+    ){
+
+        return;
+
+    }
+
+
+    const employees =
+        getCompletedRecallEmployees();
+
+
+    tableBody.innerHTML =
+        "";
+
+
+    if(
+        countElement
+    ){
+
+        countElement.textContent =
+            employees.length;
+
+    }
+
+
+    if(
+        !employees.length
+    ){
+
+        if(
+            tableWrapper
+        ){
+
+            tableWrapper.style.display =
+                "none";
+
+        }
+
+
+        if(
+            emptyState
+        ){
+
+            emptyState.style.display =
+                "block";
+
+        }
+
+
+        return;
+
+    }
+
+
+    if(
+        tableWrapper
+    ){
+
+        tableWrapper.style.display =
+            "block";
+
+    }
+
+
+    if(
+        emptyState
+    ){
+
+        emptyState.style.display =
+            "none";
+
+    }
+
+
+    employees.forEach(
+        employee => {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            row.innerHTML =
+                `
+
+                    <td>
+
+                        <span
+                            class="recall-completed-employee"
+                        >
+
+                            ${recallSafeText(employee.name)}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="recall-completed-id"
+                        >
+
+                            ${recallSafeText(employee.id)}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        ${recallSafeText(employee.department)}
+
+                    </td>
+
+
+                    <td>
+
+                        ${recallSafeText(employee.cluster)}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatRecallRequestDate(
+                            employee.recalledAt
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="recall-completed-status"
+                        >
+
+                            <span
+                                class="recall-completed-status-dot"
+                            ></span>
+
+                            Available
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="recall-pool-badge"
+                        >
+
+                            <i
+                                class="fa-solid fa-user-check"
+                            ></i>
+
+                            Ready for Deployment
+
+                        </span>
+
+                    </td>
+
+                `;
+
+
+            tableBody.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   REFRESH COMPLETED RECALL VIEW
+============================================================ */
+
+function refreshCompletedRecallView(){
+
+    /*
+     * First process approved requests that may still
+     * need completion.
+     */
+
+    processApprovedRecallRequests();
+
+
+    renderCompletedRecallEmployees();
+
+}
+
+
+/* ============================================================
+   EXTEND EXISTING RECALL REFRESH
+============================================================ */
+
+const originalRefreshRecallHistory =
+    refreshRecallHistory;
+
+
+refreshRecallHistory =
+    function(){
+
+        originalRefreshRecallHistory();
+
+        renderCompletedRecallEmployees();
+
+    };
+
+
+/* ============================================================
+   PART 7 INITIALIZATION
+============================================================ */
+
+function initializeRecallPartSeven(){
+
+    renderCompletedRecallEmployees();
+
+
+    console.log(
+        "Recall.html Part 7 loaded successfully."
+    );
+
+}
+
+
+if(
+    document.readyState ===
+    "loading"
+){
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeRecallPartSeven,
+        {
+            once:true
+        }
+    );
+
+}
+else{
+
+    initializeRecallPartSeven();
+
+}
+
+</script>
+<!-- ============================================================
+     PART 8 — FINAL JS INTEGRATION & SYNCHRONIZATION LAYER
+============================================================ -->
+
+<script>
+
+/* ============================================================
+   EXISTING PROJECT JS INTEGRATION
+============================================================ */
+
+function recallCallExistingFunction(
+    functionNames,
+    ...args
+){
+
+    if(
+        !Array.isArray(
+            functionNames
+        )
+    ){
+
+        return false;
+
+    }
+
+
+    for(
+        const functionName of functionNames
+    ){
+
+        if(
+            typeof window[
+                functionName
+            ] ===
+            "function"
+        ){
+
+            try{
+
+                window[
+                    functionName
+                ](
+                    ...args
+                );
+
+
+                console.log(
+                    `Recall integration: ${functionName}() executed.`
+                );
+
+
+                return true;
+
+            }
+            catch(
+                error
+            ){
+
+                console.warn(
+                    `Recall integration: ${functionName}() failed.`,
+                    error
+                );
+
+            }
+
+        }
+
+    }
+
+
+    return false;
+
+}
+
+
+/* ============================================================
+   DEPLOYMENT DATA SYNCHRONIZATION
+============================================================ */
+
+function synchronizeRecallWithDeploymentManager(){
+
+    /*
+     * These are possible public functions that may already
+     * exist in your deployment-management JS.
+     *
+     * We do not overwrite them.
+     */
+
+    recallCallExistingFunction(
+        [
+            "syncDeploymentData",
+            "refreshDeploymentData",
+            "loadDeploymentData"
+        ]
+    );
+
+
+    /*
+     * Refresh all Recall views after synchronization.
+     */
+
+    if(
+        typeof renderRecallEmployeeTable ===
+        "function"
+    ){
+
+        renderRecallEmployeeTable();
+
+    }
+
+
+    if(
+        typeof renderRecallHistory ===
+        "function"
+    ){
+
+        renderRecallHistory();
+
+    }
+
+
+    if(
+        typeof renderCompletedRecallEmployees ===
+        "function"
+    ){
+
+        renderCompletedRecallEmployees();
+
+    }
+
+
+    if(
+        typeof updateRecallActionButton ===
+        "function"
+    ){
+
+        updateRecallActionButton();
+
+    }
+
+
+    if(
+        typeof updateRecallSelectAllState ===
+        "function"
+    ){
+
+        updateRecallSelectAllState();
+
+    }
+
+}
+
+
+/* ============================================================
+   LISTEN FOR SHARED DEPLOYMENT EVENTS
+============================================================ */
+
+window.addEventListener(
+    "storage",
+    function(event){
+
+        const relevantKeys = [
+
+            "serenticaSiteManpowerData",
+
+            "serenticaManpowerData",
+
+            "siteManpowerData",
+
+            "manpowerData",
+
+            "employees",
+
+            "serenticaEmployees",
+
+            "serenticaRecallRequests"
+
+        ];
+
+
+        if(
+            relevantKeys.includes(
+                event.key
+            )
+        ){
+
+            synchronizeRecallWithDeploymentManager();
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   CUSTOM APPLICATION EVENT
+============================================================ */
+
+window.addEventListener(
+    "serenticaDeploymentUpdated",
+    function(){
+
+        synchronizeRecallWithDeploymentManager();
+
+    }
+);
+
+
+/* ============================================================
+   MANUAL REFRESH EVENT
+============================================================ */
+
+window.addEventListener(
+    "serenticaRecallRefresh",
+    function(){
+
+        synchronizeRecallWithDeploymentManager();
+
+    }
+);
+
+
+/* ============================================================
+   PERIODIC DATA REFRESH
+============================================================ */
+
+let recallRefreshTimer =
+    null;
+
+
+function startRecallRefreshTimer(){
+
+    if(
+        recallRefreshTimer
+    ){
+
+        clearInterval(
+            recallRefreshTimer
+        );
+
+    }
+
+
+    recallRefreshTimer =
+        setInterval(
+            function(){
+
+                /*
+                 * Do not recreate the page.
+                 * Only synchronize and refresh the data.
+                 */
+
+                synchronizeRecallWithDeploymentManager();
+
+            },
+            30000
+        );
+
+}
+
+
+/* ============================================================
+   STOP REFRESH WHEN PAGE IS HIDDEN
+============================================================ */
+
+document.addEventListener(
+    "visibilitychange",
+    function(){
+
+        if(
+            document.hidden
+        ){
+
+            if(
+                recallRefreshTimer
+            ){
+
+                clearInterval(
+                    recallRefreshTimer
+                );
+
+                recallRefreshTimer =
+                    null;
+
+            }
+
+        }
+        else{
+
+            synchronizeRecallWithDeploymentManager();
+
+            startRecallRefreshTimer();
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   FINAL RECALL PAGE INITIALIZATION
+============================================================ */
+
+function initializeRecallIntegration(){
+
+    synchronizeRecallWithDeploymentManager();
+
+    startRecallRefreshTimer();
+
+
+    console.log(
+        "Recall.html integration layer initialized."
+    );
+
+}
+
+
+/* ============================================================
+   INITIALIZE SAFELY
+============================================================ */
+
+if(
+    document.readyState ===
+    "loading"
+){
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeRecallIntegration,
+        {
+            once:true
+        }
+    );
+
+}
+else{
+
+    initializeRecallIntegration();
+
+}
+
+</script>
+<!-- ============================================================
+     PART 9 — FINAL JS CONNECTIONS & HTML CLOSING
+============================================================ -->
+
+
+<!-- ============================================================
+     EXISTING PROJECT JAVASCRIPT FILES
+     
+     IMPORTANT:
+     Replace ONLY the filenames below with the EXACT filenames
+     you already created in your project.
+
+     Do NOT create duplicate JS files for recall.html.
+============================================================ -->
+
+<script src="js/deploymentManager.js"></script>
+
+<script src="js/employeeManager.js"></script>
+
+<script src="js/organizationManager.js"></script>
+
+<script src="js/auth.js"></script>
+
+
+<!-- ============================================================
+     RECALL PAGE FINAL INITIALIZATION
+============================================================ -->
+
+<script>
+
+(function(){
+
+    "use strict";
+
+
+    function initializeFinalRecallPage(){
+
+        /*
+         * Refresh Recall page after all existing project
+         * JavaScript files have been loaded.
+         */
+
+        try{
+
+            if(
+                typeof synchronizeRecallWithDeploymentManager ===
+                "function"
+            ){
+
+                synchronizeRecallWithDeploymentManager();
+
+            }
+
+
+            if(
+                typeof renderRecallEmployeeTable ===
+                "function"
+            ){
+
+                renderRecallEmployeeTable();
+
+            }
+
+
+            if(
+                typeof renderRecallHistory ===
+                "function"
+            ){
+
+                renderRecallHistory();
+
+            }
+
+
+            if(
+                typeof renderCompletedRecallEmployees ===
+                "function"
+            ){
+
+                renderCompletedRecallEmployees();
+
+            }
+
+
+            if(
+                typeof updateRecallPendingCount ===
+                "function"
+            ){
+
+                updateRecallPendingCount();
+
+            }
+
+
+            if(
+                typeof updateRecallActionButton ===
+                "function"
+            ){
+
+                updateRecallActionButton();
+
+            }
+
+
+            if(
+                typeof updateRecallSelectAllState ===
+                "function"
+            ){
+
+                updateRecallSelectAllState();
+
+            }
+
+
+            console.log(
+                "Serentica Recall page initialized successfully."
+            );
+
+        }
+        catch(
+            error
+        ){
+
+            console.error(
+                "Recall page initialization error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /*
+     * Wait until the complete document is ready.
+     */
+
+    if(
+        document.readyState ===
+        "loading"
+    ){
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeFinalRecallPage,
+            {
+                once:true
+            }
+        );
+
+    }
+    else{
+
+        initializeFinalRecallPage();
+
+    }
+
+})();
+
+</script>
+
+
+<!-- ============================================================
+     END OF RECALL PAGE
+============================================================ -->
+
+</body>
+
+</html>
