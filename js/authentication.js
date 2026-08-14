@@ -1,3192 +1,2399 @@
-/*==========================================================
-SERENTICA SITE MANPOWER MANAGEMENT SYSTEM
-AUTHENTICATION MODULE
-authentication.js
-Version 1.0
-==========================================================*/
+/* ============================================================
+   SERENTICA SITE MANPOWER MANAGEMENT SYSTEM
+   AUTHENTICATION MODULE
+   authentication.js — PART 1
+   ============================================================ */
 
 "use strict";
 
-/*==========================================================
-AUTHENTICATION MANAGER
-==========================================================*/
+
+/* ============================================================
+   AUTHENTICATION MANAGER
+   ============================================================ */
 
 const AuthenticationManager = {
 
-    currentUser : null,
+    /* --------------------------------------------------------
+       SYSTEM INFORMATION
+       -------------------------------------------------------- */
 
-    currentRole : null,
+    version:
+        typeof CONFIG !== "undefined" &&
+        CONFIG.VERSION
+            ? CONFIG.VERSION
+            : "1.0.0",
 
-    session : null,
 
-    isAuthenticated : false
+    /* --------------------------------------------------------
+       CURRENT USER / SESSION
+       -------------------------------------------------------- */
+
+    currentUser: null,
+
+    currentRole: null,
+
+    sessionActive: false,
+
+
+    /* --------------------------------------------------------
+       INITIALIZATION STATUS
+       -------------------------------------------------------- */
+
+    initialized: false,
+
+    initializationError: null,
+
+
+    /* ========================================================
+       CONFIGURATION VALIDATION
+       ======================================================== */
+
+    validateConfiguration: function () {
+
+        if (
+            typeof CONFIG === "undefined"
+        ) {
+
+            console.error(
+                "AuthenticationManager: CONFIG is not available."
+            );
+
+            return false;
+        }
+
+
+        return true;
+    },
+
+
+    /* ========================================================
+       DATABASE VALIDATION
+       ======================================================== */
+
+    validateDatabase: function () {
+
+        if (
+            typeof EmployeeDatabase === "undefined"
+        ) {
+
+            console.error(
+                "AuthenticationManager: EmployeeDatabase is not available."
+            );
+
+            return false;
+        }
+
+
+        return true;
+    },
+
+
+    /* ========================================================
+       SYSTEM VALIDATION
+       ======================================================== */
+
+    validateSystem: function () {
+
+        const configurationReady =
+            this.validateConfiguration();
+
+
+        if (
+            !configurationReady
+        ) {
+
+            return false;
+        }
+
+
+        const databaseReady =
+            this.validateDatabase();
+
+
+        if (
+            !databaseReady
+        ) {
+
+            return false;
+        }
+
+
+        return true;
+    },
+
+
+    /* ========================================================
+       STORAGE KEY HELPERS
+       ======================================================== */
+
+    getStorageKey: function (
+        keyName
+    ) {
+
+        if (
+            typeof CONFIG !== "undefined" &&
+            CONFIG.STORAGE &&
+            CONFIG.STORAGE[keyName]
+        ) {
+
+            return CONFIG.STORAGE[keyName];
+        }
+
+
+        return keyName;
+    },
+
+
+    /* ========================================================
+       SAVE CURRENT USER
+       ======================================================== */
+
+    saveCurrentUser: function (
+        user
+    ) {
+
+        if (
+            !user
+        ) {
+
+            return false;
+        }
+
+
+        try {
+
+            const userKey =
+                this.getStorageKey(
+                    "CURRENT_USER"
+                );
+
+
+            const roleKey =
+                this.getStorageKey(
+                    "CURRENT_ROLE"
+                );
+
+
+            localStorage.setItem(
+                userKey,
+                JSON.stringify(user)
+            );
+
+
+            if (
+                user.role
+            ) {
+
+                localStorage.setItem(
+                    roleKey,
+                    user.role
+                );
+            }
+
+
+            this.currentUser =
+                user;
+
+
+            this.currentRole =
+                user.role || null;
+
+
+            this.sessionActive =
+                true;
+
+
+            return true;
+
+        }
+        catch (
+            error
+        ) {
+
+            console.error(
+                "AuthenticationManager: Unable to save user session.",
+                error
+            );
+
+
+            return false;
+        }
+    },
+
+
+    /* ========================================================
+       LOAD CURRENT USER
+       ======================================================== */
+
+    loadCurrentUser: function () {
+
+        try {
+
+            const userKey =
+                this.getStorageKey(
+                    "CURRENT_USER"
+                );
+
+
+            const roleKey =
+                this.getStorageKey(
+                    "CURRENT_ROLE"
+                );
+
+
+            const storedUser =
+                localStorage.getItem(
+                    userKey
+                );
+
+
+            const storedRole =
+                localStorage.getItem(
+                    roleKey
+                );
+
+
+            if (
+                storedUser
+            ) {
+
+                this.currentUser =
+                    JSON.parse(
+                        storedUser
+                    );
+            }
+            else {
+
+                this.currentUser =
+                    null;
+            }
+
+
+            if (
+                this.currentUser
+            ) {
+
+                this.currentRole =
+                    this.currentUser.role ||
+                    storedRole ||
+                    null;
+
+                this.sessionActive =
+                    true;
+            }
+            else {
+
+                this.currentRole =
+                    storedRole ||
+                    null;
+
+                this.sessionActive =
+                    false;
+            }
+
+
+            return this.currentUser;
+
+        }
+        catch (
+            error
+        ) {
+
+            console.error(
+                "AuthenticationManager: Unable to load user session.",
+                error
+            );
+
+
+            this.currentUser =
+                null;
+
+            this.currentRole =
+                null;
+
+            this.sessionActive =
+                false;
+
+
+            return null;
+        }
+    },
+
+
+    /* ========================================================
+       CHECK LOGIN STATUS
+       ======================================================== */
+
+    isLoggedIn: function () {
+
+        return (
+            this.sessionActive === true &&
+            !!this.currentUser
+        );
+    },
+
+
+    /* ========================================================
+       GET CURRENT USER
+       ======================================================== */
+
+    getCurrentUser: function () {
+
+        return this.currentUser;
+    },
+
+
+    /* ========================================================
+       GET CURRENT ROLE
+       ======================================================== */
+
+    getCurrentRole: function () {
+
+        return this.currentRole;
+    }
 
 };
+/* ============================================================
+   AUTHENTICATION.JS — PART 2
+   USER LOOKUP, CREDENTIAL VALIDATION & LOGIN
+   ============================================================ */
 
 
-/*==========================================================
-SESSION STATUS
-==========================================================*/
+/* ============================================================
+   FIND USER BY LOGIN ID
+   ============================================================ */
 
-AuthenticationManager.SESSION_STATUS = {
+AuthenticationManager.findUserByLoginId = function (
+    loginId
+) {
 
-    ACTIVE : "Active",
+    if (
+        !loginId
+    ) {
 
-    EXPIRED : "Expired",
-
-    LOGGED_OUT : "Logged Out"
-
-};
-
-
-/*==========================================================
-GET CURRENT USER
-==========================================================*/
-
-AuthenticationManager.getCurrentUser = function(){
-
-    return this.currentUser;
-
-};
+        return null;
+    }
 
 
-/*==========================================================
-GET CURRENT ROLE
-==========================================================*/
-
-AuthenticationManager.getCurrentRole = function(){
-
-    return this.currentRole;
-
-};
-
-
-/*==========================================================
-CHECK AUTHENTICATION
-==========================================================*/
-
-AuthenticationManager.isLoggedIn = function(){
-
-    return this.isAuthenticated === true;
-
-};
-
-
-/*==========================================================
-GET SESSION
-==========================================================*/
-
-AuthenticationManager.getSession = function(){
-
-    return this.session;
-
-};
-
-
-/*==========================================================
-CREATE SESSION OBJECT
-==========================================================*/
-
-AuthenticationManager.createSession = function(user){
-
-    if(!user){
+    if (
+        typeof EmployeeDatabase === "undefined"
+    ) {
 
         console.error(
-
-            "Cannot create session without a user."
-
+            "AuthenticationManager: EmployeeDatabase is unavailable."
         );
 
         return null;
-
     }
 
-    this.session = {
-
-        sessionID :
-
-            "SES" + Date.now(),
-
-        employeeID :
-
-            user.employeeID || "",
-
-        userName :
-
-            user.employeeName || "",
-
-        role :
-
-            user.role || CONFIG.ROLES.EMPLOYEE,
-
-        loginTime :
-
-            new Date(),
-
-        status :
-
-            this.SESSION_STATUS.ACTIVE
-
-    };
-
-    this.currentUser = user;
-
-    this.currentRole = this.session.role;
-
-    this.isAuthenticated = true;
-
-    return this.session;
-
-};
-
-
-/*==========================================================
-CLEAR SESSION
-==========================================================*/
-
-AuthenticationManager.clearSession = function(){
-
-    this.currentUser = null;
-
-    this.currentRole = null;
-
-    this.session = null;
-
-    this.isAuthenticated = false;
-
-};
-
-
-/*==========================================================
-SYSTEM READY
-==========================================================*/
-
-console.log(
-
-    "Authentication Manager Loaded."
-
-);
-/*==========================================================
-USER VALIDATION & LOGIN ENGINE
-==========================================================*/
-
-/*==========================================================
-GET USER DATABASE
-==========================================================*/
-
-AuthenticationManager.getUserDatabase = function(){
-
-    if(
-
-        typeof EmployeeDatabase === "undefined" ||
-
-        !Array.isArray(EmployeeDatabase.employees)
-
-    ){
-
-        console.error(
-
-            "Employee database is unavailable."
-
-        );
-
-        return [];
-
-    }
-
-    return EmployeeDatabase.employees;
-
-};
-
-
-/*==========================================================
-FIND USER
-==========================================================*/
-
-AuthenticationManager.findUser = function(
-
-    employeeID
-
-){
-
-    const users = this.getUserDatabase();
-
-    return users.find(
-
-        user =>
-
-            String(user.employeeID).toLowerCase() ===
-
-            String(employeeID).toLowerCase()
-
-    );
-
-};
-
-
-/*==========================================================
-VALIDATE USER
-==========================================================*/
-
-AuthenticationManager.validateUser = function(
-
-    employeeID
-
-){
-
-    if(!employeeID){
-
-        return{
-
-            valid:false,
-
-            message:"Employee ID is required."
-
-        };
-
-    }
-
-    const user = this.findUser(employeeID);
-
-    if(!user){
-
-        return{
-
-            valid:false,
-
-            message:"Employee ID not found."
-
-        };
-
-    }
-
-    if(
-
-        user.status &&
-
-        user.status !== CONFIG.EMPLOYEE_STATUS.ACTIVE
-
-    ){
-
-        return{
-
-            valid:false,
-
-            message:"This employee account is not active."
-
-        };
-
-    }
-
-    return{
-
-        valid:true,
-
-        user:user,
-
-        message:"User validated successfully."
-
-    };
-
-};
-
-
-/*==========================================================
-VALIDATE PASSWORD
-==========================================================*/
-
-AuthenticationManager.validatePassword = function(
-
-    user,
-
-    password
-
-){
-
-    if(!user){
-
-        return false;
-
-    }
-
-    if(!password){
-
-        return false;
-
-    }
 
     /*
-     * DEMO AUTHENTICATION
-     *
-     * The current GitHub/static version does not contain
-     * a secure backend authentication service.
-     *
-     * Therefore this function supports a temporary
-     * development password field if one exists.
-     *
-     * Production authentication should be handled by
-     * a secure backend/authentication provider.
+     * EmployeeDatabase.employees is the central
+     * employee collection used by the system.
      */
 
-    if(user.password){
+    const employees =
+        Array.isArray(
+            EmployeeDatabase.employees
+        )
+            ? EmployeeDatabase.employees
+            : [];
 
-        return String(user.password) ===
 
-            String(password);
+    const normalizedLoginId =
+        String(
+            loginId
+        )
+        .trim()
+        .toLowerCase();
 
-    }
 
-    /*
-     * If no password exists in the employee data,
-     * authentication remains unavailable rather than
-     * silently accepting any password.
-     */
+    return (
+        employees.find(
+            employee => {
 
-    return false;
+                if (
+                    !employee
+                ) {
+
+                    return false;
+                }
+
+
+                const employeeLoginId =
+                    employee.loginId ||
+                    employee.employeeId ||
+                    employee.id ||
+                    employee.username;
+
+
+                if (
+                    !employeeLoginId
+                ) {
+
+                    return false;
+                }
+
+
+                return (
+                    String(
+                        employeeLoginId
+                    )
+                    .trim()
+                    .toLowerCase() ===
+                    normalizedLoginId
+                );
+
+            }
+        ) || null
+    );
 
 };
 
 
-/*==========================================================
-LOGIN
-==========================================================*/
+/* ============================================================
+   NORMALIZE LOGIN INPUT
+   ============================================================ */
 
-AuthenticationManager.login = function(
+AuthenticationManager.normalizeLoginInput =
+    function (
+        loginId,
+        password
+    ) {
 
-    employeeID,
+        return {
 
-    password,
+            loginId:
+                String(
+                    loginId || ""
+                )
+                .trim(),
 
-    rememberMe=false
-
-){
-
-    const validation =
-
-        this.validateUser(employeeID);
-
-    if(!validation.valid){
-
-        return{
-
-            success:false,
-
-            message:validation.message
+            password:
+                String(
+                    password || ""
+                )
+                .trim()
 
         };
-
-    }
-
-    const passwordValid =
-
-        this.validatePassword(
-
-            validation.user,
-
-            password
-
-        );
-
-    if(!passwordValid){
-
-        return{
-
-            success:false,
-
-            message:"Invalid login credentials."
-
-        };
-
-    }
-
-    const session =
-
-        this.createSession(
-
-            validation.user
-
-        );
-
-    if(!session){
-
-        return{
-
-            success:false,
-
-            message:"Unable to create user session."
-
-        };
-
-    }
-
-    if(rememberMe){
-
-        localStorage.setItem(
-
-            CONFIG.STORAGE.CURRENT_USER,
-
-            JSON.stringify(validation.user)
-
-        );
-
-    }
-
-    localStorage.setItem(
-
-        CONFIG.STORAGE.CURRENT_ROLE,
-
-        session.role
-
-    );
-
-    localStorage.setItem(
-
-        CONFIG.STORAGE.SESSION,
-
-        JSON.stringify(session)
-
-    );
-
-    return{
-
-        success:true,
-
-        message:"Login successful.",
-
-        user:validation.user,
-
-        role:session.role,
-
-        session:session
 
     };
 
-};
+
+/* ============================================================
+   VALIDATE LOGIN CREDENTIALS
+   ============================================================ */
+
+AuthenticationManager.validateCredentials =
+    function (
+        loginId,
+        password
+    ) {
+
+        const credentials =
+            this.normalizeLoginInput(
+                loginId,
+                password
+            );
 
 
-/*==========================================================
-LOGIN VALIDATION RESULT
-==========================================================*/
+        if (
+            !credentials.loginId ||
+            !credentials.password
+        ) {
 
-AuthenticationManager.getLoginResult = function(){
+            return {
 
-    if(!this.isLoggedIn()){
+                success: false,
 
-        return{
+                message:
+                    "Login ID and password are required.",
 
-            authenticated:false,
+                user: null
 
-            user:null,
+            };
 
-            role:null,
+        }
 
-            session:null
+
+        const user =
+            this.findUserByLoginId(
+                credentials.loginId
+            );
+
+
+        if (
+            !user
+        ) {
+
+            return {
+
+                success: false,
+
+                message:
+                    "Invalid Login ID or password.",
+
+                user: null
+
+            };
+
+        }
+
+
+        /*
+         * Password is intentionally checked against
+         * the existing employee record.
+         */
+
+        const storedPassword =
+            user.password;
+
+
+        if (
+            typeof storedPassword ===
+            "undefined"
+        ) {
+
+            console.error(
+                "AuthenticationManager: User has no password configured.",
+                user
+            );
+
+
+            return {
+
+                success: false,
+
+                message:
+                    "User authentication is not configured correctly.",
+
+                user: null
+
+            };
+
+        }
+
+
+        if (
+            String(
+                storedPassword
+            ) !==
+            credentials.password
+        ) {
+
+            return {
+
+                success: false,
+
+                message:
+                    "Invalid Login ID or password.",
+
+                user: null
+
+            };
+
+        }
+
+
+        /*
+         * Optional account-status validation.
+         *
+         * If the employee record contains a status,
+         * inactive users should not be allowed to log in.
+         */
+
+        const accountStatus =
+            user.accountStatus ||
+            user.userStatus ||
+            user.status;
+
+
+        if (
+            accountStatus
+        ) {
+
+            const normalizedStatus =
+                String(
+                    accountStatus
+                )
+                .trim()
+                .toLowerCase();
+
+
+            const blockedStatuses = [
+
+                "inactive",
+                "disabled",
+                "blocked",
+                "terminated",
+                "suspended"
+
+            ];
+
+
+            if (
+                blockedStatuses.includes(
+                    normalizedStatus
+                )
+            ) {
+
+                return {
+
+                    success: false,
+
+                    message:
+                        "This user account is inactive.",
+
+                    user: null
+
+                };
+
+            }
+
+        }
+
+
+        return {
+
+            success: true,
+
+            message:
+                "Authentication successful.",
+
+            user: user
 
         };
-
-    }
-
-    return{
-
-        authenticated:true,
-
-        user:this.currentUser,
-
-        role:this.currentRole,
-
-        session:this.session
 
     };
 
-};
-/*==========================================================
-ROLE-BASED ACCESS CONTROL
-==========================================================*/
 
-/*==========================================================
-GET ROLE ACCESS LEVEL
-==========================================================*/
+/* ============================================================
+   LOGIN
+   ============================================================ */
 
-AuthenticationManager.getRoleAccessLevel = function(
+AuthenticationManager.login =
+    function (
+        loginId,
+        password
+    ) {
 
-    role
+        /*
+         * Validate system dependencies first.
+         */
 
-){
+        if (
+            !this.validateSystem()
+        ) {
 
-    if(!role){
+            return {
 
-        return 0;
+                success: false,
 
-    }
+                message:
+                    "Authentication system is not ready.",
 
-    const roleKey = Object.keys(
+                user: null
 
-        CONFIG.ROLES
+            };
 
-    ).find(
+        }
 
-        key =>
 
-            CONFIG.ROLES[key] === role
+        const authenticationResult =
+            this.validateCredentials(
+                loginId,
+                password
+            );
 
-    );
 
-    if(!roleKey){
+        if (
+            !authenticationResult.success
+        ) {
 
-        return 0;
+            return authenticationResult;
 
-    }
+        }
 
-    return CONFIG.ACCESS_LEVELS[roleKey] || 0;
 
-};
+        const user =
+            authenticationResult.user;
 
 
-/*==========================================================
-GET ROLE PERMISSIONS
-==========================================================*/
+        /*
+         * Save authenticated user.
+         */
 
-AuthenticationManager.getRolePermissions = function(
+        const sessionSaved =
+            this.saveCurrentUser(
+                user
+            );
 
-    role
 
-){
+        if (
+            !sessionSaved
+        ) {
 
-    if(!role){
+            return {
 
-        return [];
+                success: false,
 
-    }
+                message:
+                    "Unable to create login session.",
 
-    const roleKey = Object.keys(
+                user: null
 
-        CONFIG.ROLES
+            };
 
-    ).find(
+        }
 
-        key =>
 
-            CONFIG.ROLES[key] === role
+        /*
+         * Return a clean result to the
+         * page that initiated the login.
+         */
 
-    );
+        return {
 
-    if(!roleKey){
+            success: true,
 
-        return [];
+            message:
+                "Login successful.",
 
-    }
+            user: user,
 
-    return CONFIG.PERMISSIONS[roleKey] || [];
-
-};
-
-
-/*==========================================================
-CHECK ROLE
-==========================================================*/
-
-AuthenticationManager.hasRole = function(
-
-    role
-
-){
-
-    return(
-
-        this.isLoggedIn() &&
-
-        this.currentRole === role
-
-    );
-
-};
-
-
-/*==========================================================
-CHECK PERMISSION
-==========================================================*/
-
-AuthenticationManager.hasPermission = function(
-
-    permission
-
-){
-
-    if(!this.isLoggedIn()){
-
-        return false;
-
-    }
-
-    const permissions =
-
-        this.getRolePermissions(
-
-            this.currentRole
-
-        );
-
-    return permissions.includes(
-
-        permission
-
-    );
-
-};
-
-
-/*==========================================================
-CHECK ANY PERMISSION
-==========================================================*/
-
-AuthenticationManager.hasAnyPermission = function(
-
-    permissions
-
-){
-
-    if(!Array.isArray(permissions)){
-
-        return false;
-
-    }
-
-    return permissions.some(
-
-        permission =>
-
-            this.hasPermission(permission)
-
-    );
-
-};
-
-
-/*==========================================================
-CHECK ALL PERMISSIONS
-==========================================================*/
-
-AuthenticationManager.hasAllPermissions = function(
-
-    permissions
-
-){
-
-    if(!Array.isArray(permissions)){
-
-        return false;
-
-    }
-
-    return permissions.every(
-
-        permission =>
-
-            this.hasPermission(permission)
-
-    );
-
-};
-
-
-/*==========================================================
-CHECK MINIMUM ACCESS LEVEL
-==========================================================*/
-
-AuthenticationManager.hasMinimumAccess = function(
-
-    requiredLevel
-
-){
-
-    if(!this.isLoggedIn()){
-
-        return false;
-
-    }
-
-    const currentLevel =
-
-        this.getRoleAccessLevel(
-
-            this.currentRole
-
-        );
-
-    return currentLevel >= requiredLevel;
-
-};
-
-
-/*==========================================================
-AUTHORIZE ACTION
-==========================================================*/
-
-AuthenticationManager.authorize = function(
-
-    permission
-
-){
-
-    if(!this.isLoggedIn()){
-
-        return{
-
-            authorized:false,
-
-            reason:"User is not authenticated."
-
-        };
-
-    }
-
-    if(!this.hasPermission(permission)){
-
-        return{
-
-            authorized:false,
-
-            reason:
-
-                "User does not have permission: " +
-
-                permission
-
-        };
-
-    }
-
-    return{
-
-        authorized:true,
-
-        reason:"Access granted."
-
-    };
-
-};
-
-
-/*==========================================================
-GET CURRENT ACCESS PROFILE
-==========================================================*/
-
-AuthenticationManager.getAccessProfile = function(){
-
-    if(!this.isLoggedIn()){
-
-        return{
-
-            authenticated:false,
-
-            role:null,
-
-            accessLevel:0,
-
-            permissions:[]
-
-        };
-
-    }
-
-    return{
-
-        authenticated:true,
-
-        role:this.currentRole,
-
-        accessLevel:
-
-            this.getRoleAccessLevel(
-
+            role:
                 this.currentRole
 
-            ),
+        };
 
-        permissions:
+    };
 
-            this.getRolePermissions(
 
-                this.currentRole
+/* ============================================================
+   LOGIN RESULT HELPER
+   ============================================================ */
 
+AuthenticationManager.loginAndRedirect =
+    function (
+        loginId,
+        password
+    ) {
+
+        const result =
+            this.login(
+                loginId,
+                password
+            );
+
+
+        if (
+            !result.success
+        ) {
+
+            return result;
+
+        }
+
+
+        const landingPage =
+            this.getRoleLandingPage(
+                result.role
+            );
+
+
+        return {
+
+            success: true,
+
+            message:
+                "Login successful.",
+
+            user:
+                result.user,
+
+            role:
+                result.role,
+
+            redirect:
+                landingPage
+
+        };
+
+    };
+/* ============================================================
+   AUTHENTICATION.JS — PART 3
+   ROLE MANAGEMENT & PERMISSIONS
+   ============================================================ */
+
+
+/* ============================================================
+   GET ROLE LANDING PAGE
+   ============================================================ */
+
+AuthenticationManager.getRoleLandingPage =
+    function (
+        role
+    ) {
+
+        /*
+         * All primary site-management roles use
+         * welcome.html as the central dashboard.
+         */
+
+        const pages = {
+
+            "Admin":
+                "welcome.html",
+
+            "Project Manager":
+                "welcome.html",
+
+            "Team Lead":
+                "welcome.html",
+
+            "Executive":
+                "welcome.html",
+
+            "Employee":
+                "employee.html"
+
+        };
+
+
+        /*
+         * Also support role constants from CONFIG
+         * when they are available.
+         */
+
+        if (
+            typeof CONFIG !== "undefined" &&
+            CONFIG.ROLES
+        ) {
+
+            const roleConfig =
+                CONFIG.ROLES;
+
+
+            if (
+                roleConfig.ADMIN
+            ) {
+
+                pages[
+                    roleConfig.ADMIN
+                ] =
+                    "welcome.html";
+            }
+
+
+            if (
+                roleConfig.PROJECT_MANAGER
+            ) {
+
+                pages[
+                    roleConfig.PROJECT_MANAGER
+                ] =
+                    "welcome.html";
+            }
+
+
+            if (
+                roleConfig.LEAD
+            ) {
+
+                pages[
+                    roleConfig.LEAD
+                ] =
+                    "welcome.html";
+            }
+
+
+            if (
+                roleConfig.EXECUTIVE
+            ) {
+
+                pages[
+                    roleConfig.EXECUTIVE
+                ] =
+                    "welcome.html";
+            }
+
+
+            if (
+                roleConfig.EMPLOYEE
+            ) {
+
+                pages[
+                    roleConfig.EMPLOYEE
+                ] =
+                    "employee.html";
+            }
+
+        }
+
+
+        return (
+            pages[role] ||
+            "welcome.html"
+        );
+
+    };
+
+
+/* ============================================================
+   GET CURRENT USER PERMISSIONS
+   ============================================================ */
+
+AuthenticationManager.getCurrentPermissions =
+    function () {
+
+        if (
+            !this.currentUser
+        ) {
+
+            return [];
+
+        }
+
+
+        /*
+         * Prefer permissions stored directly
+         * against the authenticated employee.
+         */
+
+        if (
+            Array.isArray(
+                this.currentUser.permissions
             )
+        ) {
+
+            return [
+                ...this.currentUser.permissions
+            ];
+
+        }
+
+
+        /*
+         * Otherwise obtain permissions from CONFIG.
+         */
+
+        if (
+            typeof CONFIG !== "undefined" &&
+            CONFIG.PERMISSIONS
+        ) {
+
+            const role =
+                this.currentRole;
+
+
+            if (
+                role &&
+                CONFIG.PERMISSIONS[role]
+            ) {
+
+                const rolePermissions =
+                    CONFIG.PERMISSIONS[role];
+
+
+                if (
+                    Array.isArray(
+                        rolePermissions
+                    )
+                ) {
+
+                    return [
+                        ...rolePermissions
+                    ];
+
+                }
+
+
+                /*
+                 * If permissions are stored as
+                 * an object of boolean values.
+                 */
+
+                return Object.keys(
+                    rolePermissions
+                )
+                .filter(
+                    permission =>
+                        rolePermissions[
+                            permission
+                        ] === true
+                );
+
+            }
+
+        }
+
+
+        return [];
 
     };
 
-};
-/*==========================================================
-SESSION MANAGEMENT & REMEMBER ME
-==========================================================*/
 
-/*==========================================================
-SAVE SESSION
-==========================================================*/
+/* ============================================================
+   CHECK PERMISSION
+   ============================================================ */
 
-AuthenticationManager.saveSession = function(){
+AuthenticationManager.hasPermission =
+    function (
+        permission
+    ) {
 
-    if(!this.session){
-
-        return false;
-
-    }
-
-    try{
-
-        localStorage.setItem(
-
-            CONFIG.STORAGE.SESSION,
-
-            JSON.stringify(this.session)
-
-        );
-
-        localStorage.setItem(
-
-            CONFIG.STORAGE.CURRENT_ROLE,
-
-            this.currentRole || ""
-
-        );
-
-        return true;
-
-    }catch(error){
-
-        console.error(
-
-            "Unable to save authentication session.",
-
-            error
-
-        );
-
-        return false;
-
-    }
-
-};
-
-
-/*==========================================================
-RESTORE SESSION
-==========================================================*/
-
-AuthenticationManager.restoreSession = function(){
-
-    try{
-
-        const storedSession =
-
-            localStorage.getItem(
-
-                CONFIG.STORAGE.SESSION
-
-            );
-
-        if(!storedSession){
+        if (
+            !this.isLoggedIn()
+        ) {
 
             return false;
 
         }
 
-        const session =
 
-            JSON.parse(storedSession);
-
-        if(!session){
-
-            return false;
-
-        }
-
-        if(
-
-            session.status !==
-
-            this.SESSION_STATUS.ACTIVE
-
-        ){
-
-            this.clearStoredSession();
+        if (
+            !permission
+        ) {
 
             return false;
 
         }
 
-        const employee =
 
-            this.findUser(
+        const permissions =
+            this.getCurrentPermissions();
 
-                session.employeeID
 
-            );
-
-        if(!employee){
-
-            this.clearStoredSession();
-
-            return false;
-
-        }
-
-        this.currentUser = employee;
-
-        this.currentRole =
-
-            session.role ||
-
-            CONFIG.ROLES.EMPLOYEE;
-
-        this.session = session;
-
-        this.isAuthenticated = true;
-
-        return true;
-
-    }catch(error){
-
-        console.error(
-
-            "Unable to restore authentication session.",
-
-            error
-
+        return permissions.includes(
+            permission
         );
 
-        this.clearStoredSession();
-
-        return false;
-
-    }
-
-};
+    };
 
 
-/*==========================================================
-CHECK REMEMBERED USER
-==========================================================*/
+/* ============================================================
+   CHECK ANY PERMISSION
+   ============================================================ */
 
-AuthenticationManager.getRememberedUser = function(){
+AuthenticationManager.hasAnyPermission =
+    function (
+        permissions
+    ) {
 
-    try{
+        if (
+            !Array.isArray(
+                permissions
+            )
+        ) {
 
-        const storedUser =
+            return false;
 
-            localStorage.getItem(
+        }
 
-                CONFIG.STORAGE.CURRENT_USER
 
-            );
+        return permissions.some(
+            permission =>
+                this.hasPermission(
+                    permission
+                )
+        );
 
-        if(!storedUser){
+    };
+
+
+/* ============================================================
+   CHECK ALL PERMISSIONS
+   ============================================================ */
+
+AuthenticationManager.hasAllPermissions =
+    function (
+        permissions
+    ) {
+
+        if (
+            !Array.isArray(
+                permissions
+            )
+        ) {
+
+            return false;
+
+        }
+
+
+        return permissions.every(
+            permission =>
+                this.hasPermission(
+                    permission
+                )
+        );
+
+    };
+
+
+/* ============================================================
+   CHECK CURRENT ROLE
+   ============================================================ */
+
+AuthenticationManager.hasRole =
+    function (
+        role
+    ) {
+
+        if (
+            !this.isLoggedIn()
+        ) {
+
+            return false;
+
+        }
+
+
+        if (
+            !role
+        ) {
+
+            return false;
+
+        }
+
+
+        return (
+            this.currentRole ===
+            role
+        );
+
+    };
+
+
+/* ============================================================
+   CHECK ANY ROLE
+   ============================================================ */
+
+AuthenticationManager.hasAnyRole =
+    function (
+        roles
+    ) {
+
+        if (
+            !Array.isArray(
+                roles
+            )
+        ) {
+
+            return false;
+
+        }
+
+
+        if (
+            !this.isLoggedIn()
+        ) {
+
+            return false;
+
+        }
+
+
+        return roles.includes(
+            this.currentRole
+        );
+
+    };
+
+
+/* ============================================================
+   GET ROLE
+   ============================================================ */
+
+AuthenticationManager.getRole =
+    function () {
+
+        return (
+            this.currentRole ||
+            null
+        );
+
+    };
+
+
+/* ============================================================
+   GET USER DISPLAY NAME
+   ============================================================ */
+
+AuthenticationManager.getUserDisplayName =
+    function () {
+
+        if (
+            !this.currentUser
+        ) {
+
+            return "";
+
+        }
+
+
+        return (
+            this.currentUser.name ||
+            this.currentUser.employeeName ||
+            this.currentUser.fullName ||
+            this.currentUser.loginId ||
+            this.currentUser.employeeId ||
+            ""
+        );
+
+    };
+
+
+/* ============================================================
+   GET USER EMPLOYEE ID
+   ============================================================ */
+
+AuthenticationManager.getEmployeeId =
+    function () {
+
+        if (
+            !this.currentUser
+        ) {
 
             return null;
 
         }
 
-        return JSON.parse(storedUser);
 
-    }catch(error){
+        return (
+            this.currentUser.employeeId ||
+            this.currentUser.id ||
+            this.currentUser.loginId ||
+            null
+        );
 
-        console.error(
+    };
+/* ============================================================
+   AUTHENTICATION.JS — PART 4
+   LOGOUT & SESSION MANAGEMENT
+   ============================================================ */
 
-            "Unable to read remembered user.",
 
+/* ============================================================
+   CLEAR SESSION
+   ============================================================ */
+
+AuthenticationManager.clearSession =
+    function () {
+
+        try {
+
+            const userKey =
+                this.getStorageKey(
+                    "CURRENT_USER"
+                );
+
+
+            const roleKey =
+                this.getStorageKey(
+                    "CURRENT_ROLE"
+                );
+
+
+            const sessionKey =
+                this.getStorageKey(
+                    "SESSION"
+                );
+
+
+            /*
+             * Remove authentication information.
+             */
+
+            localStorage.removeItem(
+                userKey
+            );
+
+
+            localStorage.removeItem(
+                roleKey
+            );
+
+
+            localStorage.removeItem(
+                sessionKey
+            );
+
+
+            /*
+             * Reset in-memory authentication state.
+             */
+
+            this.currentUser =
+                null;
+
+
+            this.currentRole =
+                null;
+
+
+            this.sessionActive =
+                false;
+
+
+            return true;
+
+        }
+        catch (
             error
+        ) {
 
-        );
+            console.error(
+                "AuthenticationManager: Unable to clear session.",
+                error
+            );
 
-        return null;
 
-    }
+            /*
+             * Even if localStorage encounters an
+             * issue, reset the in-memory state.
+             */
 
-};
+            this.currentUser =
+                null;
 
 
-/*==========================================================
-SET REMEMBERED USER
-==========================================================*/
+            this.currentRole =
+                null;
 
-AuthenticationManager.rememberUser = function(){
 
-    if(!this.currentUser){
+            this.sessionActive =
+                false;
 
-        return false;
 
-    }
-
-    try{
-
-        localStorage.setItem(
-
-            CONFIG.STORAGE.CURRENT_USER,
-
-            JSON.stringify(
-
-                this.currentUser
-
-            )
-
-        );
-
-        return true;
-
-    }catch(error){
-
-        console.error(
-
-            "Unable to remember user.",
-
-            error
-
-        );
-
-        return false;
-
-    }
-
-};
-
-
-/*==========================================================
-REMOVE REMEMBERED USER
-==========================================================*/
-
-AuthenticationManager.forgetUser = function(){
-
-    localStorage.removeItem(
-
-        CONFIG.STORAGE.CURRENT_USER
-
-    );
-
-};
-
-
-/*==========================================================
-CLEAR STORED SESSION
-==========================================================*/
-
-AuthenticationManager.clearStoredSession = function(){
-
-    localStorage.removeItem(
-
-        CONFIG.STORAGE.SESSION
-
-    );
-
-    localStorage.removeItem(
-
-        CONFIG.STORAGE.CURRENT_ROLE
-
-    );
-
-};
-
-
-/*==========================================================
-REFRESH SESSION
-==========================================================*/
-
-AuthenticationManager.refreshSession = function(){
-
-    if(!this.isLoggedIn()){
-
-        return false;
-
-    }
-
-    this.session.lastActivity =
-
-        new Date();
-
-    return this.saveSession();
-
-};
-
-
-/*==========================================================
-GET SESSION AGE
-==========================================================*/
-
-AuthenticationManager.getSessionAge = function(){
-
-    if(!this.session || !this.session.loginTime){
-
-        return 0;
-
-    }
-
-    const loginTime =
-
-        new Date(
-
-            this.session.loginTime
-
-        );
-
-    const currentTime =
-
-        new Date();
-
-    return Math.floor(
-
-        (
-
-            currentTime - loginTime
-
-        ) / 1000
-
-    );
-
-};
-
-
-/*==========================================================
-CHECK SESSION VALIDITY
-==========================================================*/
-
-AuthenticationManager.isSessionValid = function(){
-
-    if(
-
-        !this.session ||
-
-        !this.isAuthenticated
-
-    ){
-
-        return false;
-
-    }
-
-    return(
-
-        this.session.status ===
-
-        this.SESSION_STATUS.ACTIVE
-
-    );
-
-};
-/*==========================================================
-LOGOUT & NAVIGATION
-==========================================================*/
-
-/*==========================================================
-LOGOUT
-==========================================================*/
-
-AuthenticationManager.logout = function(
-
-    redirect = true
-
-){
-
-    if(this.session){
-
-        this.session.status =
-
-            this.SESSION_STATUS.LOGGED_OUT;
-
-        this.session.logoutTime =
-
-            new Date();
-
-    }
-
-    this.clearSession();
-
-    this.clearStoredSession();
-
-    this.forgetUser();
-
-    console.log(
-
-        "User logged out successfully."
-
-    );
-
-    if(redirect){
-
-        this.redirectToLogin();
-
-    }
-
-    return true;
-
-};
-
-
-/*==========================================================
-REDIRECT TO LOGIN
-==========================================================*/
-
-AuthenticationManager.redirectToLogin = function(){
-
-    const loginPage = "index.html";
-
-    if(
-
-        window.location.pathname.endsWith(
-
-            loginPage
-
-        )
-
-    ){
-
-        return;
-
-    }
-
-    window.location.href = loginPage;
-
-};
-
-
-/*==========================================================
-GET ROLE LANDING PAGE
-==========================================================*/
-
-AuthenticationManager.getRoleLandingPage = function(
-
-    role
-
-){
-
-    const pages = {
-
-        [CONFIG.ROLES.ADMIN]:
-
-            "admin.html",
-
-        [CONFIG.ROLES.EXECUTIVE]:
-
-            "welcome.html",
-
-        [CONFIG.ROLES.PROJECT_MANAGER]:
-
-            "projectManager.html",
-
-        [CONFIG.ROLES.LEAD]:
-
-            "lead.html",
-
-        [CONFIG.ROLES.EMPLOYEE]:
-
-            "employee.html"
+            return false;
+        }
 
     };
 
-    return pages[role] || "welcome.html";
 
-};
+/* ============================================================
+   LOGOUT
+   ============================================================ */
 
+AuthenticationManager.logout =
+    function (
+        redirect = true
+    ) {
 
-/*==========================================================
-REDIRECT AFTER LOGIN
-==========================================================*/
+        const sessionCleared =
+            this.clearSession();
 
-AuthenticationManager.redirectAfterLogin = function(){
 
-    if(!this.isLoggedIn()){
+        /*
+         * Redirect to the login page after logout.
+         */
 
-        this.redirectToLogin();
+        if (
+            redirect === true
+        ) {
 
-        return false;
-
-    }
-
-    const destination =
-
-        this.getRoleLandingPage(
-
-            this.currentRole
-
-        );
-
-    window.location.href = destination;
-
-    return true;
-
-};
-
-
-/*==========================================================
-CHECK PAGE ACCESS
-==========================================================*/
-
-AuthenticationManager.canAccessPage = function(
-
-    requiredRoles = []
-
-){
-
-    if(!this.isLoggedIn()){
-
-        return false;
-
-    }
-
-    if(!Array.isArray(requiredRoles)){
-
-        return false;
-
-    }
-
-    if(requiredRoles.length === 0){
-
-        return true;
-
-    }
-
-    return requiredRoles.includes(
-
-        this.currentRole
-
-    );
-
-};
-
-
-/*==========================================================
-PROTECT PAGE
-==========================================================*/
-
-AuthenticationManager.protectPage = function(
-
-    requiredRoles = []
-
-){
-
-    if(!this.isLoggedIn()){
-
-        this.redirectToLogin();
-
-        return false;
-
-    }
-
-    if(
-
-        !this.canAccessPage(
-
-            requiredRoles
-
-        )
-
-    ){
-
-        console.warn(
-
-            "User does not have access to this page."
-
-        );
-
-        this.redirectAfterLogin();
-
-        return false;
-
-    }
-
-    return true;
-
-};
-
-
-/*==========================================================
-GET NAVIGATION MENU
-==========================================================*/
-
-AuthenticationManager.getNavigationItems = function(){
-
-    if(!this.isLoggedIn()){
-
-        return [];
-
-    }
-
-    const role = this.currentRole;
-
-    const items = [
-
-        {
-
-            label:"Dashboard",
-
-            icon:CONFIG.ICONS.DASHBOARD,
-
-            page:"welcome.html",
-
-            permission:null
-
-        },
-
-        {
-
-            label:"Employees",
-
-            icon:CONFIG.ICONS.EMPLOYEES,
-
-            page:"employee.html",
-
-            permission:"VIEW_TEAM"
-
-        },
-
-        {
-
-            label:"Organisation",
-
-            icon:CONFIG.ICONS.ORGANISATION,
-
-            page:"organisation.html",
-
-            permission:"VIEW_ALL"
-
-        },
-
-        {
-
-            label:"Deployment",
-
-            icon:CONFIG.ICONS.DEPLOYMENT,
-
-            page:"deployment.html",
-
-            permission:"VIEW_TEAM"
-
-        },
-
-        {
-
-            label:"Reports",
-
-            icon:CONFIG.ICONS.REPORT,
-
-            page:"reports.html",
-
-            permission:"VIEW_REPORTS"
+            window.location.href =
+                "index.html";
 
         }
 
-    ];
 
-    return items.filter(item => {
+        return sessionCleared;
 
-        if(!item.permission){
+    };
+
+
+/* ============================================================
+   RESTORE SESSION
+   ============================================================ */
+
+AuthenticationManager.restoreSession =
+    function () {
+
+        const user =
+            this.loadCurrentUser();
+
+
+        if (
+            !user
+        ) {
+
+            return {
+
+                success: false,
+
+                user: null,
+
+                role: null
+
+            };
+
+        }
+
+
+        /*
+         * Make sure the restored user still
+         * exists in the central employee database.
+         */
+
+        const employeeId =
+            user.employeeId ||
+            user.id ||
+            user.loginId;
+
+
+        if (
+            !employeeId
+        ) {
+
+            this.clearSession();
+
+
+            return {
+
+                success: false,
+
+                user: null,
+
+                role: null
+
+            };
+
+        }
+
+
+        return {
+
+            success: true,
+
+            user:
+                this.currentUser,
+
+            role:
+                this.currentRole
+
+        };
+
+    };
+
+
+/* ============================================================
+   VALIDATE ACTIVE SESSION
+   ============================================================ */
+
+AuthenticationManager.validateSession =
+    function () {
+
+        if (
+            !this.isLoggedIn()
+        ) {
+
+            return false;
+
+        }
+
+
+        if (
+            !this.currentUser
+        ) {
+
+            this.sessionActive =
+                false;
+
+            return false;
+
+        }
+
+
+        /*
+         * A role is required for all authenticated
+         * management users.
+         */
+
+        if (
+            !this.currentRole
+        ) {
+
+            this.sessionActive =
+                false;
+
+            return false;
+
+        }
+
+
+        return true;
+
+    };
+
+
+/* ============================================================
+   REFRESH SESSION STATE
+   ============================================================ */
+
+AuthenticationManager.refreshSession =
+    function () {
+
+        const restored =
+            this.restoreSession();
+
+
+        if (
+            !restored.success
+        ) {
+
+            return false;
+
+        }
+
+
+        return this.validateSession();
+
+    };
+
+
+/* ============================================================
+   SESSION INFORMATION
+   ============================================================ */
+
+AuthenticationManager.getSession =
+    function () {
+
+        return {
+
+            active:
+                this.sessionActive,
+
+            user:
+                this.currentUser,
+
+            role:
+                this.currentRole,
+
+            employeeId:
+                this.getEmployeeId(),
+
+            displayName:
+                this.getUserDisplayName()
+
+        };
+
+    };
+/* ============================================================
+   AUTHENTICATION.JS — PART 5
+   PAGE PROTECTION & ROLE-BASED ACCESS
+   ============================================================ */
+
+
+/* ============================================================
+   GET CURRENT PAGE NAME
+   ============================================================ */
+
+AuthenticationManager.getCurrentPage =
+    function () {
+
+        const path =
+            window.location.pathname;
+
+
+        let page =
+            path.substring(
+                path.lastIndexOf("/") + 1
+            );
+
+
+        /*
+         * When the browser is serving the page
+         * from a root location without a filename.
+         */
+
+        if (
+            !page
+        ) {
+
+            page =
+                "index.html";
+
+        }
+
+
+        return page.toLowerCase();
+
+    };
+
+
+/* ============================================================
+   GET PAGE ACCESS RULES
+   ============================================================ */
+
+AuthenticationManager.getPageAccessRules =
+    function () {
+
+        const rules = {};
+
+
+        /*
+         * Main dashboard.
+         */
+
+        rules["welcome.html"] = [
+
+            "Admin",
+            "Project Manager",
+            "Team Lead",
+            "Executive"
+
+        ];
+
+
+        /*
+         * Employee dashboard.
+         */
+
+        rules["employee.html"] = [
+
+            "Admin",
+            "Project Manager",
+            "Team Lead",
+            "Executive",
+            "Employee"
+
+        ];
+
+
+        /*
+         * Organization structure.
+         */
+
+        rules["organization.html"] = [
+
+            "Admin",
+            "Project Manager",
+            "Team Lead",
+            "Executive"
+
+        ];
+
+
+        /*
+         * Deployment module.
+         */
+
+        rules["deploy.html"] = [
+
+            "Admin",
+            "Project Manager",
+            "Team Lead"
+
+        ];
+
+
+        /*
+         * Recall module.
+         */
+
+        rules["recall.html"] = [
+
+            "Admin",
+            "Project Manager",
+            "Team Lead"
+
+        ];
+
+
+        return rules;
+
+    };
+
+
+/* ============================================================
+   CHECK PAGE ACCESS
+   ============================================================ */
+
+AuthenticationManager.canAccessPage =
+    function (
+        pageName
+    ) {
+
+        if (
+            !pageName
+        ) {
+
+            return false;
+
+        }
+
+
+        /*
+         * Login page is always accessible.
+         */
+
+        if (
+            pageName.toLowerCase() ===
+            "index.html"
+        ) {
 
             return true;
 
         }
 
-        return this.hasPermission(
 
-            item.permission
+        /*
+         * User must be logged in for
+         * protected pages.
+         */
 
+        if (
+            !this.validateSession()
+        ) {
+
+            return false;
+
+        }
+
+
+        const rules =
+            this.getPageAccessRules();
+
+
+        const page =
+            pageName
+                .toLowerCase();
+
+
+        /*
+         * If the page has no explicit rule,
+         * deny access rather than accidentally
+         * exposing a protected page.
+         */
+
+        if (
+            !rules[page]
+        ) {
+
+            return false;
+
+        }
+
+
+        return rules[page].includes(
+            this.currentRole
         );
-
-    });
-
-};
-
-
-/*==========================================================
-GET AUTHENTICATION STATE
-==========================================================*/
-
-AuthenticationManager.getAuthenticationState = function(){
-
-    return{
-
-        authenticated:
-
-            this.isLoggedIn(),
-
-        user:
-
-            this.currentUser,
-
-        role:
-
-            this.currentRole,
-
-        session:
-
-            this.session
-
-    };
-
-};
-/*==========================================================
-PASSWORD RESET REQUEST FLOW
-==========================================================*/
-
-/*==========================================================
-PASSWORD RESET STATE
-==========================================================*/
-
-AuthenticationManager.passwordResetRequests = [];
-
-
-/*==========================================================
-FIND USER FOR PASSWORD RESET
-==========================================================*/
-
-AuthenticationManager.findUserForPasswordReset = function(
-
-    employeeID
-
-){
-
-    if(!employeeID){
-
-        return null;
-
-    }
-
-    return this.findUser(employeeID);
-
-};
-
-
-/*==========================================================
-CREATE PASSWORD RESET REQUEST
-==========================================================*/
-
-AuthenticationManager.createPasswordResetRequest = function(
-
-    employeeID
-
-){
-
-    const user =
-
-        this.findUserForPasswordReset(
-
-            employeeID
-
-        );
-
-    if(!user){
-
-        return{
-
-            success:false,
-
-            message:
-
-                "Employee ID not found."
-
-        };
-
-    }
-
-
-    const existingRequest =
-
-        this.passwordResetRequests.find(
-
-            request =>
-
-                request.employeeID === employeeID &&
-
-                request.status === "Pending"
-
-        );
-
-
-    if(existingRequest){
-
-        return{
-
-            success:false,
-
-            message:
-
-                "A password reset request is already pending."
-
-        };
-
-    }
-
-
-    const request = {
-
-        requestID:
-
-            "PWD" + Date.now(),
-
-        employeeID:
-
-            user.employeeID,
-
-        employeeName:
-
-            user.employeeName || "",
-
-        requestDate:
-
-            new Date(),
-
-        status:
-
-            "Pending",
-
-        completedDate:
-
-            "",
-
-        remarks:
-
-            ""
 
     };
 
 
-    this.passwordResetRequests.push(
+/* ============================================================
+   PROTECT CURRENT PAGE
+   ============================================================ */
 
-        request
+AuthenticationManager.protectCurrentPage =
+    function () {
 
-    );
+        const currentPage =
+            this.getCurrentPage();
 
 
-    return{
+        /*
+         * index.html does not require
+         * authentication.
+         */
 
-        success:true,
+        if (
+            currentPage ===
+            "index.html"
+        ) {
 
-        message:
+            return true;
 
-            "Password reset request submitted successfully.",
+        }
 
-        request:request
 
-    };
+        const accessAllowed =
+            this.canAccessPage(
+                currentPage
+            );
 
-};
 
+        if (
+            accessAllowed
+        ) {
 
-/*==========================================================
-GET PASSWORD RESET REQUESTS
-==========================================================*/
+            return true;
 
-AuthenticationManager.getPasswordResetRequests = function(){
+        }
 
-    return this.passwordResetRequests;
 
-};
+        /*
+         * If the user has no valid session,
+         * send them to the login page.
+         */
 
+        if (
+            !this.validateSession()
+        ) {
 
-/*==========================================================
-GET PENDING PASSWORD RESET REQUESTS
-==========================================================*/
+            window.location.replace(
+                "index.html"
+            );
 
-AuthenticationManager.getPendingPasswordResetRequests = function(){
 
-    return this.passwordResetRequests.filter(
+            return false;
 
-        request =>
+        }
 
-            request.status === "Pending"
 
-    );
+        /*
+         * The user is authenticated but does
+         * not have permission for this page.
+         */
 
-};
-
-
-/*==========================================================
-COMPLETE PASSWORD RESET REQUEST
-==========================================================*/
-
-AuthenticationManager.completePasswordResetRequest = function(
-
-    requestID,
-
-    remarks=""
-
-){
-
-    const request =
-
-        this.passwordResetRequests.find(
-
-            item =>
-
-                item.requestID === requestID
-
-        );
-
-    if(!request){
-
-        return{
-
-            success:false,
-
-            message:
-
-                "Password reset request not found."
-
-        };
-
-    }
-
-
-    request.status = "Completed";
-
-    request.completedDate = new Date();
-
-    request.remarks = remarks;
-
-
-    return{
-
-        success:true,
-
-        message:
-
-            "Password reset request completed.",
-
-        request:request
-
-    };
-
-};
-
-
-/*==========================================================
-CANCEL PASSWORD RESET REQUEST
-==========================================================*/
-
-AuthenticationManager.cancelPasswordResetRequest = function(
-
-    requestID
-
-){
-
-    const request =
-
-        this.passwordResetRequests.find(
-
-            item =>
-
-                item.requestID === requestID
-
-        );
-
-    if(!request){
-
-        return{
-
-            success:false,
-
-            message:
-
-                "Password reset request not found."
-
-        };
-
-    }
-
-
-    request.status = "Cancelled";
-
-
-    return{
-
-        success:true,
-
-        message:
-
-            "Password reset request cancelled.",
-
-        request:request
-
-    };
-
-};
-
-
-/*==========================================================
-GET PASSWORD RESET STATUS
-==========================================================*/
-
-AuthenticationManager.getPasswordResetStatus = function(
-
-    employeeID
-
-){
-
-    const requests =
-
-        this.passwordResetRequests.filter(
-
-            request =>
-
-                request.employeeID === employeeID
-
-        );
-
-
-    if(requests.length === 0){
-
-        return{
-
-            requested:false,
-
-            status:null
-
-        };
-
-    }
-
-
-    const latestRequest =
-
-        requests[requests.length - 1];
-
-
-    return{
-
-        requested:true,
-
-        status:
-
-            latestRequest.status,
-
-        requestID:
-
-            latestRequest.requestID,
-
-        requestDate:
-
-            latestRequest.requestDate
-
-    };
-
-};
-/*==========================================================
-AUTHENTICATION SECURITY & VALIDATION
-==========================================================*/
-
-/*==========================================================
-LOGIN ATTEMPT TRACKING
-==========================================================*/
-
-AuthenticationManager.loginAttempts = {};
-
-
-/*==========================================================
-MAXIMUM LOGIN ATTEMPTS
-==========================================================*/
-
-AuthenticationManager.MAX_LOGIN_ATTEMPTS = 5;
-
-
-/*==========================================================
-LOGIN LOCKOUT DURATION
-==========================================================*/
-
-AuthenticationManager.LOCKOUT_DURATION =
-
-    15 * 60 * 1000;
-
-
-/*==========================================================
-GET LOGIN ATTEMPT RECORD
-==========================================================*/
-
-AuthenticationManager.getLoginAttemptRecord = function(
-
-    employeeID
-
-){
-
-    if(!this.loginAttempts[employeeID]){
-
-        this.loginAttempts[employeeID] = {
-
-            attempts:0,
-
-            lockedUntil:null
-
-        };
-
-    }
-
-    return this.loginAttempts[employeeID];
-
-};
-
-
-/*==========================================================
-CHECK ACCOUNT LOCK
-==========================================================*/
-
-AuthenticationManager.isAccountLocked = function(
-
-    employeeID
-
-){
-
-    const record =
-
-        this.getLoginAttemptRecord(
-
-            employeeID
-
-        );
-
-    if(!record.lockedUntil){
-
-        return false;
-
-    }
-
-    const currentTime =
-
-        new Date().getTime();
-
-    if(
-
-        currentTime <
-
-        record.lockedUntil
-
-    ){
-
-        return true;
-
-    }
-
-    record.attempts = 0;
-
-    record.lockedUntil = null;
-
-    return false;
-
-};
-
-
-/*==========================================================
-REGISTER FAILED LOGIN
-==========================================================*/
-
-AuthenticationManager.registerFailedLogin = function(
-
-    employeeID
-
-){
-
-    const record =
-
-        this.getLoginAttemptRecord(
-
-            employeeID
-
-        );
-
-    record.attempts++;
-
-    if(
-
-        record.attempts >=
-
-        this.MAX_LOGIN_ATTEMPTS
-
-    ){
-
-        record.lockedUntil =
-
-            new Date().getTime() +
-
-            this.LOCKOUT_DURATION;
-
-    }
-
-};
-
-
-/*==========================================================
-RESET LOGIN ATTEMPTS
-==========================================================*/
-
-AuthenticationManager.resetLoginAttempts = function(
-
-    employeeID
-
-){
-
-    delete this.loginAttempts[employeeID];
-
-};
-
-
-/*==========================================================
-GET REMAINING LOGIN ATTEMPTS
-==========================================================*/
-
-AuthenticationManager.getRemainingLoginAttempts = function(
-
-    employeeID
-
-){
-
-    const record =
-
-        this.getLoginAttemptRecord(
-
-            employeeID
-
-        );
-
-    return Math.max(
-
-        0,
-
-        this.MAX_LOGIN_ATTEMPTS -
-
-        record.attempts
-
-    );
-
-};
-
-
-/*==========================================================
-SESSION SECURITY CHECK
-==========================================================*/
-
-AuthenticationManager.performSecurityCheck = function(){
-
-    if(!this.isLoggedIn()){
-
-        return{
-
-            secure:false,
-
-            reason:
-
-                "No authenticated session."
-
-        };
-
-    }
-
-    if(!this.isSessionValid()){
-
-        this.logout(false);
-
-        return{
-
-            secure:false,
-
-            reason:
-
-                "Session is no longer valid."
-
-        };
-
-    }
-
-    if(!this.currentUser){
-
-        this.logout(false);
-
-        return{
-
-            secure:false,
-
-            reason:
-
-                "Authenticated user information is unavailable."
-
-        };
-
-    }
-
-    return{
-
-        secure:true,
-
-        reason:
-
-            "Authentication security check passed."
-
-    };
-
-};
-
-
-/*==========================================================
-SANITIZE USER INPUT
-==========================================================*/
-
-AuthenticationManager.sanitizeInput = function(
-
-    value
-
-){
-
-    if(value === null || value === undefined){
-
-        return "";
-
-    }
-
-    return String(value)
-
-        .trim()
-
-        .replace(
-
-            /[<>]/g,
-
-            ""
-
-        );
-
-};
-
-
-/*==========================================================
-VALIDATE EMPLOYEE ID FORMAT
-==========================================================*/
-
-AuthenticationManager.validateEmployeeIDFormat = function(
-
-    employeeID
-
-){
-
-    const sanitizedID =
-
-        this.sanitizeInput(
-
-            employeeID
-
-        );
-
-    if(
-
-        sanitizedID.length <
-
-        CONFIG.VALIDATION.EMPLOYEE_ID_MIN_LENGTH
-
-    ){
-
-        return false;
-
-    }
-
-    return true;
-
-};
-
-
-/*==========================================================
-SECURE LOGIN CHECK
-==========================================================*/
-
-AuthenticationManager.secureLoginCheck = function(
-
-    employeeID
-
-){
-
-    const sanitizedID =
-
-        this.sanitizeInput(
-
-            employeeID
-
-        );
-
-    if(
-
-        !this.validateEmployeeIDFormat(
-
-            sanitizedID
-
-        )
-
-    ){
-
-        return{
-
-            allowed:false,
-
-            message:
-
-                "Invalid Employee ID."
-
-        };
-
-    }
-
-    if(
-
-        this.isAccountLocked(
-
-            sanitizedID
-
-        )
-
-    ){
-
-        return{
-
-            allowed:false,
-
-            message:
-
-                "Account temporarily locked due to multiple failed login attempts."
-
-        };
-
-    }
-
-    return{
-
-        allowed:true,
-
-        employeeID:sanitizedID
-
-    };
-
-};
-
-
-/*==========================================================
-AUDIT AUTHENTICATION EVENT
-==========================================================*/
-
-AuthenticationManager.auditEvent = function(
-
-    eventType,
-
-    employeeID,
-
-    description
-
-){
-
-    const event = {
-
-        eventID:
-
-            "AUTH" + Date.now(),
-
-        eventType:
-
-            eventType,
-
-        employeeID:
-
-            employeeID || "",
-
-        description:
-
-            description || "",
-
-        eventDate:
-
-            new Date()
-
-    };
-
-
-    if(
-
-        typeof DeploymentManager !==
-
-        "undefined" &&
-
-        typeof DeploymentManager.addTimelineEvent ===
-
-        "function"
-
-    ){
-
-        DeploymentManager.addTimelineEvent(
-
-            "Authentication",
-
-            employeeID || "",
-
-            description || "",
-
-            "System"
-
-        );
-
-    }
-
-
-    return event;
-
-};
-/*==========================================================
-AUTHENTICATION INTEGRATION
-==========================================================*/
-
-/*==========================================================
-ORIGINAL LOGIN REFERENCE
-==========================================================*/
-
-AuthenticationManager.baseLogin =
-
-    AuthenticationManager.login;
-
-
-/*==========================================================
-SECURE LOGIN
-==========================================================*/
-
-AuthenticationManager.loginSecure = function(
-
-    employeeID,
-
-    password,
-
-    rememberMe = false
-
-){
-
-    const securityCheck =
-
-        this.secureLoginCheck(
-
-            employeeID
-
-        );
-
-
-    if(!securityCheck.allowed){
-
-        this.auditEvent(
-
-            "LOGIN_BLOCKED",
-
-            employeeID,
-
-            securityCheck.message
-
-        );
-
-        return{
-
-            success:false,
-
-            message:
-
-                securityCheck.message
-
-        };
-
-    }
-
-
-    const sanitizedID =
-
-        securityCheck.employeeID;
-
-
-    const validation =
-
-        this.validateUser(
-
-            sanitizedID
-
-        );
-
-
-    if(!validation.valid){
-
-        this.registerFailedLogin(
-
-            sanitizedID
-
-        );
-
-        this.auditEvent(
-
-            "LOGIN_FAILED",
-
-            sanitizedID,
-
-            validation.message
-
-        );
-
-        return{
-
-            success:false,
-
-            message:
-
-                validation.message,
-
-            remainingAttempts:
-
-                this.getRemainingLoginAttempts(
-
-                    sanitizedID
-
-                )
-
-        };
-
-    }
-
-
-    const passwordValid =
-
-        this.validatePassword(
-
-            validation.user,
-
-            password
-
-        );
-
-
-    if(!passwordValid){
-
-        this.registerFailedLogin(
-
-            sanitizedID
-
-        );
-
-        this.auditEvent(
-
-            "LOGIN_FAILED",
-
-            sanitizedID,
-
-            "Invalid login credentials."
-
-        );
-
-        return{
-
-            success:false,
-
-            message:
-
-                "Invalid login credentials.",
-
-            remainingAttempts:
-
-                this.getRemainingLoginAttempts(
-
-                    sanitizedID
-
-                )
-
-        };
-
-    }
-
-
-    const session =
-
-        this.createSession(
-
-            validation.user
-
-        );
-
-
-    if(!session){
-
-        return{
-
-            success:false,
-
-            message:
-
-                "Unable to create user session."
-
-        };
-
-    }
-
-
-    this.resetLoginAttempts(
-
-        sanitizedID
-
-    );
-
-
-    if(rememberMe){
-
-        this.rememberUser();
-
-    }else{
-
-        this.forgetUser();
-
-    }
-
-
-    this.saveSession();
-
-
-    this.auditEvent(
-
-        "LOGIN_SUCCESS",
-
-        sanitizedID,
-
-        "User logged in successfully."
-
-    );
-
-
-    return{
-
-        success:true,
-
-        message:"Login successful.",
-
-        user:validation.user,
-
-        role:this.currentRole,
-
-        session:this.session,
-
-        redirect:
-
+        const landingPage =
             this.getRoleLandingPage(
-
                 this.currentRole
+            );
 
-            )
+
+        if (
+            currentPage !==
+            landingPage
+        ) {
+
+            window.location.replace(
+                landingPage
+            );
+
+        }
+
+
+        return false;
 
     };
 
-};
+
+/* ============================================================
+   CHECK PAGE BEFORE EXECUTION
+   ============================================================ */
+
+AuthenticationManager.autoProtectPage =
+    function () {
+
+        /*
+         * Do not execute protection until
+         * the DOM is ready.
+         */
+
+        const executeProtection =
+            () => {
+
+                /*
+                 * Restore any saved session first.
+                 */
+
+                this.restoreSession();
 
 
-/*==========================================================
-INITIAL SESSION RESTORATION
-==========================================================*/
+                /*
+                 * Then validate access to
+                 * the current page.
+                 */
 
-AuthenticationManager.initializeSession = function(){
+                this.protectCurrentPage();
 
-    const restored =
+            };
+
+
+        if (
+            document.readyState ===
+            "loading"
+        ) {
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                executeProtection,
+                {
+                    once: true
+                }
+            );
+
+        }
+        else {
+
+            executeProtection();
+
+        }
+
+    };
+
+
+/* ============================================================
+   REQUIRE AUTHENTICATION
+   ============================================================ */
+
+AuthenticationManager.requireAuthentication =
+    function () {
+
+        if (
+            this.validateSession()
+        ) {
+
+            return true;
+
+        }
+
+
+        window.location.replace(
+            "index.html"
+        );
+
+
+        return false;
+
+    };
+
+
+/* ============================================================
+   REQUIRE SPECIFIC ROLE
+   ============================================================ */
+
+AuthenticationManager.requireRole =
+    function (
+        roles
+    ) {
+
+        if (
+            !this.validateSession()
+        ) {
+
+            window.location.replace(
+                "index.html"
+            );
+
+
+            return false;
+
+        }
+
+
+        const allowedRoles =
+            Array.isArray(
+                roles
+            )
+                ? roles
+                : [roles];
+
+
+        if (
+            allowedRoles.includes(
+                this.currentRole
+            )
+        ) {
+
+            return true;
+
+        }
+
+
+        const landingPage =
+            this.getRoleLandingPage(
+                this.currentRole
+            );
+
+
+        window.location.replace(
+            landingPage
+        );
+
+
+        return false;
+
+    };
+ /* ============================================================
+   AUTHENTICATION.JS — PART 6
+   INITIALIZATION, LOGOUT HANDLER & HEALTH CHECK
+   ============================================================ */
+
+
+/* ============================================================
+   INITIALIZE AUTHENTICATION SYSTEM
+   ============================================================ */
+
+AuthenticationManager.initialize =
+    function () {
+
+        /*
+         * Prevent duplicate initialization.
+         */
+
+        if (
+            this.initialized === true
+        ) {
+
+            return true;
+
+        }
+
+
+        /*
+         * Validate required dependencies.
+         */
+
+        if (
+            !this.validateSystem()
+        ) {
+
+            this.initializationError =
+                "Authentication dependencies are unavailable.";
+
+            this.initialized =
+                false;
+
+            return false;
+
+        }
+
+
+        /*
+         * Restore an existing session.
+         */
 
         this.restoreSession();
 
 
-    if(restored){
+        /*
+         * Connect logout controls that already
+         * exist on the current page.
+         */
 
-        const securityCheck =
-
-            this.performSecurityCheck();
+        this.bindLogoutButtons();
 
 
-        if(!securityCheck.secure){
+        /*
+         * Mark authentication system as ready.
+         */
 
-            this.logout(false);
+        this.initialized =
+            true;
 
-            return false;
+
+        this.initializationError =
+            null;
+
+
+        console.info(
+            "AuthenticationManager initialized successfully."
+        );
+
+
+        return true;
+
+    };
+
+
+/* ============================================================
+   BIND LOGOUT BUTTONS
+   ============================================================ */
+
+AuthenticationManager.bindLogoutButtons =
+    function () {
+
+        /*
+         * Support both a standard ID and
+         * data-auth-action attributes.
+         */
+
+        const logoutButtons =
+            document.querySelectorAll(
+                "#logoutBtn, " +
+                "#logoutButton, " +
+                "[data-auth-action='logout']"
+            );
+
+
+        if (
+            !logoutButtons.length
+        ) {
+
+            return;
 
         }
 
 
-        this.refreshSession();
+        logoutButtons.forEach(
+            button => {
 
-        return true;
+                /*
+                 * Prevent the same event from being
+                 * attached multiple times.
+                 */
 
-    }
+                if (
+                    button.dataset.authBound ===
+                    "true"
+                ) {
 
+                    return;
 
-    return false;
-
-};
-
-
-/*==========================================================
-PAGE AUTHENTICATION CHECK
-==========================================================*/
-
-AuthenticationManager.initializeProtectedPage = function(
-
-    requiredRoles = []
-
-){
-
-    const authenticated =
-
-        this.initializeSession();
+                }
 
 
-    if(!authenticated){
+                button.addEventListener(
+                    "click",
+                    event => {
 
-        this.redirectToLogin();
-
-        return false;
-
-    }
+                        event.preventDefault();
 
 
-    if(
+                        this.logout(
+                            true
+                        );
 
-        requiredRoles.length > 0 &&
-
-        !this.canAccessPage(
-
-            requiredRoles
-
-        )
-
-    ){
-
-        this.redirectAfterLogin();
-
-        return false;
-
-    }
+                    }
+                );
 
 
-    return true;
+                button.dataset.authBound =
+                    "true";
 
-};
-
-
-/*==========================================================
-AUTHENTICATION EVENT HANDLER
-==========================================================*/
-
-AuthenticationManager.handleLoginResult = function(
-
-    result
-
-){
-
-    if(!result){
-
-        return false;
-
-    }
-
-
-    if(result.success){
-
-        this.auditEvent(
-
-            "AUTHENTICATION_SUCCESS",
-
-            result.user ?
-
-                result.user.employeeID :
-
-                "",
-
-            "Authentication completed successfully."
-
+            }
         );
 
-        return true;
-
-    }
+    };
 
 
-    return false;
+/* ============================================================
+   AUTHENTICATION HEALTH CHECK
+   ============================================================ */
 
-};
+AuthenticationManager.healthCheck =
+    function () {
 
+        const result = {
 
-/*==========================================================
-GET USER DISPLAY INFORMATION
-==========================================================*/
+            status:
+                "healthy",
 
-AuthenticationManager.getUserDisplayInformation = function(){
+            config:
+                false,
 
-    if(!this.isLoggedIn()){
+            database:
+                false,
 
-        return{
+            session:
+                false,
 
-            name:"Guest",
+            initialized:
+                this.initialized,
 
-            employeeID:"",
-
-            role:"",
-
-            department:"",
-
-            site:"",
-
-            authenticated:false
+            errors: []
 
         };
 
-    }
 
+        /*
+         * Check CONFIG.
+         */
 
-    const user =
-
-        this.currentUser;
-
-
-    return{
-
-        name:
-
-            user.employeeName ||
-
-            user.name ||
-
-            "User",
-
-        employeeID:
-
-            user.employeeID ||
-
-            "",
-
-        role:
-
-            this.currentRole ||
-
-            "",
-
-        department:
-
-            user.department ||
-
-            "",
-
-        site:
-
-            user.site ||
-
-            "",
-
-        authenticated:true
-
-    };
-
-};
-
-
-/*==========================================================
-AUTHENTICATION DASHBOARD DATA
-==========================================================*/
-
-AuthenticationManager.getAuthenticationDashboardData = function(){
-
-    const profile =
-
-        this.getUserDisplayInformation();
-
-
-    const access =
-
-        this.getAccessProfile();
-
-
-    return{
-
-        profile:profile,
-
-        access:access,
-
-        sessionAge:
-
-            this.getSessionAge(),
-
-        sessionValid:
-
-            this.isSessionValid(),
-
-        navigation:
-
-            this.getNavigationItems()
-
-    };
-
-};
-
-
-/*==========================================================
-AUTHENTICATION INTEGRATION STATUS
-==========================================================*/
-
-AuthenticationManager.getIntegrationStatus = function(){
-
-    return{
-
-        configuration:
-
-            typeof CONFIG !== "undefined",
-
-        employeeDatabase:
-
-            typeof EmployeeDatabase !== "undefined",
-
-        deploymentManager:
-
-            typeof DeploymentManager !== "undefined",
-
-        authenticated:
-
-            this.isLoggedIn(),
-
-        currentRole:
-
-            this.currentRole,
-
-        sessionValid:
-
-            this.isSessionValid()
-
-    };
-
-};
-
-
-/*==========================================================
-INTEGRATION READY
-==========================================================*/
-
-console.log(
-
-    "Authentication Integration Loaded."
-
-);
-/*==========================================================
-FINAL INITIALIZATION & AUTHENTICATION STARTUP
-==========================================================*/
-
-/*==========================================================
-AUTHENTICATION VALIDATION
-==========================================================*/
-
-AuthenticationManager.validateSystem = function(){
-
-    const requiredModules = [
-
-        "CONFIG",
-
-        "EmployeeDatabase"
-
-    ];
-
-
-    for(const module of requiredModules){
-
-        if(
-
-            typeof window[module] ===
-
+        if (
+            typeof CONFIG !==
             "undefined"
+        ) {
 
-        ){
+            result.config =
+                true;
 
-            console.error(
+        }
+        else {
 
-                "Authentication dependency missing: " +
-
-                module
-
+            result.errors.push(
+                "CONFIG is unavailable."
             );
-
-            return false;
 
         }
 
-    }
+
+        /*
+         * Check EmployeeDatabase.
+         */
+
+        if (
+            typeof EmployeeDatabase !==
+            "undefined"
+        ) {
+
+            result.database =
+                true;
+
+        }
+        else {
+
+            result.errors.push(
+                "EmployeeDatabase is unavailable."
+            );
+
+        }
 
 
-    return true;
+        /*
+         * Check current session.
+         */
 
-};
-
-
-/*==========================================================
-INITIALIZE AUTHENTICATION MANAGER
-==========================================================*/
-
-AuthenticationManager.initialize = function(){
-
-    if(!this.validateSystem()){
-
-        console.error(
-
-            "Authentication Manager initialization failed."
-
-        );
-
-        return false;
-
-    }
+        result.session =
+            this.validateSession();
 
 
-    console.log(
+        /*
+         * Overall status.
+         */
 
-        "Initializing Authentication Manager..."
+        if (
+            result.errors.length > 0
+        ) {
 
-    );
+            result.status =
+                "error";
 
-
-    this.initializeSession();
-
-
-    console.log(
-
-        "Authentication Manager initialized successfully."
-
-    );
+        }
 
 
-    return true;
-
-};
-
-
-/*==========================================================
-PROTECT CURRENT PAGE
-==========================================================*/
-
-AuthenticationManager.autoProtectPage = function(){
-
-    const page =
-
-        window.location.pathname
-
-            .split("/")
-
-            .pop()
-
-            .toLowerCase();
-
-
-    const pageRoles = {
-
-        "admin.html":[
-
-            CONFIG.ROLES.ADMIN
-
-        ],
-
-        "projectmanager.html":[
-
-            CONFIG.ROLES.PROJECT_MANAGER,
-
-            CONFIG.ROLES.ADMIN
-
-        ],
-
-        "lead.html":[
-
-            CONFIG.ROLES.LEAD,
-
-            CONFIG.ROLES.PROJECT_MANAGER,
-
-            CONFIG.ROLES.ADMIN
-
-        ],
-
-        "employee.html":[
-
-            CONFIG.ROLES.EMPLOYEE,
-
-            CONFIG.ROLES.LEAD,
-
-            CONFIG.ROLES.PROJECT_MANAGER,
-
-            CONFIG.ROLES.ADMIN
-
-        ],
-
-        "deployment.html":[
-
-            CONFIG.ROLES.LEAD,
-
-            CONFIG.ROLES.PROJECT_MANAGER,
-
-            CONFIG.ROLES.ADMIN
-
-        ],
-
-        "reports.html":[
-
-            CONFIG.ROLES.EXECUTIVE,
-
-            CONFIG.ROLES.PROJECT_MANAGER,
-
-            CONFIG.ROLES.ADMIN
-
-        ]
+        return result;
 
     };
 
 
-    if(!pageRoles[page]){
+/* ============================================================
+   GET AUTHENTICATION STATUS
+   ============================================================ */
 
-        return true;
+AuthenticationManager.getAuthenticationStatus =
+    function () {
 
-    }
+        return {
 
+            initialized:
+                this.initialized,
 
-    return this.initializeProtectedPage(
+            loggedIn:
+                this.isLoggedIn(),
 
-        pageRoles[page]
+            role:
+                this.getCurrentRole(),
 
-    );
+            employeeId:
+                this.getEmployeeId(),
 
-};
+            displayName:
+                this.getUserDisplayName(),
 
+            session:
+                this.getSession()
 
-/*==========================================================
-AUTHENTICATION HEALTH CHECK
-==========================================================*/
-
-AuthenticationManager.healthCheck = function(){
-
-    return{
-
-        module:
-
-            "Authentication Manager",
-
-        version:
-
-            CONFIG.VERSION,
-
-        initialized:
-
-            true,
-
-        authenticated:
-
-            this.isLoggedIn(),
-
-        sessionValid:
-
-            this.isSessionValid(),
-
-        currentRole:
-
-            this.currentRole,
-
-        integration:
-
-            this.getIntegrationStatus()
+        };
 
     };
 
-};
+
+/* ============================================================
+   INITIALIZATION HANDLER
+   ============================================================ */
+
+AuthenticationManager.initializeWhenReady =
+    function () {
+
+        const initialize =
+            () => {
+
+                this.initialize();
+
+            };
 
 
-/*==========================================================
-AUTHENTICATION SYSTEM INFORMATION
-==========================================================*/
+        if (
+            document.readyState ===
+            "loading"
+        ) {
 
-AuthenticationManager.getSystemInformation = function(){
+            document.addEventListener(
+                "DOMContentLoaded",
+                initialize,
+                {
+                    once: true
+                }
+            );
 
-    return{
+        }
+        else {
 
-        module:
+            initialize();
 
-            "Authentication Manager",
-
-        version:
-
-            CONFIG.VERSION,
-
-        company:
-
-            CONFIG.COMPANY_NAME,
-
-        application:
-
-            CONFIG.APPLICATION_NAME,
-
-        authenticationStatus:
-
-            this.isLoggedIn()
-
-                ? "Authenticated"
-
-                : "Not Authenticated",
-
-        currentRole:
-
-            this.currentRole || "None"
+        }
 
     };
+/* ============================================================
+   AUTHENTICATION.JS — PART 7
+   FINALIZATION & GLOBAL ACCESS
+   ============================================================ */
 
-};
 
+/* ============================================================
+   GLOBAL AUTHENTICATION ACCESS
+   ============================================================ */
 
-/*==========================================================
-GLOBAL AUTHENTICATION INSTANCE
-==========================================================*/
+/*
+ * Expose the manager through window so that
+ * HTML pages and other JavaScript modules can
+ * access the same authentication instance.
+ */
 
 window.AuthenticationManager =
-
     AuthenticationManager;
 
 
-/*==========================================================
-AUTO INITIALIZATION
-==========================================================*/
+/* ============================================================
+   SAFE INITIALIZATION
+   ============================================================ */
 
-window.addEventListener(
+/*
+ * Authentication initialization is intentionally
+ * started only after the document is ready.
+ */
 
-    "load",
+if (
+    document.readyState ===
+    "loading"
+) {
 
-    function(){
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
 
-        AuthenticationManager.initialize();
+            AuthenticationManager.initialize();
 
-    }
+        },
+        {
+            once: true
+        }
+    );
 
+}
+else {
+
+    AuthenticationManager.initialize();
+
+}
+
+
+/* ============================================================
+   FINAL MODULE STATUS
+   ============================================================ */
+
+console.info(
+    "Serentica Authentication Module loaded.",
+    AuthenticationManager.version
 );
 
 
-/*==========================================================
-SYSTEM READY MESSAGE
-==========================================================*/
 
-console.log(
 
-    "========================================"
-
-);
-
-console.log(
-
-    "Serentica Renewables"
-
-);
-
-console.log(
-
-    "Authentication Manager"
-
-);
-
-console.log(
-
-    "Version : " + CONFIG.VERSION
-
-);
-
-console.log(
-
-    "Status : Ready"
-
-);
-
-console.log(
-
-    "========================================"
-
-);
