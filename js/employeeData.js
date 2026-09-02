@@ -2,15 +2,44 @@
 SERENTICA SITE MANPOWER MANAGEMENT SYSTEM
 MASTER EMPLOYEE DATABASE
 employeeData.js
+
+VERSION : 2.0
+PURPOSE :
+Central employee master data layer for
+
+Excel Upload
+      ↓
+Employee Master Database
+      ↓
+Employee / Organization / Deploy / Recall
+      ↓
+Future HRMS API Integration
+
+IMPORTANT:
+- Employee ID is the unique primary identifier.
+- No employee records are hard-coded here.
+- Excel import will be handled by excelImporter.js.
 ==========================================================*/
 
 "use strict";
 
+
 /*==========================================================
-GLOBAL DATABASE
+1. DATABASE CONFIGURATION
+==========================================================*/
+
+const DATABASE_KEY = "SerenticaEmployeeDatabase";
+
+const DATABASE_VERSION = "2.0";
+
+
+/*==========================================================
+2. GLOBAL EMPLOYEE DATABASE
 ==========================================================*/
 
 const EmployeeDatabase = {
+
+    version: DATABASE_VERSION,
 
     site: {
 
@@ -34,78 +63,80 @@ const EmployeeDatabase = {
 
     deploymentHistory: [],
 
-    recallHistory: []
+    recallHistory: [],
+
+    importHistory: []
 
 };
 
 
 /*==========================================================
-ROLE MASTER
+3. ROLE MASTER
 ==========================================================*/
 
 const RoleMaster = {
 
-    "Cluster Head":{
+    "Cluster Head": {
 
-        hierarchy:1,
+        hierarchy: 1,
 
-        reportingTo:null
-
-    },
-
-    "Project Manager":{
-
-        hierarchy:2,
-
-        reportingTo:"Cluster Head"
+        reportingTo: null
 
     },
 
-    "Department Head":{
+    "Project Manager": {
 
-        hierarchy:3,
+        hierarchy: 2,
 
-        reportingTo:"Project Manager"
-
-    },
-
-    "Team Lead":{
-
-        hierarchy:4,
-
-        reportingTo:"Department Head"
+        reportingTo: "Cluster Head"
 
     },
 
-    "Engineer":{
+    "Department Head": {
 
-        hierarchy:5,
+        hierarchy: 3,
 
-        reportingTo:"Team Lead"
-
-    },
-
-    "Supervisor":{
-
-        hierarchy:6,
-
-        reportingTo:"Engineer"
+        reportingTo: "Project Manager"
 
     },
 
-    "Technician":{
+    "Team Lead": {
 
-        hierarchy:7,
+        hierarchy: 4,
 
-        reportingTo:"Supervisor"
+        reportingTo: "Department Head"
 
     },
 
-    "Executive":{
+    "Engineer": {
 
-        hierarchy:5,
+        hierarchy: 5,
 
-        reportingTo:"Team Lead"
+        reportingTo: "Team Lead"
+
+    },
+
+    "Supervisor": {
+
+        hierarchy: 6,
+
+        reportingTo: "Engineer"
+
+    },
+
+    "Technician": {
+
+        hierarchy: 7,
+
+        reportingTo: "Supervisor"
+
+    },
+
+    "Executive": {
+
+        hierarchy: 5,
+
+        reportingTo: "Team Lead"
 
     }
 
@@ -113,7 +144,7 @@ const RoleMaster = {
 
 
 /*==========================================================
-DEPARTMENT MASTER
+4. DEPARTMENT MASTER
 ==========================================================*/
 
 const DepartmentMaster = [
@@ -138,36 +169,44 @@ const DepartmentMaster = [
 
 
 /*==========================================================
-INITIALIZE DEPARTMENTS
+5. INITIALIZE DEPARTMENTS
 ==========================================================*/
 
-DepartmentMaster.forEach(department=>{
+function initializeDepartments() {
 
-    EmployeeDatabase.departments[department]={
+    DepartmentMaster.forEach(department => {
 
-        name:department,
+        EmployeeDatabase.departments[department] = {
 
-        employees:[],
+            name: department,
 
-        sanctionedStrength:0,
+            employees: [],
 
-        currentStrength:0,
+            sanctionedStrength: 0,
 
-        vacancies:0,
+            currentStrength: 0,
 
-        averageKPI:0,
+            vacancies: 0,
 
-        averageEfficiency:0,
+            averageKPI: 0,
 
-        deploymentReady:0,
+            averageEfficiency: 0,
 
-        departmentHealth:0
+            deploymentReady: 0,
 
-    };
+            departmentHealth: 0
 
-});
+        };
+
+    });
+
+}
+
+initializeDepartments();
+
+
 /*==========================================================
-EMPLOYEE CLASS
+6. EMPLOYEE CLASS
 ==========================================================*/
 
 class Employee {
@@ -175,187 +214,491 @@ class Employee {
     constructor(data = {}) {
 
         /*==================================================
-        BASIC INFORMATION
+        UNIQUE EMPLOYEE IDENTIFICATION
         ==================================================*/
 
-        this.employeeID = data.employeeID || "";
+        this.employeeID =
+            String(data.employeeID || "").trim();
 
-        this.employeeName = data.employeeName || "";
+        this.employeeName =
+            String(data.employeeName || "").trim();
 
-        this.profilePhoto = data.profilePhoto || "assets/images/profile.png";
+        this.profilePhoto =
+            data.profilePhoto ||
+            "assets/images/profile.png";
 
-        this.department = data.department || "";
-
-        this.role = data.role || "";
-
-        this.designation = data.designation || "";
-
-        this.reportingManager = data.reportingManager || "";
-
-        this.teamLead = data.teamLead || "";
-
-        this.clusterHead = data.clusterHead || "";
-
-        this.projectManager = data.projectManager || "";
 
         /*==================================================
-        PERSONAL DETAILS
+        ORGANIZATIONAL INFORMATION
         ==================================================*/
 
-        this.email = data.email || "";
+        this.department =
+            data.department || "";
 
-        this.phone = data.phone || "";
+        this.role =
+            data.role || "";
 
-        this.gender = data.gender || "";
+        this.designation =
+            data.designation || "";
 
-        this.dateOfBirth = data.dateOfBirth || "";
+        this.reportingManager =
+            data.reportingManager || "";
 
-        this.bloodGroup = data.bloodGroup || "";
+        this.teamLead =
+            data.teamLead || "";
 
-        this.address = data.address || "";
+        this.clusterHead =
+            data.clusterHead || "";
 
-        this.emergencyContact = data.emergencyContact || "";
+        this.projectManager =
+            data.projectManager || "";
+
 
         /*==================================================
-        EMPLOYMENT DETAILS
+        PERSONAL INFORMATION
         ==================================================*/
 
-        this.company = data.company || "Serentica Renewables";
+        this.email =
+            data.email || "";
 
-        this.currentSite = data.currentSite || "Koppal";
+        this.phone =
+            data.phone || "";
 
-        this.currentProject = data.currentProject || "";
+        this.gender =
+            data.gender || "";
 
-        this.employmentType = data.employmentType || "";
+        this.dateOfBirth =
+            data.dateOfBirth || "";
 
-        this.dateOfJoining = data.dateOfJoining || "";
+        this.bloodGroup =
+            data.bloodGroup || "";
 
-        this.experience = data.experience || 0;
+        this.address =
+            data.address || "";
 
-        this.noticePeriod = data.noticePeriod || "";
+        this.emergencyContact =
+            data.emergencyContact || "";
 
-        this.status = data.status || "Active";
+
+        /*==================================================
+        EMPLOYMENT INFORMATION
+        ==================================================*/
+
+        this.company =
+            data.company ||
+            "Serentica Renewables";
+
+        this.currentSite =
+            data.currentSite ||
+            "Koppal";
+
+        this.currentProject =
+            data.currentProject || "";
+
+        this.employmentType =
+            data.employmentType || "";
+
+        this.dateOfJoining =
+            data.dateOfJoining || "";
+
+        this.experience =
+            Number(data.experience || 0);
+
+        this.noticePeriod =
+            data.noticePeriod || "";
+
+        this.status =
+            data.status ||
+            "Active";
+
 
         /*==================================================
         ROLE INFORMATION
         ==================================================*/
 
-        this.roleHierarchy = data.roleHierarchy || 0;
+        this.roleHierarchy =
+            Number(data.roleHierarchy || 0);
 
-        this.jobDescription = data.jobDescription || "";
+        this.jobDescription =
+            data.jobDescription || "";
 
-        this.roleKPIs = data.roleKPIs || [];
+        this.roleKPIs =
+            Array.isArray(data.roleKPIs)
+                ? data.roleKPIs
+                : [];
 
-        this.currentTasks = data.currentTasks || [];
+        this.currentTasks =
+            Array.isArray(data.currentTasks)
+                ? data.currentTasks
+                : [];
 
-        /*==================================================
-        DEPLOYMENT
-        ==================================================*/
-
-        this.deploymentStatus = data.deploymentStatus || "Not Deployed";
-
-        this.readyForDeployment = data.readyForDeployment || false;
-
-        this.deploymentRecommendation = data.deploymentRecommendation || "Pending";
-
-        this.lastDeployment = data.lastDeployment || "";
-
-        this.lastRecall = data.lastRecall || "";
-
-        this.deploymentHistory = data.deploymentHistory || [];
-
-        this.recallHistory = data.recallHistory || [];
 
         /*==================================================
-        PERFORMANCE
+        DEPLOYMENT INFORMATION
         ==================================================*/
 
-        this.kpiScores = data.kpiScores || [];
+        this.deploymentStatus =
+            data.deploymentStatus ||
+            "Not Deployed";
 
-        this.averageKPI = data.averageKPI || 0;
+        this.readyForDeployment =
+            Boolean(data.readyForDeployment);
 
-        this.efficiencyScore = data.efficiencyScore || 0;
+        this.deploymentRecommendation =
+            data.deploymentRecommendation ||
+            "Pending";
 
-        this.performanceRating = data.performanceRating || "";
+        this.lastDeployment =
+            data.lastDeployment || "";
 
-        this.managerRemarks = data.managerRemarks || "";
+        this.lastRecall =
+            data.lastRecall || "";
 
-        this.teamLeadRemarks = data.teamLeadRemarks || "";
+        this.deploymentHistory =
+            Array.isArray(data.deploymentHistory)
+                ? data.deploymentHistory
+                : [];
 
-        this.clusterRemarks = data.clusterRemarks || "";
+        this.recallHistory =
+            Array.isArray(data.recallHistory)
+                ? data.recallHistory
+                : [];
+
+
+        /*==================================================
+        PERFORMANCE INFORMATION
+        ==================================================*/
+
+        this.kpiScores =
+            Array.isArray(data.kpiScores)
+                ? data.kpiScores
+                : [];
+
+        this.averageKPI =
+            Number(data.averageKPI || 0);
+
+        this.efficiencyScore =
+            Number(data.efficiencyScore || 0);
+
+        this.performanceRating =
+            data.performanceRating || "";
+
+        this.managerRemarks =
+            data.managerRemarks || "";
+
+        this.teamLeadRemarks =
+            data.teamLeadRemarks || "";
+
+        this.clusterRemarks =
+            data.clusterRemarks || "";
+
 
         /*==================================================
         TRAINING
         ==================================================*/
 
-        this.trainingRequired = data.trainingRequired || [];
+        this.trainingRequired =
+            Array.isArray(data.trainingRequired)
+                ? data.trainingRequired
+                : [];
 
-        this.completedTraining = data.completedTraining || [];
+        this.completedTraining =
+            Array.isArray(data.completedTraining)
+                ? data.completedTraining
+                : [];
 
-        this.certifications = data.certifications || [];
+        this.certifications =
+            Array.isArray(data.certifications)
+                ? data.certifications
+                : [];
+
 
         /*==================================================
-        SUCCESSION
+        SUCCESSION & RISK
         ==================================================*/
 
-        this.promotionReady = data.promotionReady || false;
+        this.promotionReady =
+            Boolean(data.promotionReady);
 
-        this.successorFor = data.successorFor || "";
+        this.successorFor =
+            data.successorFor || "";
 
-        this.riskLevel = data.riskLevel || "Low";
+        this.riskLevel =
+            data.riskLevel || "Low";
+
+        this.recallRecommendation =
+            data.recallRecommendation ||
+            "No Recall Required";
+
 
         /*==================================================
-        SYSTEM
+        SYSTEM INFORMATION
         ==================================================*/
 
-        this.createdDate = data.createdDate || new Date();
+        this.createdDate =
+            data.createdDate ||
+            new Date().toISOString();
 
-        this.lastUpdated = data.lastUpdated || new Date();
+        this.lastUpdated =
+            data.lastUpdated ||
+            new Date().toISOString();
 
     }
 
 }
+
+
 /*==========================================================
-EMPLOYEE DATABASE MANAGER
+7. EMPLOYEE DATABASE MANAGER
 ==========================================================*/
 
 const EmployeeManager = {
 
+
     /*======================================================
-    ADD EMPLOYEE
+    ADD OR UPDATE EMPLOYEE
+
+    UNIQUE KEY:
+    employeeID
     ======================================================*/
 
     addEmployee(employeeData) {
 
-        const employee = new Employee(employeeData);
+        if (!employeeData) {
 
-        EmployeeDatabase.employees.push(employee);
+            console.error(
+                "Employee data is missing."
+            );
+
+            return false;
+
+        }
+
+
+        const employeeID =
+            String(
+                employeeData.employeeID || ""
+            ).trim();
+
+
+        if (!employeeID) {
+
+            console.error(
+                "Employee ID is required."
+            );
+
+            return false;
+
+        }
+
+
+        const existingEmployee =
+            this.getEmployeeByID(employeeID);
+
+
+        /*==================================================
+        UPDATE EXISTING EMPLOYEE
+        ==================================================*/
+
+        if (existingEmployee) {
+
+            Object.assign(
+                existingEmployee,
+                employeeData
+            );
+
+            existingEmployee.lastUpdated =
+                new Date().toISOString();
+
+            this.applyRoleTemplate(
+                existingEmployee
+            );
+
+            this.updateReportingHierarchy(
+                existingEmployee
+            );
+
+            this.initializeKPIs(
+                existingEmployee
+            );
+
+            this.updateDepartmentStatistics();
+
+            return existingEmployee;
+
+        }
+
+
+        /*==================================================
+        CREATE NEW EMPLOYEE
+        ==================================================*/
+
+        const employee =
+            new Employee(employeeData);
+
+
+        this.applyRoleTemplate(employee);
+
+        this.updateReportingHierarchy(employee);
+
+        this.initializeKPIs(employee);
+
+
+        EmployeeDatabase.employees.push(
+            employee
+        );
+
 
         this.updateDepartmentStatistics();
+
 
         return employee;
 
     },
 
+
+    /*======================================================
+    BULK ADD / UPDATE
+
+    USED BY FUTURE EXCEL IMPORTER
+    ======================================================*/
+
+    bulkAddEmployees(employeeList = []) {
+
+        if (!Array.isArray(employeeList)) {
+
+            return {
+
+                added: 0,
+
+                updated: 0,
+
+                failed: 0
+
+            };
+
+        }
+
+
+        let added = 0;
+
+        let updated = 0;
+
+        let failed = 0;
+
+
+        employeeList.forEach(data => {
+
+            try {
+
+                if (!data || !data.employeeID) {
+
+                    failed++;
+
+                    return;
+
+                }
+
+
+                const existing =
+                    this.getEmployeeByID(
+                        String(data.employeeID).trim()
+                    );
+
+
+                this.addEmployee(data);
+
+
+                if (existing) {
+
+                    updated++;
+
+                }
+
+                else {
+
+                    added++;
+
+                }
+
+            }
+
+            catch (error) {
+
+                failed++;
+
+                console.error(
+                    "Employee import error:",
+                    error
+                );
+
+            }
+
+        });
+
+
+        this.updateDepartmentStatistics();
+
+        this.saveDatabase();
+
+
+        return {
+
+            added: added,
+
+            updated: updated,
+
+            failed: failed,
+
+            totalProcessed:
+                added + updated + failed
+
+        };
+
+    },
+
+
     /*======================================================
     UPDATE EMPLOYEE
     ======================================================*/
 
-    updateEmployee(employeeID, updatedData) {
+    updateEmployee(
+        employeeID,
+        updatedData = {}
+    ) {
 
-        const employee = this.getEmployeeByID(employeeID);
+        const employee =
+            this.getEmployeeByID(employeeID);
 
-        if (!employee) return false;
 
-        Object.assign(employee, updatedData);
+        if (!employee) {
 
-        employee.lastUpdated = new Date();
+            return false;
+
+        }
+
+
+        Object.assign(
+            employee,
+            updatedData
+        );
+
+
+        employee.lastUpdated =
+            new Date().toISOString();
+
+
+        this.applyRoleTemplate(employee);
+
+        this.updateReportingHierarchy(employee);
 
         this.updateDepartmentStatistics();
+
 
         return true;
 
     },
+
 
     /*======================================================
     DELETE EMPLOYEE
@@ -363,35 +706,54 @@ const EmployeeManager = {
 
     deleteEmployee(employeeID) {
 
-        const index = EmployeeDatabase.employees.findIndex(
+        const index =
+            EmployeeDatabase.employees.findIndex(
+                employee =>
+                    employee.employeeID ===
+                    employeeID
+            );
 
-            employee => employee.employeeID === employeeID
 
+        if (index === -1) {
+
+            return false;
+
+        }
+
+
+        EmployeeDatabase.employees.splice(
+            index,
+            1
         );
 
-        if (index === -1) return false;
-
-        EmployeeDatabase.employees.splice(index, 1);
 
         this.updateDepartmentStatistics();
+
+        this.saveDatabase();
+
 
         return true;
 
     },
 
+
     /*======================================================
-    GET EMPLOYEE BY ID
+    GET EMPLOYEE BY UNIQUE ID
     ======================================================*/
 
     getEmployeeByID(employeeID) {
 
+        const id =
+            String(employeeID || "").trim();
+
+
         return EmployeeDatabase.employees.find(
-
-            employee => employee.employeeID === employeeID
-
+            employee =>
+                employee.employeeID === id
         );
 
     },
+
 
     /*======================================================
     GET EMPLOYEE BY NAME
@@ -399,13 +761,20 @@ const EmployeeManager = {
 
     getEmployeeByName(employeeName) {
 
+        const name =
+            String(employeeName || "")
+                .trim()
+                .toLowerCase();
+
+
         return EmployeeDatabase.employees.find(
-
-            employee => employee.employeeName === employeeName
-
+            employee =>
+                employee.employeeName
+                    .toLowerCase() === name
         );
 
     },
+
 
     /*======================================================
     GET EMPLOYEES BY DEPARTMENT
@@ -414,12 +783,12 @@ const EmployeeManager = {
     getEmployeesByDepartment(department) {
 
         return EmployeeDatabase.employees.filter(
-
-            employee => employee.department === department
-
+            employee =>
+                employee.department === department
         );
 
     },
+
 
     /*======================================================
     GET EMPLOYEES BY ROLE
@@ -428,26 +797,29 @@ const EmployeeManager = {
     getEmployeesByRole(role) {
 
         return EmployeeDatabase.employees.filter(
-
-            employee => employee.role === role
-
+            employee =>
+                employee.role === role
         );
 
     },
+
 
     /*======================================================
     GET EMPLOYEES BY REPORTING MANAGER
     ======================================================*/
 
-    getEmployeesByReportingManager(managerName) {
+    getEmployeesByReportingManager(
+        managerName
+    ) {
 
         return EmployeeDatabase.employees.filter(
-
-            employee => employee.reportingManager === managerName
-
+            employee =>
+                employee.reportingManager ===
+                managerName
         );
 
     },
+
 
     /*======================================================
     GET DEPLOYMENT READY EMPLOYEES
@@ -456,12 +828,12 @@ const EmployeeManager = {
     getDeploymentReadyEmployees() {
 
         return EmployeeDatabase.employees.filter(
-
-            employee => employee.readyForDeployment === true
-
+            employee =>
+                employee.readyForDeployment === true
         );
 
     },
+
 
     /*======================================================
     GET PROMOTION READY EMPLOYEES
@@ -470,12 +842,12 @@ const EmployeeManager = {
     getPromotionReadyEmployees() {
 
         return EmployeeDatabase.employees.filter(
-
-            employee => employee.promotionReady === true
-
+            employee =>
+                employee.promotionReady === true
         );
 
     },
+
 
     /*======================================================
     GET ACTIVE EMPLOYEES
@@ -484,12 +856,12 @@ const EmployeeManager = {
     getActiveEmployees() {
 
         return EmployeeDatabase.employees.filter(
-
-            employee => employee.status === "Active"
-
+            employee =>
+                employee.status === "Active"
         );
 
     },
+
 
     /*======================================================
     GET ALL EMPLOYEES
@@ -502,17 +874,19 @@ const EmployeeManager = {
     }
 
 };
+
+
 /*==========================================================
-DEPARTMENT STATISTICS ENGINE
+8. DEPARTMENT STATISTICS ENGINE
 ==========================================================*/
 
-EmployeeManager.updateDepartmentStatistics = function () {
+EmployeeManager.updateDepartmentStatistics =
+function () {
 
-    /*--------------------------------------------
-    RESET ALL DEPARTMENTS
-    ---------------------------------------------*/
 
-    Object.values(EmployeeDatabase.departments).forEach(department => {
+    Object.values(
+        EmployeeDatabase.departments
+    ).forEach(department => {
 
         department.employees = [];
 
@@ -524,219 +898,202 @@ EmployeeManager.updateDepartmentStatistics = function () {
 
         department.deploymentReady = 0;
 
+        department.vacancies = 0;
+
         department.departmentHealth = 0;
 
     });
 
-    /*--------------------------------------------
-    POPULATE EMPLOYEES
-    ---------------------------------------------*/
 
-    EmployeeDatabase.employees.forEach(employee => {
+    EmployeeDatabase.employees.forEach(
+        employee => {
 
-        const department =
-            EmployeeDatabase.departments[employee.department];
+            const department =
+                EmployeeDatabase
+                    .departments[
+                        employee.department
+                    ];
 
-        if (!department) return;
 
-        department.employees.push(employee);
+            if (!department) {
 
-    });
+                return;
 
-    /*--------------------------------------------
-    CALCULATE STATISTICS
-    ---------------------------------------------*/
+            }
 
-    Object.values(EmployeeDatabase.departments).forEach(department => {
 
-        department.currentStrength = department.employees.length;
+            department.employees.push(
+                employee
+            );
 
-        /*-------------------------
-        Average KPI
-        --------------------------*/
+        }
+    );
 
-        let totalKPI = 0;
 
-        department.employees.forEach(employee => {
+    Object.values(
+        EmployeeDatabase.departments
+    ).forEach(department => {
 
-            totalKPI += Number(employee.averageKPI || 0);
+        department.currentStrength =
+            department.employees.length;
 
-        });
 
-        department.averageKPI =
+        if (department.currentStrength === 0) {
 
-            department.currentStrength === 0
+            department.averageKPI = 0;
 
-                ? 0
+            department.averageEfficiency = 0;
 
-                : Number(
+        }
+
+        else {
+
+            const totalKPI =
+                department.employees.reduce(
+                    (total, employee) =>
+                        total +
+                        Number(
+                            employee.averageKPI || 0
+                        ),
+                    0
+                );
+
+
+            const totalEfficiency =
+                department.employees.reduce(
+                    (total, employee) =>
+                        total +
+                        Number(
+                            employee.efficiencyScore || 0
+                        ),
+                    0
+                );
+
+
+            department.averageKPI =
+                Number(
                     (
                         totalKPI /
                         department.currentStrength
                     ).toFixed(1)
                 );
 
-        /*-------------------------
-        Average Efficiency
-        --------------------------*/
 
-        let totalEfficiency = 0;
-
-        department.employees.forEach(employee => {
-
-            totalEfficiency += Number(employee.efficiencyScore || 0);
-
-        });
-
-        department.averageEfficiency =
-
-            department.currentStrength === 0
-
-                ? 0
-
-                : Number(
+            department.averageEfficiency =
+                Number(
                     (
                         totalEfficiency /
                         department.currentStrength
                     ).toFixed(1)
                 );
 
-        /*-------------------------
-        Deployment Ready
-        --------------------------*/
+        }
+
 
         department.deploymentReady =
-
-            department.employees.filter(employee =>
-
-                employee.readyForDeployment === true
-
+            department.employees.filter(
+                employee =>
+                    employee.readyForDeployment === true
             ).length;
 
-        /*-------------------------
-        Vacancies
-        --------------------------*/
 
         department.vacancies =
-
             Math.max(
-
                 0,
-
                 department.sanctionedStrength -
-
                 department.currentStrength
-
             );
 
-        /*-------------------------
-        Department Health
-        --------------------------*/
 
         department.departmentHealth =
-
-            this.calculateDepartmentHealth(
-
+            EmployeeManager.calculateDepartmentHealth(
                 department
-
             );
 
     });
 
 };
+
+
 /*==========================================================
-DEPARTMENT HEALTH ENGINE
+9. DEPARTMENT HEALTH ENGINE
 ==========================================================*/
 
-EmployeeManager.calculateDepartmentHealth = function (department) {
+EmployeeManager.calculateDepartmentHealth =
+function (department) {
 
-    /*--------------------------------------------
-    EMPTY DEPARTMENT
-    ---------------------------------------------*/
 
-    if (department.currentStrength === 0) {
+    if (
+        !department ||
+        department.currentStrength === 0
+    ) {
 
         return 0;
 
     }
 
-    /*--------------------------------------------
-    KPI SCORE
-    ---------------------------------------------*/
 
-    const kpiScore = Number(department.averageKPI || 0);
+    const kpiScore =
+        Number(
+            department.averageKPI || 0
+        );
 
-    /*--------------------------------------------
-    EFFICIENCY SCORE
-    ---------------------------------------------*/
 
-    const efficiencyScore = Number(
+    const efficiencyScore =
+        Number(
+            department.averageEfficiency || 0
+        );
 
-        department.averageEfficiency || 0
-
-    );
-
-    /*--------------------------------------------
-    VACANCY SCORE
-    ---------------------------------------------*/
 
     let vacancyScore = 100;
 
-    if (department.sanctionedStrength > 0) {
+
+    if (
+        department.sanctionedStrength > 0
+    ) {
 
         const vacancyPercentage =
+            (
+                department.vacancies /
+                department.sanctionedStrength
+            ) * 100;
 
-            (department.vacancies /
-
-                department.sanctionedStrength) * 100;
 
         vacancyScore =
-
             Math.max(
-
                 0,
-
                 100 - vacancyPercentage
-
             );
 
     }
 
-    /*--------------------------------------------
-    DEPLOYMENT SCORE
-    ---------------------------------------------*/
 
     let deploymentScore = 100;
+
 
     if (department.currentStrength > 0) {
 
         deploymentScore =
-
             (
-
                 department.deploymentReady /
-
                 department.currentStrength
-
             ) * 100;
 
     }
 
-    /*--------------------------------------------
-    CRITICAL ROLE SCORE
-    ---------------------------------------------*/
 
     let criticalRoleScore = 100;
 
-    const hasLead = department.employees.some(
 
-        employee =>
+    const hasLead =
+        department.employees.some(
+            employee =>
+                employee.role ===
+                    "Department Head" ||
+                employee.role ===
+                    "Team Lead"
+        );
 
-            employee.role === "Department Head" ||
-
-            employee.role === "Team Lead"
-
-    );
 
     if (!hasLead) {
 
@@ -744,39 +1101,30 @@ EmployeeManager.calculateDepartmentHealth = function (department) {
 
     }
 
-    /*--------------------------------------------
-    FINAL HEALTH INDEX
-    ---------------------------------------------*/
 
     const health =
-
         (
-
             (kpiScore * 0.30) +
-
             (efficiencyScore * 0.30) +
-
             (vacancyScore * 0.15) +
-
             (deploymentScore * 0.15) +
-
             (criticalRoleScore * 0.10)
-
         );
 
+
     return Number(
-
         health.toFixed(1)
-
     );
 
 };
 
+
 /*==========================================================
-HEALTH STATUS LABEL
+10. HEALTH STATUS
 ==========================================================*/
 
-EmployeeManager.getHealthStatus = function (score) {
+EmployeeManager.getHealthStatus =
+function (score) {
 
     if (score >= 90) {
 
@@ -806,11 +1154,13 @@ EmployeeManager.getHealthStatus = function (score) {
 
 };
 
+
 /*==========================================================
-HEALTH COLOR
+11. HEALTH COLOR
 ==========================================================*/
 
-EmployeeManager.getHealthColor = function (score) {
+EmployeeManager.getHealthColor =
+function (score) {
 
     if (score >= 90) {
 
@@ -839,23 +1189,20 @@ EmployeeManager.getHealthColor = function (score) {
     return "#E74C3C";
 
 };
+
+
 /*==========================================================
-ROLE TEMPLATE ENGINE
-Automatically assigns Job Description & KPIs
+12. ROLE TEMPLATE MASTER
 ==========================================================*/
 
 EmployeeDatabase.roleTemplates = {
 
-    /*======================================================
-    CLUSTER HEAD
-    ======================================================*/
-
-    "Cluster Head":{
+    "Cluster Head": {
 
         jobDescription:
             "Overall site leadership, operational excellence, strategic planning, manpower optimization and stakeholder management.",
 
-        kpis:[
+        kpis: [
 
             "Overall Site Performance",
 
@@ -871,16 +1218,13 @@ EmployeeDatabase.roleTemplates = {
 
     },
 
-    /*======================================================
-    PROJECT MANAGER
-    ======================================================*/
 
-    "Project Manager":{
+    "Project Manager": {
 
         jobDescription:
             "Responsible for complete project execution, planning, quality, manpower deployment and client coordination.",
 
-        kpis:[
+        kpis: [
 
             "Project Progress",
 
@@ -896,16 +1240,13 @@ EmployeeDatabase.roleTemplates = {
 
     },
 
-    /*======================================================
-    DEPARTMENT HEAD
-    ======================================================*/
 
-    "Department Head":{
+    "Department Head": {
 
         jobDescription:
             "Leads departmental execution, manpower allocation, technical coordination and performance monitoring.",
 
-        kpis:[
+        kpis: [
 
             "Department Productivity",
 
@@ -921,16 +1262,13 @@ EmployeeDatabase.roleTemplates = {
 
     },
 
-    /*======================================================
-    TEAM LEAD
-    ======================================================*/
 
-    "Team Lead":{
+    "Team Lead": {
 
         jobDescription:
             "Coordinates daily activities, allocates work, monitors engineers and ensures timely execution.",
 
-        kpis:[
+        kpis: [
 
             "Task Completion",
 
@@ -946,16 +1284,13 @@ EmployeeDatabase.roleTemplates = {
 
     },
 
-    /*======================================================
-    ENGINEER
-    ======================================================*/
 
-    "Engineer":{
+    "Engineer": {
 
         jobDescription:
             "Responsible for execution, monitoring, reporting, quality and technical support.",
 
-        kpis:[
+        kpis: [
 
             "Daily Productivity",
 
@@ -971,16 +1306,13 @@ EmployeeDatabase.roleTemplates = {
 
     },
 
-    /*======================================================
-    SUPERVISOR
-    ======================================================*/
 
-    "Supervisor":{
+    "Supervisor": {
 
         jobDescription:
             "Supervises field execution, workforce management and adherence to site procedures.",
 
-        kpis:[
+        kpis: [
 
             "Daily Output",
 
@@ -996,16 +1328,13 @@ EmployeeDatabase.roleTemplates = {
 
     },
 
-    /*======================================================
-    TECHNICIAN
-    ======================================================*/
 
-    "Technician":{
+    "Technician": {
 
         jobDescription:
             "Performs installation, maintenance, inspection and technical activities.",
 
-        kpis:[
+        kpis: [
 
             "Work Completion",
 
@@ -1021,16 +1350,13 @@ EmployeeDatabase.roleTemplates = {
 
     },
 
-    /*======================================================
-    EXECUTIVE
-    ======================================================*/
 
-    "Executive":{
+    "Executive": {
 
         jobDescription:
             "Supports departmental activities, reporting, documentation and coordination.",
 
-        kpis:[
+        kpis: [
 
             "Documentation",
 
@@ -1050,91 +1376,86 @@ EmployeeDatabase.roleTemplates = {
 
 
 /*==========================================================
-LOAD ROLE TEMPLATE
+13. APPLY ROLE TEMPLATE
 ==========================================================*/
 
-EmployeeManager.applyRoleTemplate = function(employee){
+EmployeeManager.applyRoleTemplate =
+function (employee) {
 
-    const template =
-
-        EmployeeDatabase.roleTemplates[employee.role];
-
-    if(!template){
+    if (!employee) {
 
         return employee;
 
     }
 
-    employee.jobDescription = template.jobDescription;
 
-    employee.roleKPIs = [...template.kpis];
+    const template =
+        EmployeeDatabase.roleTemplates[
+            employee.role
+        ];
+
+
+    if (!template) {
+
+        return employee;
+
+    }
+
+
+    employee.jobDescription =
+        template.jobDescription;
+
+
+    employee.roleKPIs =
+        [...template.kpis];
+
 
     return employee;
 
 };
+
+
 /*==========================================================
-AUTOMATIC ROLE ASSIGNMENT ENGINE
+14. ROLE ASSIGNMENT
 ==========================================================*/
 
-EmployeeManager.assignRole = function(employeeID, role){
+EmployeeManager.assignRole =
+function (employeeID, role) {
 
-    /*--------------------------------------------
-    Find Employee
-    ---------------------------------------------*/
+    const employee =
+        this.getEmployeeByID(employeeID);
 
-    const employee = this.getEmployeeByID(employeeID);
 
-    if(!employee){
-
-        console.error("Employee Not Found");
+    if (!employee) {
 
         return false;
 
     }
 
-    /*--------------------------------------------
-    Assign New Role
-    ---------------------------------------------*/
+
+    if (!RoleMaster[role]) {
+
+        console.error(
+            "Invalid role:",
+            role
+        );
+
+        return false;
+
+    }
+
 
     employee.role = role;
 
-    /*--------------------------------------------
-    Load JD & KPIs
-    ---------------------------------------------*/
 
     this.applyRoleTemplate(employee);
 
-    /*--------------------------------------------
-    Update Hierarchy
-    ---------------------------------------------*/
-
     this.updateReportingHierarchy(employee);
 
-    /*--------------------------------------------
-    Refresh Department Statistics
-    ---------------------------------------------*/
+    this.initializeKPIs(employee);
 
     this.updateDepartmentStatistics();
 
-    /*--------------------------------------------
-    Refresh Dashboard
-    ---------------------------------------------*/
-
-    if(typeof DashboardManager !== "undefined"){
-
-        DashboardManager.refresh();
-
-    }
-
-    /*--------------------------------------------
-    Refresh Organisation Chart
-    ---------------------------------------------*/
-
-    if(typeof OrganisationManager !== "undefined"){
-
-        OrganisationManager.refresh();
-
-    }
 
     return true;
 
@@ -1142,47 +1463,64 @@ EmployeeManager.assignRole = function(employeeID, role){
 
 
 /*==========================================================
-REPORTING HIERARCHY ENGINE
+15. REPORTING HIERARCHY
 ==========================================================*/
 
-EmployeeManager.updateReportingHierarchy = function(employee){
+EmployeeManager.updateReportingHierarchy =
+function (employee) {
 
-    const hierarchy = RoleMaster[employee.role];
-
-    if(!hierarchy){
+    if (!employee) {
 
         return;
 
     }
 
-    employee.roleHierarchy = hierarchy.hierarchy;
+
+    const hierarchy =
+        RoleMaster[employee.role];
+
+
+    if (!hierarchy) {
+
+        return;
+
+    }
+
+
+    employee.roleHierarchy =
+        hierarchy.hierarchy;
 
 };
 
 
 /*==========================================================
-CHANGE REPORTING MANAGER
+16. REPORTING MANAGER
 ==========================================================*/
 
-EmployeeManager.changeReportingManager = function(
-
+EmployeeManager.changeReportingManager =
+function (
     employeeID,
-
     managerName
+) {
 
-){
+    const employee =
+        this.getEmployeeByID(employeeID);
 
-    const employee = this.getEmployeeByID(employeeID);
 
-    if(!employee){
+    if (!employee) {
 
         return false;
 
     }
 
-    employee.reportingManager = managerName;
 
-    employee.lastUpdated = new Date();
+    employee.reportingManager =
+        managerName || "";
+
+
+    employee.lastUpdated =
+        new Date().toISOString();
+
 
     return true;
 
@@ -1190,28 +1528,33 @@ EmployeeManager.changeReportingManager = function(
 
 
 /*==========================================================
-CHANGE TEAM LEAD
+17. TEAM LEAD
 ==========================================================*/
 
-EmployeeManager.changeTeamLead = function(
-
+EmployeeManager.changeTeamLead =
+function (
     employeeID,
-
     teamLead
+) {
 
-){
+    const employee =
+        this.getEmployeeByID(employeeID);
 
-    const employee = this.getEmployeeByID(employeeID);
 
-    if(!employee){
+    if (!employee) {
 
         return false;
 
     }
 
-    employee.teamLead = teamLead;
 
-    employee.lastUpdated = new Date();
+    employee.teamLead =
+        teamLead || "";
+
+
+    employee.lastUpdated =
+        new Date().toISOString();
+
 
     return true;
 
@@ -1219,112 +1562,175 @@ EmployeeManager.changeTeamLead = function(
 
 
 /*==========================================================
-TRANSFER DEPARTMENT
+18. DEPARTMENT TRANSFER
 ==========================================================*/
 
-EmployeeManager.transferDepartment = function(
-
+EmployeeManager.transferDepartment =
+function (
     employeeID,
-
     newDepartment
+) {
 
-){
+    const employee =
+        this.getEmployeeByID(employeeID);
 
-    const employee = this.getEmployeeByID(employeeID);
 
-    if(!employee){
+    if (!employee) {
 
         return false;
 
     }
 
-    employee.department = newDepartment;
 
-    employee.lastUpdated = new Date();
+    if (
+        !EmployeeDatabase.departments[
+            newDepartment
+        ]
+    ) {
+
+        console.error(
+            "Invalid department:",
+            newDepartment
+        );
+
+        return false;
+
+    }
+
+
+    employee.department =
+        newDepartment;
+
+
+    employee.lastUpdated =
+        new Date().toISOString();
+
 
     this.updateDepartmentStatistics();
 
+
     return true;
 
 };
+
+
 /*==========================================================
-AUTOMATIC KPI ENGINE
+19. KPI INITIALIZATION
 ==========================================================*/
 
-EmployeeManager.initializeKPIs = function(employee){
+EmployeeManager.initializeKPIs =
+function (employee) {
 
-    if(!employee.roleKPIs || employee.roleKPIs.length === 0){
+    if (!employee) {
+
+        return;
+
+    }
+
+
+    if (
+        !employee.roleKPIs ||
+        employee.roleKPIs.length === 0
+    ) {
 
         this.applyRoleTemplate(employee);
 
     }
 
-    employee.kpiScores = employee.roleKPIs.map(kpi => ({
 
-        name: kpi,
+    if (
+        !employee.kpiScores ||
+        employee.kpiScores.length === 0
+    ) {
 
-        score: 0,
+        employee.kpiScores =
+            employee.roleKPIs.map(kpi => ({
 
-        remarks: ""
+                name: kpi,
 
-    }));
+                score: 0,
+
+                remarks: ""
+
+            }));
+
+    }
 
 };
 
 
 /*==========================================================
-UPDATE KPI SCORE
+20. UPDATE KPI SCORE
 ==========================================================*/
 
-EmployeeManager.updateKPIScore = function(
-
+EmployeeManager.updateKPIScore =
+function (
     employeeID,
-
     kpiName,
-
     score,
-
     remarks = ""
+) {
 
-){
+    const employee =
+        this.getEmployeeByID(employeeID);
 
-    const employee = this.getEmployeeByID(employeeID);
 
-    if(!employee){
-
-        return false;
-
-    }
-
-    if(!employee.kpiScores){
-
-        this.initializeKPIs(employee);
-
-    }
-
-    const kpi = employee.kpiScores.find(
-
-        item => item.name === kpiName
-
-    );
-
-    if(!kpi){
+    if (!employee) {
 
         return false;
 
     }
 
-    kpi.score = Number(score);
 
-    kpi.remarks = remarks;
+    this.initializeKPIs(employee);
+
+
+    const kpi =
+        employee.kpiScores.find(
+            item =>
+                item.name === kpiName
+        );
+
+
+    if (!kpi) {
+
+        return false;
+
+    }
+
+
+    const numericScore =
+        Number(score);
+
+
+    if (
+        Number.isNaN(numericScore) ||
+        numericScore < 0 ||
+        numericScore > 100
+    ) {
+
+        return false;
+
+    }
+
+
+    kpi.score =
+        numericScore;
+
+    kpi.remarks =
+        remarks;
+
 
     employee.averageKPI =
-
         this.calculateAverageKPI(employee);
 
-    employee.lastUpdated = new Date();
+
+    employee.lastUpdated =
+        new Date().toISOString();
+
 
     this.updateDepartmentStatistics();
+
 
     return true;
 
@@ -1332,61 +1738,64 @@ EmployeeManager.updateKPIScore = function(
 
 
 /*==========================================================
-CALCULATE AVERAGE KPI
+21. CALCULATE AVERAGE KPI
 ==========================================================*/
 
-EmployeeManager.calculateAverageKPI = function(employee){
+EmployeeManager.calculateAverageKPI =
+function (employee) {
 
-    if(
-
+    if (
+        !employee ||
         !employee.kpiScores ||
-
         employee.kpiScores.length === 0
-
-    ){
+    ) {
 
         return 0;
 
     }
 
-    let total = 0;
 
-    employee.kpiScores.forEach(kpi=>{
+    const total =
+        employee.kpiScores.reduce(
+            (sum, kpi) =>
+                sum +
+                Number(kpi.score || 0),
+            0
+        );
 
-        total += Number(kpi.score);
-
-    });
 
     return Number(
-
         (
-
             total /
-
             employee.kpiScores.length
-
         ).toFixed(1)
-
     );
 
 };
 
 
 /*==========================================================
-RESET KPI SCORES
+22. RESET KPIs
 ==========================================================*/
 
-EmployeeManager.resetKPIs = function(employeeID){
+EmployeeManager.resetKPIs =
+function (employeeID) {
 
-    const employee = this.getEmployeeByID(employeeID);
+    const employee =
+        this.getEmployeeByID(employeeID);
 
-    if(!employee){
+
+    if (!employee) {
 
         return false;
 
     }
 
-    employee.kpiScores.forEach(kpi=>{
+
+    this.initializeKPIs(employee);
+
+
+    employee.kpiScores.forEach(kpi => {
 
         kpi.score = 0;
 
@@ -1394,11 +1803,16 @@ EmployeeManager.resetKPIs = function(employeeID){
 
     });
 
+
     employee.averageKPI = 0;
 
-    employee.lastUpdated = new Date();
+
+    employee.lastUpdated =
+        new Date().toISOString();
+
 
     this.updateDepartmentStatistics();
+
 
     return true;
 
@@ -1406,145 +1820,122 @@ EmployeeManager.resetKPIs = function(employeeID){
 
 
 /*==========================================================
-GET KPI DETAILS
+23. GET KPI DETAILS
 ==========================================================*/
 
-EmployeeManager.getKPIs = function(employeeID){
+EmployeeManager.getKPIs =
+function (employeeID) {
 
-    const employee = this.getEmployeeByID(employeeID);
+    const employee =
+        this.getEmployeeByID(employeeID);
 
-    if(!employee){
+
+    if (!employee) {
 
         return [];
 
     }
 
-    return employee.kpiScores;
+
+    return employee.kpiScores || [];
 
 };
+
+
 /*==========================================================
-AUTOMATIC EFFICIENCY ENGINE
+24. EFFICIENCY ENGINE
 ==========================================================*/
 
-EmployeeManager.calculateEfficiency = function(employee){
+EmployeeManager.calculateEfficiency =
+function (employee) {
 
-    if(!employee){
+    if (!employee) {
 
         return 0;
 
     }
 
-    /*--------------------------------------------
-    KPI WEIGHTAGE (70%)
-    ---------------------------------------------*/
 
-    const kpiScore = Number(employee.averageKPI || 0);
+    const kpiScore =
+        Number(
+            employee.averageKPI || 0
+        );
 
-    /*--------------------------------------------
-    MANAGER REMARK SCORE (30%)
-    ---------------------------------------------*/
 
     let managerScore = 80;
 
-    const remarks = (
 
-        employee.managerRemarks ||
+    const remarks =
+        String(
+            employee.managerRemarks || ""
+        ).toLowerCase();
 
-        ""
 
-    ).toLowerCase();
-
-    if(
-
-        remarks.includes("excellent")
-
-    ){
+    if (remarks.includes("excellent")) {
 
         managerScore = 100;
 
     }
 
-    else if(
-
+    else if (
         remarks.includes("very good")
-
-    ){
+    ) {
 
         managerScore = 90;
 
     }
 
-    else if(
-
+    else if (
         remarks.includes("good")
-
-    ){
+    ) {
 
         managerScore = 80;
 
     }
 
-    else if(
-
+    else if (
         remarks.includes("average")
-
-    ){
+    ) {
 
         managerScore = 65;
 
     }
 
-    else if(
-
+    else if (
         remarks.includes("poor")
-
-    ){
+    ) {
 
         managerScore = 40;
 
     }
 
-    else if(
-
+    else if (
         remarks.includes("critical")
-
-    ){
+    ) {
 
         managerScore = 20;
 
     }
 
-    /*--------------------------------------------
-    FINAL EFFICIENCY
-    ---------------------------------------------*/
 
     const efficiency =
-
         (
-
-            (kpiScore * 0.70)
-
-            +
-
+            (kpiScore * 0.70) +
             (managerScore * 0.30)
-
         );
+
 
     employee.efficiencyScore =
-
         Number(
-
             efficiency.toFixed(1)
-
         );
+
 
     employee.performanceRating =
-
         this.getPerformanceRating(
-
             employee.efficiencyScore
-
         );
+
 
     return employee.efficiencyScore;
 
@@ -1552,36 +1943,37 @@ EmployeeManager.calculateEfficiency = function(employee){
 
 
 /*==========================================================
-PERFORMANCE RATING
+25. PERFORMANCE RATING
 ==========================================================*/
 
-EmployeeManager.getPerformanceRating = function(score){
+EmployeeManager.getPerformanceRating =
+function (score) {
 
-    if(score>=95){
+    if (score >= 95) {
 
         return "Outstanding";
 
     }
 
-    if(score>=85){
+    if (score >= 85) {
 
         return "Excellent";
 
     }
 
-    if(score>=75){
+    if (score >= 75) {
 
         return "Very Good";
 
     }
 
-    if(score>=65){
+    if (score >= 65) {
 
         return "Good";
 
     }
 
-    if(score>=50){
+    if (score >= 50) {
 
         return "Average";
 
@@ -1593,32 +1985,38 @@ EmployeeManager.getPerformanceRating = function(score){
 
 
 /*==========================================================
-UPDATE MANAGER REMARKS
+26. MANAGER REMARKS
 ==========================================================*/
 
-EmployeeManager.updateManagerRemarks=function(
-
+EmployeeManager.updateManagerRemarks =
+function (
     employeeID,
-
     remarks
+) {
 
-){
+    const employee =
+        this.getEmployeeByID(employeeID);
 
-    const employee=this.getEmployeeByID(employeeID);
 
-    if(!employee){
+    if (!employee) {
 
         return false;
 
     }
 
-    employee.managerRemarks=remarks;
 
-    employee.lastUpdated=new Date();
+    employee.managerRemarks =
+        remarks || "";
+
+
+    employee.lastUpdated =
+        new Date().toISOString();
+
 
     this.calculateEfficiency(employee);
 
     this.updateDepartmentStatistics();
+
 
     return true;
 
@@ -1626,34 +2024,44 @@ EmployeeManager.updateManagerRemarks=function(
 
 
 /*==========================================================
-REFRESH ALL EMPLOYEE EFFICIENCY
+27. REFRESH EFFICIENCY
 ==========================================================*/
 
-EmployeeManager.refreshEfficiencyScores=function(){
+EmployeeManager.refreshEfficiencyScores =
+function () {
 
-    EmployeeDatabase.employees.forEach(employee=>{
+    EmployeeDatabase.employees.forEach(
+        employee => {
 
-        this.calculateEfficiency(employee);
+            this.calculateEfficiency(
+                employee
+            );
 
-    });
+        }
+    );
+
 
     this.updateDepartmentStatistics();
 
 };
+
+
 /*==========================================================
-PROMOTION & DEPLOYMENT DECISION ENGINE
+28. DECISION ENGINE
 ==========================================================*/
 
-EmployeeManager.evaluateEmployee = function(employee){
+EmployeeManager.evaluateEmployee =
+function (employee) {
 
-    if(!employee){
+    if (!employee) {
 
         return;
 
     }
 
+
     /*======================================================
-    PROMOTION READINESS
+    PROMOTION
     ======================================================*/
 
     employee.promotionReady =
@@ -1664,8 +2072,9 @@ EmployeeManager.evaluateEmployee = function(employee){
 
         employee.status === "Active";
 
+
     /*======================================================
-    DEPLOYMENT READINESS
+    DEPLOYMENT
     ======================================================*/
 
     employee.readyForDeployment =
@@ -1676,103 +2085,96 @@ EmployeeManager.evaluateEmployee = function(employee){
 
         employee.status === "Active";
 
+
     /*======================================================
     DEPLOYMENT RECOMMENDATION
     ======================================================*/
 
-    if(
-
-        employee.readyForDeployment
-
-    ){
+    if (employee.readyForDeployment) {
 
         employee.deploymentRecommendation =
-
             "Ready for Deployment";
 
     }
 
-    else if(
-
+    else if (
         employee.efficiencyScore >= 60
-
-    ){
+    ) {
 
         employee.deploymentRecommendation =
-
             "Deploy after Review";
 
     }
 
-    else{
+    else {
 
         employee.deploymentRecommendation =
-
             "Not Recommended";
 
     }
 
+
     /*======================================================
-    RECALL RECOMMENDATION
+    RECALL
     ======================================================*/
 
-    if(
-
+    if (
         employee.efficiencyScore < 50
-
-    ){
+    ) {
 
         employee.recallRecommendation =
-
             "Recall Immediately";
 
     }
 
-    else if(
-
+    else if (
         employee.efficiencyScore < 65
-
-    ){
+    ) {
 
         employee.recallRecommendation =
-
             "Monitor Performance";
 
     }
 
-    else{
+    else {
 
         employee.recallRecommendation =
-
             "No Recall Required";
 
     }
 
+
     /*======================================================
-    RISK LEVEL
+    RISK
     ======================================================*/
 
-    if(employee.efficiencyScore>=90){
+    if (
+        employee.efficiencyScore >= 90
+    ) {
 
-        employee.riskLevel="Low";
-
-    }
-
-    else if(employee.efficiencyScore>=75){
-
-        employee.riskLevel="Medium";
+        employee.riskLevel = "Low";
 
     }
 
-    else if(employee.efficiencyScore>=60){
+    else if (
+        employee.efficiencyScore >= 75
+    ) {
 
-        employee.riskLevel="High";
+        employee.riskLevel = "Medium";
 
     }
 
-    else{
+    else if (
+        employee.efficiencyScore >= 60
+    ) {
 
-        employee.riskLevel="Critical";
+        employee.riskLevel = "High";
+
+    }
+
+    else {
+
+        employee.riskLevel = "Critical";
 
     }
 
@@ -1780,115 +2182,110 @@ EmployeeManager.evaluateEmployee = function(employee){
 
 
 /*==========================================================
-REFRESH ALL DECISIONS
+29. REFRESH DECISION ENGINE
 ==========================================================*/
 
-EmployeeManager.refreshDecisionEngine=function(){
+EmployeeManager.refreshDecisionEngine =
+function () {
 
-    EmployeeDatabase.employees.forEach(employee=>{
+    EmployeeDatabase.employees.forEach(
+        employee => {
 
-        this.calculateEfficiency(employee);
+            this.calculateEfficiency(
+                employee
+            );
 
-        this.evaluateEmployee(employee);
+            this.evaluateEmployee(
+                employee
+            );
 
-    });
-
-};
-
-
-/*==========================================================
-PROMOTION READY LIST
-==========================================================*/
-
-EmployeeManager.getPromotionCandidates=function(){
-
-    return EmployeeDatabase.employees.filter(
-
-        employee=>employee.promotionReady===true
-
+        }
     );
 
 };
 
 
 /*==========================================================
-DEPLOYMENT READY LIST
+30. DECISION LISTS
 ==========================================================*/
 
-EmployeeManager.getDeploymentCandidates=function(){
+EmployeeManager.getPromotionCandidates =
+function () {
 
     return EmployeeDatabase.employees.filter(
+        employee =>
+            employee.promotionReady === true
+    );
 
-        employee=>employee.readyForDeployment===true
+};
 
+
+EmployeeManager.getDeploymentCandidates =
+function () {
+
+    return EmployeeDatabase.employees.filter(
+        employee =>
+            employee.readyForDeployment === true
+    );
+
+};
+
+
+EmployeeManager.getHighRiskEmployees =
+function () {
+
+    return EmployeeDatabase.employees.filter(
+        employee =>
+            employee.riskLevel === "Critical" ||
+            employee.riskLevel === "High"
+    );
+
+};
+
+
+EmployeeManager.getRecallCandidates =
+function () {
+
+    return EmployeeDatabase.employees.filter(
+        employee =>
+            employee.recallRecommendation ===
+            "Recall Immediately"
     );
 
 };
 
 
 /*==========================================================
-HIGH RISK EMPLOYEES
+31. NOTIFICATION ENGINE
 ==========================================================*/
 
-EmployeeManager.getHighRiskEmployees=function(){
-
-    return EmployeeDatabase.employees.filter(
-
-        employee=>
-
-        employee.riskLevel==="Critical" ||
-
-        employee.riskLevel==="High"
-
-    );
-
-};
-
-
-/*==========================================================
-RECALL CANDIDATES
-==========================================================*/
-
-EmployeeManager.getRecallCandidates=function(){
-
-    return EmployeeDatabase.employees.filter(
-
-        employee=>
-
-        employee.recallRecommendation===
-
-        "Recall Immediately"
-
-    );
-
-};
-/*==========================================================
-NOTIFICATION ENGINE
-==========================================================*/
-
-EmployeeManager.addNotification = function (
-
+EmployeeManager.addNotification =
+function (
     title,
-
     message,
-
     type = "info"
-
 ) {
 
     EmployeeDatabase.notifications.unshift({
 
-        id: Date.now(),
+        id:
+            Date.now() +
+            Math.random(),
 
-        title: title,
+        title:
+            title,
 
-        message: message,
+        message:
+            message,
 
-        type: type,
+        type:
+            type,
 
-        read: false,
+        read:
+            false,
 
-        createdOn: new Date()
+        createdOn:
+            new Date().toISOString()
 
     });
 
@@ -1896,18 +2293,20 @@ EmployeeManager.addNotification = function (
 
 
 /*==========================================================
-MARK NOTIFICATION AS READ
+32. NOTIFICATION MANAGEMENT
 ==========================================================*/
 
-EmployeeManager.markNotificationRead = function(id){
+EmployeeManager.markNotificationRead =
+function (id) {
 
-    const notification = EmployeeDatabase.notifications.find(
+    const notification =
+        EmployeeDatabase.notifications.find(
+            item =>
+                item.id === id
+        );
 
-        item => item.id === id
 
-    );
-
-    if(notification){
+    if (notification) {
 
         notification.read = true;
 
@@ -1916,154 +2315,130 @@ EmployeeManager.markNotificationRead = function(id){
 };
 
 
-/*==========================================================
-CLEAR ALL NOTIFICATIONS
-==========================================================*/
-
-EmployeeManager.clearNotifications = function(){
+EmployeeManager.clearNotifications =
+function () {
 
     EmployeeDatabase.notifications = [];
 
 };
 
 
-/*==========================================================
-GET ALL NOTIFICATIONS
-==========================================================*/
-
-EmployeeManager.getNotifications = function(){
+EmployeeManager.getNotifications =
+function () {
 
     return EmployeeDatabase.notifications;
 
 };
 
 
-/*==========================================================
-UNREAD NOTIFICATION COUNT
-==========================================================*/
-
-EmployeeManager.getUnreadNotificationCount = function(){
+EmployeeManager.getUnreadNotificationCount =
+function () {
 
     return EmployeeDatabase.notifications.filter(
-
-        item => item.read === false
-
+        item =>
+            item.read === false
     ).length;
 
 };
 
 
 /*==========================================================
-SYSTEM ALERT CHECK
+33. SYSTEM NOTIFICATIONS
 ==========================================================*/
 
-EmployeeManager.generateSystemNotifications = function(){
+EmployeeManager.generateSystemNotifications =
+function () {
 
-    /*--------------------------------------------
-    Promotion Ready Employees
-    ---------------------------------------------*/
+    this.getPromotionCandidates()
+        .forEach(employee => {
 
-    this.getPromotionCandidates().forEach(employee=>{
+            this.addNotification(
 
-        this.addNotification(
+                "Promotion Candidate",
 
-            "Promotion Candidate",
+                employee.employeeName +
+                " is eligible for promotion.",
 
-            employee.employeeName +
+                "success"
 
-            " is eligible for promotion.",
+            );
 
-            "success"
+        });
 
-        );
 
-    });
+    this.getDeploymentCandidates()
+        .forEach(employee => {
 
-    /*--------------------------------------------
-    Deployment Ready Employees
-    ---------------------------------------------*/
+            this.addNotification(
 
-    this.getDeploymentCandidates().forEach(employee=>{
+                "Deployment Ready",
 
-        this.addNotification(
+                employee.employeeName +
+                " is ready for deployment.",
 
-            "Deployment Ready",
+                "info"
 
-            employee.employeeName +
+            );
 
-            " is ready for deployment.",
+        });
 
-            "info"
 
-        );
+    this.getRecallCandidates()
+        .forEach(employee => {
 
-    });
+            this.addNotification(
 
-    /*--------------------------------------------
-    Recall Candidates
-    ---------------------------------------------*/
+                "Recall Required",
 
-    this.getRecallCandidates().forEach(employee=>{
+                employee.employeeName +
+                " requires immediate recall.",
 
-        this.addNotification(
+                "warning"
 
-            "Recall Required",
+            );
 
-            employee.employeeName +
+        });
 
-            " requires immediate recall.",
 
-            "warning"
+    this.getHighRiskEmployees()
+        .forEach(employee => {
 
-        );
+            this.addNotification(
 
-    });
+                "High Risk Employee",
 
-    /*--------------------------------------------
-    High Risk Employees
-    ---------------------------------------------*/
+                employee.employeeName +
+                " requires performance review.",
 
-    this.getHighRiskEmployees().forEach(employee=>{
+                "danger"
 
-        this.addNotification(
+            );
 
-            "High Risk Employee",
-
-            employee.employeeName +
-
-            " requires performance review.",
-
-            "danger"
-
-        );
-
-    });
+        });
 
 };
 
 
 /*==========================================================
-REFRESH NOTIFICATIONS
+34. REFRESH NOTIFICATIONS
 ==========================================================*/
 
-EmployeeManager.refreshNotifications = function(){
+EmployeeManager.refreshNotifications =
+function () {
 
     this.clearNotifications();
 
     this.generateSystemNotifications();
 
 };
-/*==========================================================
-DATA PERSISTENCE ENGINE
-==========================================================*/
 
-const DATABASE_KEY = "SerenticaEmployeeDatabase";
 
 /*==========================================================
-SAVE DATABASE
+35. DATABASE SAVE
 ==========================================================*/
 
-EmployeeManager.saveDatabase = function () {
+EmployeeManager.saveDatabase =
+function () {
 
     try {
 
@@ -2071,97 +2446,165 @@ EmployeeManager.saveDatabase = function () {
 
             DATABASE_KEY,
 
-            JSON.stringify(EmployeeDatabase)
+            JSON.stringify(
+                EmployeeDatabase
+            )
 
         );
 
-        console.log("Employee Database Saved Successfully.");
+
+        console.log(
+            "Employee Database Saved Successfully."
+        );
+
+
+        return true;
 
     }
 
     catch (error) {
 
         console.error(
-
-            "Error Saving Database",
-
+            "Error Saving Employee Database:",
             error
-
         );
+
+
+        return false;
 
     }
 
 };
 
+
 /*==========================================================
-LOAD DATABASE
+36. DATABASE LOAD
 ==========================================================*/
 
-EmployeeManager.loadDatabase = function () {
+EmployeeManager.loadDatabase =
+function () {
 
     try {
 
-        const savedData = localStorage.getItem(
+        const savedData =
+            localStorage.getItem(
+                DATABASE_KEY
+            );
 
-            DATABASE_KEY
-
-        );
 
         if (!savedData) {
 
             console.log(
-
-                "No Existing Database Found."
-
+                "No Existing Employee Database Found."
             );
 
-            return;
+            return false;
 
         }
 
-        const parsedData = JSON.parse(savedData);
 
-        Object.assign(
+        const parsedData =
+            JSON.parse(savedData);
 
-            EmployeeDatabase,
 
-            parsedData
+        if (
+            !parsedData ||
+            !Array.isArray(
+                parsedData.employees
+            )
+        ) {
 
-        );
+            console.error(
+                "Invalid Employee Database."
+            );
+
+            return false;
+
+        }
+
+
+        EmployeeDatabase.employees =
+            parsedData.employees.map(
+                data =>
+                    new Employee(data)
+            );
+
+
+        EmployeeDatabase.site =
+            parsedData.site ||
+            EmployeeDatabase.site;
+
+
+        EmployeeDatabase.notifications =
+            Array.isArray(
+                parsedData.notifications
+            )
+                ? parsedData.notifications
+                : [];
+
+
+        EmployeeDatabase.deploymentHistory =
+            Array.isArray(
+                parsedData.deploymentHistory
+            )
+                ? parsedData.deploymentHistory
+                : [];
+
+
+        EmployeeDatabase.recallHistory =
+            Array.isArray(
+                parsedData.recallHistory
+            )
+                ? parsedData.recallHistory
+                : [];
+
+
+        EmployeeDatabase.importHistory =
+            Array.isArray(
+                parsedData.importHistory
+            )
+                ? parsedData.importHistory
+                : [];
+
+
+        this.updateDepartmentStatistics();
+
 
         console.log(
-
             "Employee Database Loaded Successfully."
-
         );
+
+
+        return true;
 
     }
 
     catch (error) {
 
         console.error(
-
-            "Error Loading Database",
-
+            "Error Loading Employee Database:",
             error
-
         );
+
+
+        return false;
 
     }
 
 };
 
+
 /*==========================================================
-RESET DATABASE
+37. DATABASE RESET
 ==========================================================*/
 
-EmployeeManager.resetDatabase = function () {
+EmployeeManager.resetDatabase =
+function () {
 
     localStorage.removeItem(
-
         DATABASE_KEY
-
     );
+
 
     EmployeeDatabase.employees = [];
 
@@ -2171,127 +2614,92 @@ EmployeeManager.resetDatabase = function () {
 
     EmployeeDatabase.recallHistory = [];
 
+    EmployeeDatabase.importHistory = [];
+
+
     this.updateDepartmentStatistics();
+
 
     console.log(
-
-        "Database Reset Successfully."
-
-    );
-
-};
-
-/*==========================================================
-AUTO SAVE
-==========================================================*/
-
-EmployeeManager.autoSave = function () {
-
-    this.saveDatabase();
-
-};
-
-/*==========================================================
-AUTO LOAD
-==========================================================*/
-
-EmployeeManager.initializeDatabase = function () {
-
-    this.loadDatabase();
-
-    this.refreshDecisionEngine();
-
-    this.refreshNotifications();
-
-    this.updateDepartmentStatistics();
-
-};
-
-/*==========================================================
-SAVE ON WINDOW CLOSE
-==========================================================*/
-
-window.addEventListener(
-
-    "beforeunload",
-
-    () => {
-
-        EmployeeManager.autoSave();
-
-    }
-
-);
-
-/*==========================================================
-INITIALIZE SYSTEM
-==========================================================*/
-
-window.addEventListener(
-
-    "load",
-
-    () => {
-
-        EmployeeManager.initializeDatabase();
-
-    }
-
-);
-/*==========================================================
-UTILITY & VALIDATION ENGINE
-==========================================================*/
-
-/*==========================================================
-GENERATE EMPLOYEE ID
-==========================================================*/
-
-EmployeeManager.generateEmployeeID = function () {
-
-    const count = EmployeeDatabase.employees.length + 1;
-
-    return "SR" + String(count).padStart(5, "0");
-
-};
-
-
-/*==========================================================
-CHECK EMPLOYEE EXISTS
-==========================================================*/
-
-EmployeeManager.employeeExists = function (employeeID) {
-
-    return EmployeeDatabase.employees.some(
-
-        employee => employee.employeeID === employeeID
-
+        "Employee Database Reset Successfully."
     );
 
 };
 
 
 /*==========================================================
-VALIDATE EMPLOYEE DATA
+38. IMPORT DATABASE JSON
 ==========================================================*/
 
-EmployeeManager.validateEmployee = function (employee) {
+EmployeeManager.importDatabase =
+function (jsonData) {
 
-    if (!employee.employeeName) return false;
+    try {
 
-    if (!employee.department) return false;
+        const data =
+            typeof jsonData === "string"
+                ? JSON.parse(jsonData)
+                : jsonData;
 
-    if (!employee.role) return false;
 
-    return true;
+        if (
+            !data ||
+            !Array.isArray(
+                data.employees
+            )
+        ) {
+
+            return false;
+
+        }
+
+
+        EmployeeDatabase.employees =
+            data.employees.map(
+                employee =>
+                    new Employee(employee)
+            );
+
+
+        EmployeeDatabase.site =
+            data.site ||
+            EmployeeDatabase.site;
+
+
+        this.refreshDecisionEngine();
+
+        this.refreshNotifications();
+
+        this.updateDepartmentStatistics();
+
+        this.saveDatabase();
+
+
+        return true;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Database Import Error:",
+            error
+        );
+
+
+        return false;
+
+    }
 
 };
 
 
 /*==========================================================
-EXPORT DATABASE
+39. EXPORT DATABASE
 ==========================================================*/
 
-EmployeeManager.exportDatabase = function () {
+EmployeeManager.exportDatabase =
+function () {
 
     return JSON.stringify(
 
@@ -2307,76 +2715,260 @@ EmployeeManager.exportDatabase = function () {
 
 
 /*==========================================================
-IMPORT DATABASE
+40. EMPLOYEE ID GENERATOR
 ==========================================================*/
 
-EmployeeManager.importDatabase = function (jsonData) {
+EmployeeManager.generateEmployeeID =
+function () {
 
-    try {
+    let number = 1;
 
-        const data = JSON.parse(jsonData);
+    let generatedID;
 
-        Object.assign(
 
-            EmployeeDatabase,
+    do {
 
-            data
+        generatedID =
+            "SR" +
+            String(number)
+                .padStart(5, "0");
 
-        );
-
-        this.saveDatabase();
-
-        this.refreshDecisionEngine();
-
-        this.refreshNotifications();
-
-        this.updateDepartmentStatistics();
-
-        return true;
+        number++;
 
     }
 
-    catch (error) {
+    while (
+        this.employeeExists(
+            generatedID
+        )
+    );
 
-        console.error(error);
 
-        return false;
-
-    }
+    return generatedID;
 
 };
 
 
 /*==========================================================
-GET DASHBOARD SUMMARY
+41. EMPLOYEE EXISTS
 ==========================================================*/
 
-EmployeeManager.getDashboardSummary = function () {
+EmployeeManager.employeeExists =
+function (employeeID) {
+
+    return Boolean(
+        this.getEmployeeByID(
+            employeeID
+        )
+    );
+
+};
+
+
+/*==========================================================
+42. VALIDATE EMPLOYEE
+==========================================================*/
+
+EmployeeManager.validateEmployee =
+function (employee) {
+
+    if (!employee) {
+
+        return {
+
+            valid: false,
+
+            errors: [
+                "Employee data is missing."
+            ]
+
+        };
+
+    }
+
+
+    const errors = [];
+
+
+    if (!employee.employeeID) {
+
+        errors.push(
+            "Employee ID is required."
+        );
+
+    }
+
+
+    if (!employee.employeeName) {
+
+        errors.push(
+            "Employee Name is required."
+        );
+
+    }
+
+
+    if (!employee.department) {
+
+        errors.push(
+            "Department is required."
+        );
+
+    }
+
+
+    if (!employee.role) {
+
+        errors.push(
+            "Role is required."
+        );
+
+    }
+
+
+    if (
+        employee.department &&
+        !EmployeeDatabase.departments[
+            employee.department
+        ]
+    ) {
+
+        errors.push(
+            "Invalid department."
+        );
+
+    }
+
+
+    if (
+        employee.role &&
+        !RoleMaster[
+            employee.role
+        ]
+    ) {
+
+        errors.push(
+            "Invalid role."
+        );
+
+    }
+
+
+    return {
+
+        valid:
+            errors.length === 0,
+
+        errors:
+            errors
+
+    };
+
+};
+
+
+/*==========================================================
+43. SEARCH EMPLOYEES
+==========================================================*/
+
+EmployeeManager.searchEmployees =
+function (keyword = "") {
+
+    const search =
+        String(keyword)
+            .trim()
+            .toLowerCase();
+
+
+    if (!search) {
+
+        return EmployeeDatabase.employees;
+
+    }
+
+
+    return EmployeeDatabase.employees.filter(
+        employee =>
+
+            String(
+                employee.employeeName || ""
+            )
+                .toLowerCase()
+                .includes(search)
+
+            ||
+
+            String(
+                employee.employeeID || ""
+            )
+                .toLowerCase()
+                .includes(search)
+
+            ||
+
+            String(
+                employee.department || ""
+            )
+                .toLowerCase()
+                .includes(search)
+
+            ||
+
+            String(
+                employee.role || ""
+            )
+                .toLowerCase()
+                .includes(search)
+
+            ||
+
+            String(
+                employee.designation || ""
+            )
+                .toLowerCase()
+                .includes(search)
+
+            ||
+
+            String(
+                employee.currentProject || ""
+            )
+                .toLowerCase()
+                .includes(search)
+
+    );
+
+};
+
+
+/*==========================================================
+44. DASHBOARD SUMMARY
+==========================================================*/
+
+EmployeeManager.getDashboardSummary =
+function () {
 
     return {
 
         totalEmployees:
-
             EmployeeDatabase.employees.length,
 
-        deploymentReady:
+        activeEmployees:
+            this.getActiveEmployees().length,
 
+        deploymentReady:
             this.getDeploymentCandidates().length,
 
         promotionReady:
-
             this.getPromotionCandidates().length,
 
         recallRequired:
-
             this.getRecallCandidates().length,
 
         highRisk:
-
             this.getHighRiskEmployees().length,
 
         notifications:
-
             this.getUnreadNotificationCount()
 
     };
@@ -2385,57 +2977,215 @@ EmployeeManager.getDashboardSummary = function () {
 
 
 /*==========================================================
-GET DEPARTMENT SUMMARY
+45. DEPARTMENT SUMMARY
 ==========================================================*/
 
-EmployeeManager.getDepartmentSummary = function (departmentName) {
+EmployeeManager.getDepartmentSummary =
+function (departmentName) {
 
-    return EmployeeDatabase.departments[departmentName];
-
-};
-
-
-/*==========================================================
-SEARCH EMPLOYEES
-==========================================================*/
-
-EmployeeManager.searchEmployees = function (keyword) {
-
-    keyword = keyword.toLowerCase();
-
-    return EmployeeDatabase.employees.filter(employee =>
-
-        employee.employeeName.toLowerCase().includes(keyword) ||
-
-        employee.employeeID.toLowerCase().includes(keyword) ||
-
-        employee.department.toLowerCase().includes(keyword) ||
-
-        employee.role.toLowerCase().includes(keyword)
-
+    return (
+        EmployeeDatabase
+            .departments[
+                departmentName
+            ] || null
     );
 
 };
 
 
 /*==========================================================
-SYSTEM READY
+46. IMPORT HISTORY
+==========================================================*/
+
+EmployeeManager.addImportHistory =
+function (record = {}) {
+
+    EmployeeDatabase.importHistory.unshift({
+
+        id:
+            Date.now(),
+
+        fileName:
+            record.fileName || "",
+
+        sheetName:
+            record.sheetName || "",
+
+        totalRows:
+            Number(record.totalRows || 0),
+
+        added:
+            Number(record.added || 0),
+
+        updated:
+            Number(record.updated || 0),
+
+        failed:
+            Number(record.failed || 0),
+
+        importedOn:
+            new Date().toISOString()
+
+    });
+
+
+    this.saveDatabase();
+
+};
+
+
+/*==========================================================
+47. GET IMPORT HISTORY
+==========================================================*/
+
+EmployeeManager.getImportHistory =
+function () {
+
+    return EmployeeDatabase.importHistory;
+
+};
+
+
+/*==========================================================
+48. AUTO SAVE
+==========================================================*/
+
+EmployeeManager.autoSave =
+function () {
+
+    this.saveDatabase();
+
+};
+
+
+/*==========================================================
+49. INITIALIZE DATABASE
+==========================================================*/
+
+EmployeeManager.initializeDatabase =
+function () {
+
+    this.loadDatabase();
+
+    this.refreshDecisionEngine();
+
+    this.refreshNotifications();
+
+    this.updateDepartmentStatistics();
+
+
+    console.log(
+        "Serentica Employee Database Initialized."
+    );
+
+};
+
+
+/*==========================================================
+50. GLOBAL ACCESS
+==========================================================*/
+
+/*
+IMPORTANT:
+
+Other JS files can access:
+
+window.EmployeeDatabase
+window.EmployeeManager
+window.RoleMaster
+window.DepartmentMaster
+window.Employee
+
+This also avoids problems with modules expecting
+these objects globally.
+*/
+
+window.EmployeeDatabase =
+    EmployeeDatabase;
+
+window.EmployeeManager =
+    EmployeeManager;
+
+window.RoleMaster =
+    RoleMaster;
+
+window.DepartmentMaster =
+    DepartmentMaster;
+
+window.Employee =
+    Employee;
+
+
+/*==========================================================
+51. INITIALIZE WHEN PAGE LOADS
+==========================================================*/
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            EmployeeManager.initializeDatabase();
+
+        },
+        { once: true }
+    );
+
+}
+
+else {
+
+    EmployeeManager.initializeDatabase();
+
+}
+
+
+/*==========================================================
+52. AUTO SAVE BEFORE PAGE CLOSE
+==========================================================*/
+
+window.addEventListener(
+    "beforeunload",
+    function () {
+
+        EmployeeManager.autoSave();
+
+    }
+);
+
+
+/*==========================================================
+53. SYSTEM READY
 ==========================================================*/
 
 console.log(
-
-    "Serentica Employee Database Loaded Successfully."
-
+    "=========================================="
 );
 
 console.log(
-
-    "Version : 1.0"
-
+    "Serentica Employee Database Loaded"
 );
 
 console.log(
+    "Version:",
+    DATABASE_VERSION
+);
 
-    "Employee Database Engine Ready."
+console.log(
+    "Dynamic Employee Master: READY"
+);
 
+console.log(
+    "Excel Import Compatibility: READY"
+);
+
+console.log(
+    "Future HRMS Integration: READY"
+);
+
+console.log(
+    "=========================================="
 );
