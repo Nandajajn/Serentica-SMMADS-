@@ -1,1697 +1,1884 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>Serentica Site Manpower Management System</title>
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
-<title>
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
 
-Serentica Site Manpower Management System
+    <style>
 
-</title>
+        /* =====================================================
+           ROOT VARIABLES
+        ===================================================== */
 
-<!-- Google Font -->
+        :root {
+            --primary: #33A7B5;
+            --primary-dark: #248895;
+
+            --background: #F4F8FA;
+            --white: #FFFFFF;
 
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
+            --text: #27343C;
+            --text-light: #6F7C84;
 
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
+            --border: #E5EDF1;
 
-<link
-href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-rel="stylesheet">
+            --success: #2ECC71;
+            --warning: #F39C12;
+            --danger: #E74C3C;
 
-<!-- Font Awesome -->
+            --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+
+            --radius: 18px;
+        }
+
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 25px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .container {
+            width: 100%;
+            max-width: 1500px;
+            margin: auto;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px 25px;
 
-<link
-rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+
+            margin-bottom: 25px;
+        }
 
-<style>
-/*=====================================================
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand img {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+        }
 
-GLOBAL SETTINGS
+        .brand-text h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text);
+        }
 
-=====================================================*/
+        .brand-text p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 3px;
+        }
 
-*{
 
-margin:0;
+        /* =====================================================
+           USER PROFILE
+        ===================================================== */
 
-padding:0;
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-box-sizing:border-box;
+        .profile-image {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(51, 167, 181, 0.2);
+        }
 
-font-family:'Poppins',sans-serif;
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .user-id {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        .user-role {
+            display: inline-block;
+            margin-top: 3px;
+
+            font-size: 10px;
+            font-weight: 600;
+
+            padding: 3px 8px;
+
+            border-radius: 20px;
+
+            color: var(--primary-dark);
+            background: rgba(51, 167, 181, 0.12);
+        }
+
+        .logout-btn {
+            border: none;
+            background: #FFF1F1;
+            color: var(--danger);
 
-}
+            width: 40px;
+            height: 40px;
 
-:root{
+            border-radius: 10px;
 
---primary:#33A7B5;
+            cursor: pointer;
 
---primary-dark:#248895;
+            transition: 0.25s;
+        }
 
---background:#F4F8FA;
+        .logout-btn:hover {
+            background: var(--danger);
+            color: white;
+            transform: translateY(-2px);
+        }
 
---white:#FFFFFF;
 
---text:#27343C;
+        /* =====================================================
+           WELCOME PANEL
+        ===================================================== */
 
---text-light:#6F7C84;
+        .welcome-panel {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(51, 167, 181, 0.14),
+                    rgba(255, 255, 255, 0.95)
+                );
 
---border:#E5EDF1;
+            border: 1px solid rgba(51, 167, 181, 0.18);
 
---success:#2ECC71;
+            border-radius: var(--radius);
 
---warning:#F39C12;
+            padding: 28px;
 
---danger:#E74C3C;
+            margin-bottom: 25px;
 
---shadow:0 12px 30px rgba(0,0,0,.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
---radius:18px;
+            box-shadow: var(--shadow);
+        }
 
-}
+        .welcome-content h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
 
-body{
+        .welcome-content p {
+            font-size: 13px;
+            color: var(--text-light);
+        }
 
-background:var(--background);
+        .datetime {
+            text-align: right;
+        }
 
-color:var(--text);
+        .datetime .date {
+            font-size: 13px;
+            color: var(--text-light);
+        }
 
-padding:30px;
+        .datetime .time {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-top: 3px;
+        }
 
-}
 
-.container{
+        /* =====================================================
+           SECTION TITLE
+        ===================================================== */
 
-max-width:1500px;
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-margin:auto;
+            margin: 25px 0 15px;
+        }
 
-}
+        .section-title h2 {
+            font-size: 19px;
+            font-weight: 700;
+        }
 
-/*=====================================================
+        .section-title span {
+            font-size: 11px;
+            color: var(--text-light);
+        }
 
-HEADER
 
-=====================================================*/
+        /* =====================================================
+           EXECUTIVE OVERVIEW
+        ===================================================== */
 
-.header{
+        .kpi-grid {
+            display: grid;
 
-background:var(--white);
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
 
-border-radius:22px;
+            gap: 18px;
+        }
 
-padding:22px 30px;
+        .kpi-card {
+            background: var(--white);
 
-display:flex;
+            border: 1px solid var(--border);
 
-justify-content:space-between;
+            border-radius: var(--radius);
 
-align-items:center;
+            padding: 22px;
 
-box-shadow:var(--shadow);
+            box-shadow: var(--shadow);
 
-margin-bottom:25px;
+            display: flex;
+            align-items: center;
 
-}
+            gap: 16px;
 
-/*=====================================================
+            transition: 0.25s;
+        }
 
-COMPANY DETAILS
+        .kpi-card:hover {
+            transform: translateY(-4px);
+        }
 
-=====================================================*/
+        .kpi-icon {
+            width: 55px;
+            height: 55px;
 
-.company{
+            border-radius: 14px;
 
-display:flex;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-align-items:center;
+            font-size: 22px;
 
-gap:20px;
+            color: var(--primary-dark);
 
-}
+            background: rgba(51, 167, 181, 0.12);
+        }
 
-.company img{
+        .kpi-info h3 {
+            font-size: 25px;
+            font-weight: 700;
+        }
 
-width:72px;
+        .kpi-info p {
+            font-size: 11px;
+            color: var(--text-light);
+        }
 
-height:72px;
 
-object-fit:contain;
+        /* =====================================================
+           OPERATIONS CONTROL CENTRE
+        ===================================================== */
 
-}
+        .module-grid {
+            display: grid;
 
-.company h1{
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
 
-font-size:28px;
+            gap: 18px;
+        }
 
-font-weight:700;
+        .module-card {
+            background: var(--white);
 
-color:var(--primary);
+            border: 1px solid var(--border);
 
-margin-bottom:4px;
+            border-radius: var(--radius);
 
-}
+            padding: 25px;
 
-.company p{
+            min-height: 180px;
 
-font-size:14px;
+            box-shadow: var(--shadow);
 
-color:var(--text-light);
+            position: relative;
 
-}
+            overflow: hidden;
 
-/*=====================================================
+            transition: 0.25s;
 
-PROFILE SECTION
+            cursor: pointer;
+        }
 
-=====================================================*/
+        .module-card::after {
+            content: "";
 
-.profile{
+            position: absolute;
 
-display:flex;
+            width: 100px;
+            height: 100px;
 
-align-items:center;
+            right: -30px;
+            bottom: -35px;
 
-gap:18px;
+            background: rgba(51, 167, 181, 0.07);
 
-}
+            border-radius: 50%;
+        }
 
-.profile img{
+        .module-card:hover {
+            transform: translateY(-5px);
 
-width:72px;
+            border-color: rgba(51, 167, 181, 0.45);
+        }
 
-height:72px;
+        .module-icon {
+            width: 55px;
+            height: 55px;
 
-border-radius:50%;
+            border-radius: 14px;
 
-border:3px solid var(--primary);
+            background: rgba(51, 167, 181, 0.12);
 
-object-fit:cover;
+            color: var(--primary-dark);
 
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-.profile-info{
+            font-size: 22px;
 
-text-align:right;
+            margin-bottom: 18px;
+        }
 
-}
+        .module-card h3 {
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
 
-.profile-info h3{
+        .module-card p {
+            font-size: 11px;
+            color: var(--text-light);
 
-font-size:20px;
+            line-height: 1.6;
+        }
 
-margin-bottom:4px;
+        .module-arrow {
+            position: absolute;
 
-}
+            right: 20px;
+            top: 25px;
 
-.profile-info p{
+            color: var(--primary);
 
-font-size:13px;
+            font-size: 15px;
+        }
 
-line-height:22px;
 
-color:var(--text-light);
+        /* =====================================================
+           EMPLOYEE DATA MANAGEMENT
+        ===================================================== */
 
-}
+        .data-management-section {
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
 
-.logout-btn{
+        .data-management-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-display:inline-flex;
+            gap: 25px;
 
-align-items:center;
+            width: 100%;
 
-gap:8px;
+            padding: 27px 30px;
 
-margin-top:10px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(51, 167, 181, 0.12),
+                    rgba(255, 255, 255, 0.98)
+                );
 
-padding:10px 18px;
+            border: 1px solid rgba(51, 167, 181, 0.35);
 
-background:var(--primary);
+            border-left: 6px solid var(--primary);
 
-color:white;
+            border-radius: var(--radius);
 
-text-decoration:none;
+            box-shadow: var(--shadow);
 
-border-radius:10px;
+            transition: all 0.3s ease;
 
-font-size:14px;
+            cursor: pointer;
+        }
 
-font-weight:600;
+        .data-management-card:hover {
+            transform: translateY(-4px);
 
-transition:.3s;
+            border-color: var(--primary);
 
-}
+            box-shadow:
+                0 15px 35px rgba(51, 167, 181, 0.15);
+        }
 
-.logout-btn:hover{
+        .data-management-left {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
 
-background:var(--primary-dark);
+        .data-management-icon {
+            width: 72px;
+            height: 72px;
 
-}
+            min-width: 72px;
 
-/*=====================================================
+            border-radius: 18px;
 
-WELCOME PANEL
+            background: var(--primary);
 
-=====================================================*/
+            color: var(--white);
 
-.welcome-panel{
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-background:var(--white);
+            font-size: 30px;
 
-border-radius:22px;
+            box-shadow:
+                0 8px 18px rgba(51, 167, 181, 0.25);
+        }
 
-padding:32px;
+        .data-management-content h3 {
+            font-size: 22px;
 
-display:flex;
+            font-weight: 700;
 
-justify-content:space-between;
+            color: var(--text);
 
-align-items:center;
+            margin-bottom: 5px;
+        }
 
-box-shadow:var(--shadow);
+        .data-management-content p {
+            font-size: 12px;
 
-margin-bottom:30px;
+            color: var(--text-light);
 
-}
+            line-height: 1.6;
+        }
 
-.welcome-text h2{
+        .data-management-badge {
+            display: inline-flex;
 
-font-size:34px;
+            align-items: center;
 
-color:var(--primary);
+            gap: 6px;
 
-margin-bottom:10px;
+            margin-top: 9px;
 
-}
+            padding: 5px 10px;
 
-.welcome-text p{
+            border-radius: 20px;
 
-font-size:15px;
+            font-size: 10px;
 
-line-height:28px;
+            font-weight: 600;
 
-color:var(--text-light);
+            color: var(--primary-dark);
 
-max-width:760px;
+            background: rgba(51, 167, 181, 0.10);
+        }
 
-}
+        .data-management-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-.datetime{
+            gap: 9px;
 
-text-align:right;
+            min-width: 205px;
 
-}
+            padding: 14px 20px;
 
-.datetime h3{
+            border-radius: 12px;
 
-font-size:16px;
+            background: var(--primary);
 
-color:var(--primary);
+            color: var(--white);
 
-margin-bottom:10px;
+            font-size: 12px;
 
-}
+            font-weight: 600;
 
-.datetime p{
+            box-shadow:
+                0 8px 18px rgba(51, 167, 181, 0.20);
 
-font-size:14px;
+            transition: 0.25s;
+        }
 
-line-height:24px;
+        .data-management-card:hover .data-management-action {
+            background: var(--primary-dark);
 
-color:var(--text-light);
+            transform: translateX(3px);
+        }
 
-}
 
-/*=====================================================
+        /* =====================================================
+           LIVE OPERATIONS DASHBOARD
+        ===================================================== */
 
-SECTION TITLE
+        .dashboard-grid {
+            display: grid;
 
-=====================================================*/
+            grid-template-columns:
+                1fr 1fr;
 
-.section-title{
+            gap: 18px;
+        }
 
-font-size:24px;
+        .panel {
+            background: var(--white);
 
-font-weight:600;
+            border: 1px solid var(--border);
 
-margin-bottom:20px;
+            border-radius: var(--radius);
 
-color:var(--primary);
+            padding: 23px;
 
-}
-/*=====================================================
+            box-shadow: var(--shadow);
+        }
 
-EXECUTIVE OVERVIEW
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-=====================================================*/
+            margin-bottom: 18px;
+        }
 
-.executive-overview{
+        .panel-header h3 {
+            font-size: 15px;
+        }
 
-margin-bottom:40px;
+        .panel-header i {
+            color: var(--primary);
+        }
 
-}
+        .action-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-.kpi-grid{
+            padding: 13px 0;
 
-display:grid;
+            border-bottom: 1px solid var(--border);
+        }
 
-grid-template-columns:repeat(4,1fr);
+        .action-item:last-child {
+            border-bottom: none;
+        }
 
-gap:22px;
+        .action-left {
+            display: flex;
+            align-items: center;
 
-}
+            gap: 12px;
+        }
 
-.kpi-card{
+        .small-icon {
+            width: 34px;
+            height: 34px;
 
-background:var(--white);
+            border-radius: 9px;
 
-border-radius:20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-padding:24px;
+            background: rgba(51, 167, 181, 0.10);
 
-box-shadow:var(--shadow);
+            color: var(--primary-dark);
 
-border-left:5px solid var(--primary);
+            font-size: 13px;
+        }
 
-transition:.30s;
+        .action-text strong {
+            display: block;
 
-}
+            font-size: 11px;
+        }
 
-.kpi-card:hover{
+        .action-text span {
+            font-size: 10px;
 
-transform:translateY(-6px);
+            color: var(--text-light);
+        }
 
-}
+        .status-badge {
+            font-size: 9px;
 
-.kpi-header{
+            font-weight: 600;
 
-display:flex;
+            padding: 5px 9px;
 
-justify-content:space-between;
+            border-radius: 20px;
+        }
 
-align-items:center;
+        .status-pending {
+            background: #FFF5E7;
+            color: var(--warning);
+        }
 
-margin-bottom:18px;
+        .status-info {
+            background: rgba(51, 167, 181, 0.10);
+            color: var(--primary-dark);
+        }
 
-}
+        .activity-item {
+            display: flex;
 
-.kpi-icon{
+            gap: 12px;
 
-width:60px;
+            padding: 12px 0;
 
-height:60px;
+            border-bottom: 1px solid var(--border);
+        }
 
-border-radius:16px;
+        .activity-item:last-child {
+            border-bottom: none;
+        }
 
-background:#EAF8FA;
+        .activity-dot {
+            width: 9px;
+            height: 9px;
 
-display:flex;
+            min-width: 9px;
 
-align-items:center;
+            margin-top: 5px;
 
-justify-content:center;
+            border-radius: 50%;
 
-}
+            background: var(--primary);
+        }
 
-.kpi-icon i{
+        .activity-text strong {
+            font-size: 11px;
 
-font-size:28px;
+            display: block;
+        }
 
-color:var(--primary);
+        .activity-text span {
+            display: block;
 
-}
+            margin-top: 3px;
 
-.kpi-title{
+            font-size: 9px;
 
-font-size:14px;
+            color: var(--text-light);
+        }
 
-font-weight:600;
 
-color:var(--text-light);
+        /* =====================================================
+           RETURN LOGIN
+        ===================================================== */
 
-}
+        .return-login {
+            position: fixed;
 
-.kpi-value{
+            right: 25px;
+            bottom: 25px;
 
-font-size:38px;
+            width: 48px;
+            height: 48px;
 
-font-weight:700;
+            border-radius: 50%;
 
-margin-top:10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-color:var(--text);
+            background: var(--primary);
 
-}
+            color: white;
 
-.kpi-footer{
+            box-shadow:
+                0 10px 25px rgba(51, 167, 181, 0.30);
 
-margin-top:16px;
+            cursor: pointer;
 
-font-size:13px;
+            transition: 0.25s;
 
-font-weight:600;
+            z-index: 1000;
+        }
 
-color:var(--success);
+        .return-login:hover {
+            background: var(--primary-dark);
 
-}
+            transform: translateY(-3px);
+        }
 
-/*=====================================================
 
-MAIN MODULES
+        /* =====================================================
+           RESPONSIVE DESIGN
+        ===================================================== */
 
-=====================================================*/
+        @media (max-width: 1100px) {
 
-.modules{
+            .kpi-grid,
+            .module-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
 
-margin:45px 0;
+        }
 
-}
 
-.module-grid{
+        @media (max-width: 800px) {
 
-display:grid;
+            body {
+                padding: 15px;
+            }
 
-grid-template-columns:repeat(4,1fr);
+            .header {
+                flex-direction: column;
 
-gap:22px;
+                align-items: flex-start;
 
-}
+                gap: 18px;
+            }
 
-.module-card{
+            .user-section {
+                width: 100%;
 
-background:var(--white);
+                justify-content: flex-end;
+            }
 
-border-radius:20px;
+            .welcome-panel {
+                flex-direction: column;
 
-padding:28px;
+                align-items: flex-start;
 
-text-decoration:none;
+                gap: 20px;
+            }
 
-color:inherit;
+            .datetime {
+                text-align: left;
+            }
 
-box-shadow:var(--shadow);
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
 
-transition:.30s;
+            .data-management-card {
+                flex-direction: column;
 
-border:1px solid transparent;
+                align-items: flex-start;
+            }
 
-display:flex;
+            .data-management-action {
+                width: 100%;
+            }
 
-flex-direction:column;
+        }
 
-justify-content:space-between;
 
-min-height:240px;
+        @media (max-width: 600px) {
 
-}
+            .kpi-grid,
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
 
-.module-card:hover{
+            .brand-text h1 {
+                font-size: 18px;
+            }
 
-transform:translateY(-6px);
+            .welcome-content h2 {
+                font-size: 23px;
+            }
 
-border-color:var(--primary);
+            .data-management-left {
+                align-items: flex-start;
+            }
 
-}
+            .data-management-content h3 {
+                font-size: 18px;
+            }
 
-.module-top{
+            .data-management-icon {
+                width: 60px;
+                height: 60px;
 
-display:flex;
+                min-width: 60px;
 
-justify-content:space-between;
+                font-size: 24px;
+            }
 
-align-items:center;
+        }
 
-margin-bottom:20px;
-
-}
-
-.module-icon{
-
-width:65px;
-
-height:65px;
-
-border-radius:16px;
-
-background:#EAF8FA;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-}
-
-.module-icon i{
-
-font-size:30px;
-
-color:var(--primary);
-
-}
-
-.module-status{
-
-padding:6px 14px;
-
-border-radius:20px;
-
-font-size:12px;
-
-font-weight:600;
-
-}
-
-.status-live{
-
-background:#EAF9F1;
-
-color:var(--success);
-
-}
-
-.module-card h3{
-
-font-size:21px;
-
-margin-bottom:12px;
-
-color:var(--text);
-
-}
-
-.module-card p{
-
-font-size:14px;
-
-line-height:24px;
-
-color:var(--text-light);
-
-flex:1;
-
-}
-
-.module-footer{
-
-margin-top:22px;
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-font-size:13px;
-
-font-weight:600;
-
-color:var(--primary);
-
-}
-
-.module-footer i{
-
-margin-left:6px;
-
-}
-/*=====================================================
-
-LIVE DASHBOARD PANELS
-
-=====================================================*/
-
-.dashboard-panels{
-
-display:grid;
-
-grid-template-columns:1fr 1fr;
-
-gap:25px;
-
-margin-bottom:40px;
-
-}
-
-.panel{
-
-background:var(--white);
-
-border-radius:20px;
-
-padding:28px;
-
-box-shadow:var(--shadow);
-
-}
-
-.panel h2{
-
-font-size:22px;
-
-color:var(--primary);
-
-margin-bottom:20px;
-
-}
-
-.activity-list{
-
-display:flex;
-
-flex-direction:column;
-
-gap:16px;
-
-}
-
-.activity-item{
-
-display:flex;
-
-align-items:flex-start;
-
-gap:15px;
-
-padding:16px;
-
-background:#F8FBFC;
-
-border-radius:14px;
-
-border-left:4px solid var(--primary);
-
-}
-
-.activity-item i{
-
-font-size:18px;
-
-color:var(--primary);
-
-margin-top:3px;
-
-}
-
-.activity-item h4{
-
-font-size:15px;
-
-margin-bottom:4px;
-
-}
-
-.activity-item p{
-
-font-size:13px;
-
-line-height:22px;
-
-color:var(--text-light);
-
-}
-
-.empty-state{
-
-text-align:center;
-
-padding:40px 20px;
-
-color:var(--text-light);
-
-}
-
-.empty-state i{
-
-font-size:42px;
-
-color:#B9C5CB;
-
-margin-bottom:16px;
-
-}
-
-.empty-state h3{
-
-margin-bottom:10px;
-
-font-size:18px;
-
-}
-
-/*=====================================================
-
-FLOATING RETURN BUTTON
-
-=====================================================*/
-
-.floating-return{
-
-position:fixed;
-
-right:30px;
-
-bottom:30px;
-
-width:65px;
-
-height:65px;
-
-border-radius:50%;
-
-background:var(--primary);
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-text-decoration:none;
-
-color:#FFFFFF;
-
-font-size:24px;
-
-box-shadow:0 12px 25px rgba(0,0,0,.18);
-
-transition:.30s;
-
-z-index:999;
-
-}
-
-.floating-return:hover{
-
-background:var(--primary-dark);
-
-transform:translateY(-4px);
-
-}
-
-/*=====================================================
-
-RESPONSIVE DESIGN
-
-=====================================================*/
-
-@media(max-width:1200px){
-
-.kpi-grid{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
-.module-grid{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
-}
-
-@media(max-width:900px){
-
-.dashboard-panels{
-
-grid-template-columns:1fr;
-
-}
-
-}
-
-@media(max-width:700px){
-
-.kpi-grid,
-
-.module-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.header,
-
-.welcome-panel{
-
-flex-direction:column;
-
-text-align:center;
-
-gap:25px;
-
-}
-
-.profile{
-
-flex-direction:column;
-
-}
-
-.datetime{
-
-text-align:center;
-
-}
-
-}
-
-</style>
-
+    </style>
 </head>
+
 
 <body>
 
 <div class="container">
-<!--=====================================================
 
-HEADER
 
-======================================================-->
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
 
-<header class="header">
+    <header class="header">
 
-    <!-- Company Information -->
+        <div class="brand">
 
-    <div class="company">
+            <img
+                src="assets/images/logo.png"
+                alt="Serentica Renewables Logo"
+            >
 
-        <img
-        src="assets/images/logo.png"
-        alt="Serentica Logo">
+            <div class="brand-text">
 
-        <div>
+                <h1>
+                    Serentica Site Manpower Management System
+                </h1>
 
-            <h1>
+                <p>
+                    Site Workforce Deployment & Operations Control
+                </p>
 
-                Serentica Site Manpower Management System
-
-            </h1>
-
-            <p>
-
-                Site Operations • Manpower Deployment • Project Execution
-
-            </p>
+            </div>
 
         </div>
 
-    </div>
+
+        <div class="user-section">
+
+            <div class="user-info">
+
+                <div
+                    class="user-name"
+                    id="userName"
+                >
+                    User
+                </div>
+
+                <div
+                    class="user-id"
+                    id="employeeId"
+                >
+                    Login ID
+                </div>
+
+                <span
+                    class="user-role"
+                    id="userRole"
+                >
+                    Role
+                </span>
+
+            </div>
 
 
-    <!-- Logged-in User -->
+            <img
+                src="assets/images/profile.png"
+                alt="Profile"
+                class="profile-image"
+                id="profileImage"
+            >
 
-    <div class="profile">
 
-        <img
-        src="assets/images/profile.png"
-        alt="Profile Picture"
-        id="profileImage">
-
-        <div class="profile-info">
-
-            <h3 id="userName">
-
-                Loading...
-
-            </h3>
-
-            <p id="employeeId">
-
-                Employee ID
-
-            </p>
-
-            <p id="userRole">
-
-                Role
-
-            </p>
-
-            <a
-            href="#"
-            class="logout-btn"
-            id="logoutBtn">
+            <button
+                class="logout-btn"
+                id="logoutBtn"
+                title="Logout"
+            >
 
                 <i class="fa-solid fa-right-from-bracket"></i>
 
-                Logout
-
-            </a>
+            </button>
 
         </div>
 
-    </div>
+    </header>
 
-</header>
-<!--=====================================================
 
-WELCOME PANEL
 
-======================================================-->
+    <!-- =====================================================
+         WELCOME PANEL
+    ===================================================== -->
 
-<section class="welcome-panel">
+    <section class="welcome-panel">
 
-    <div class="welcome-text">
+        <div class="welcome-content">
 
-        <h2 id="welcomeGreeting">
+            <h2 id="welcomeGreeting">
+                Good Morning
+            </h2>
 
-            Welcome
+            <p>
+                Welcome to the Serentica Site Manpower Management System.
+                Manage manpower deployment, workforce movement and
+                site-level operational visibility from one platform.
+            </p>
 
+        </div>
+
+
+        <div class="datetime">
+
+            <div
+                class="date"
+                id="currentDate"
+            >
+                Loading date...
+            </div>
+
+            <div
+                class="time"
+                id="currentTime"
+            >
+                --:--:--
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         EXECUTIVE OVERVIEW
+    ===================================================== -->
+
+    <div class="section-title">
+
+        <h2>
+            Executive Overview
         </h2>
 
-        <p>
-
-            Welcome to the <strong>Serentica Site Manpower Management System.</strong>
-
-            This portal enables Project Managers, Team Leads and Administrators to efficiently manage manpower deployment, monitor workforce availability, track deployment history and maintain organisational visibility across project sites.
-
-        </p>
+        <span>
+            Current Site Workforce Snapshot
+        </span>
 
     </div>
 
-    <div class="datetime">
 
-        <h3>
+    <section class="kpi-grid">
 
-            Current Date & Time
 
-        </h3>
-
-        <p id="currentDate">
-
-            --
-
-        </p>
-
-        <p id="currentTime">
-
-            --
-
-        </p>
-
-    </div>
-
-</section>
-<!--=====================================================
-
-EXECUTIVE OVERVIEW
-
-======================================================-->
-
-<section class="executive-overview">
-
-    <h2 class="section-title">
-
-        Executive Overview
-
-    </h2>
-
-    <div class="kpi-grid">
-
-        <!-- Total Manpower -->
+        <!-- Total Employees -->
 
         <div class="kpi-card">
 
-            <div class="kpi-header">
+            <div class="kpi-icon">
 
-                <div>
-
-                    <div class="kpi-title">
-
-                        Total Manpower
-
-                    </div>
-
-                    <div
-                    class="kpi-value"
-                    id="totalEmployees">
-
-                        0
-
-                    </div>
-
-                </div>
-
-                <div class="kpi-icon">
-
-                    <i class="fa-solid fa-users"></i>
-
-                </div>
+                <i class="fa-solid fa-users"></i>
 
             </div>
 
-            <div class="kpi-footer">
+            <div class="kpi-info">
 
-                Active workforce across the site
+                <h3 id="totalEmployees">
+                    0
+                </h3>
+
+                <p>
+                    Total Employees
+                </p>
 
             </div>
 
         </div>
+
 
 
         <!-- Ready for Deployment -->
 
         <div class="kpi-card">
 
-            <div class="kpi-header">
+            <div class="kpi-icon">
 
-                <div>
-
-                    <div class="kpi-title">
-
-                        Ready for Deployment
-
-                    </div>
-
-                    <div
-                    class="kpi-value"
-                    id="readyEmployees">
-
-                        0
-
-                    </div>
-
-                </div>
-
-                <div class="kpi-icon">
-
-                    <i class="fa-solid fa-user-check"></i>
-
-                </div>
+                <i class="fa-solid fa-user-check"></i>
 
             </div>
 
-            <div class="kpi-footer">
+            <div class="kpi-info">
 
-                Available for immediate deployment
+                <h3 id="readyEmployees">
+                    0
+                </h3>
+
+                <p>
+                    Ready for Deployment
+                </p>
 
             </div>
 
         </div>
 
 
-        <!-- Currently Deployed -->
+
+        <!-- Employees Deployed -->
 
         <div class="kpi-card">
 
-            <div class="kpi-header">
+            <div class="kpi-icon">
 
-                <div>
-
-                    <div class="kpi-title">
-
-                        Currently Deployed
-
-                    </div>
-
-                    <div
-                    class="kpi-value"
-                    id="deployedEmployees">
-
-                        0
-
-                    </div>
-
-                </div>
-
-                <div class="kpi-icon">
-
-                    <i class="fa-solid fa-helmet-safety"></i>
-
-                </div>
+                <i class="fa-solid fa-person-circle-check"></i>
 
             </div>
 
-            <div class="kpi-footer">
+            <div class="kpi-info">
 
-                Manpower deployed across work fronts
+                <h3 id="deployedEmployees">
+                    0
+                </h3>
+
+                <p>
+                    Employees Deployed
+                </p>
 
             </div>
 
         </div>
+
 
 
         <!-- Open Tasks -->
 
         <div class="kpi-card">
 
-            <div class="kpi-header">
+            <div class="kpi-icon">
 
-                <div>
-
-                    <div class="kpi-title">
-
-                        Open Tasks
-
-                    </div>
-
-                    <div
-                    class="kpi-value"
-                    id="openTasks">
-
-                        0
-
-                    </div>
-
-                </div>
-
-                <div class="kpi-icon">
-
-                    <i class="fa-solid fa-list-check"></i>
-
-                </div>
+                <i class="fa-solid fa-list-check"></i>
 
             </div>
 
-            <div class="kpi-footer">
+            <div class="kpi-info">
 
-                Pending approvals & operational tasks
+                <h3 id="openTasks">
+                    0
+                </h3>
+
+                <p>
+                    Open Tasks
+                </p>
 
             </div>
 
         </div>
 
+    </section>
+
+
+
+    <!-- =====================================================
+         OPERATIONS CONTROL CENTRE
+    ===================================================== -->
+
+    <div class="section-title">
+
+        <h2>
+            Operations Control Centre
+        </h2>
+
+        <span>
+            Workforce Management
+        </span>
+
     </div>
 
-</section>
- <!--=====================================================
 
-MAIN MODULES
+    <section class="module-grid">
 
-======================================================-->
-
-<section class="modules">
-
-    <h2 class="section-title">
-
-        Operations Control Centre
-
-    </h2>
-
-    <div class="module-grid">
 
         <!-- Deploy Manpower -->
 
-        <a href="deploy.html" class="module-card">
+        <a
+            href="deploy.html"
+            class="module-card"
+        >
 
-            <div class="module-top">
+            <div class="module-icon">
 
-                <div class="module-icon">
-
-                    <i class="fa-solid fa-user-plus"></i>
-
-                </div>
-
-                <span class="module-status status-live">
-
-                    Live
-
-                </span>
+                <i class="fa-solid fa-user-plus"></i>
 
             </div>
 
+            <i class="fa-solid fa-arrow-up-right-from-square module-arrow"></i>
+
             <h3>
-
                 Deploy Manpower
-
             </h3>
 
             <p>
-
-                Deploy manpower across departments and project sites based on availability, competency and operational requirements.
-
+                Deploy available employees to departments,
+                projects and operational requirements.
             </p>
 
-            <div class="module-footer">
-
-                Open Module
-
-                <span>
-
-                    <i class="fa-solid fa-arrow-right"></i>
-
-                </span>
-
-            </div>
-
         </a>
+
 
 
         <!-- Recall Manpower -->
 
-        <a href="recall.html" class="module-card">
+        <a
+            href="recall.html"
+            class="module-card"
+        >
 
-            <div class="module-top">
+            <div class="module-icon">
 
-                <div class="module-icon">
-
-                    <i class="fa-solid fa-user-minus"></i>
-
-                </div>
-
-                <span class="module-status status-live">
-
-                    Live
-
-                </span>
+                <i class="fa-solid fa-user-minus"></i>
 
             </div>
 
+            <i class="fa-solid fa-arrow-up-right-from-square module-arrow"></i>
+
             <h3>
-
                 Recall Manpower
-
             </h3>
 
             <p>
-
-                Recall deployed manpower back to the site and update workforce availability in real time.
-
+                Recall deployed employees and update
+                workforce availability across the site.
             </p>
 
-            <div class="module-footer">
-
-                Open Module
-
-                <span>
-
-                    <i class="fa-solid fa-arrow-right"></i>
-
-                </span>
-
-            </div>
-
         </a>
+
 
 
         <!-- Organisation Chart -->
 
-        <a href="orgchart.html" class="module-card">
+        <a
+            href="orgchart.html"
+            class="module-card"
+        >
 
-            <div class="module-top">
+            <div class="module-icon">
 
-                <div class="module-icon">
-
-                    <i class="fa-solid fa-sitemap"></i>
-
-                </div>
-
-                <span class="module-status status-live">
-
-                    Live
-
-                </span>
+                <i class="fa-solid fa-sitemap"></i>
 
             </div>
 
+            <i class="fa-solid fa-arrow-up-right-from-square module-arrow"></i>
+
             <h3>
-
                 Organisation Chart
-
             </h3>
 
             <p>
-
-                View the complete site organisation structure, department hierarchy and reporting relationships.
-
+                View site workforce structure,
+                departments, reporting relationships
+                and team composition.
             </p>
 
-            <div class="module-footer">
-
-                Open Module
-
-                <span>
-
-                    <i class="fa-solid fa-arrow-right"></i>
-
-                </span>
-
-            </div>
-
         </a>
+
 
 
         <!-- Deployment History -->
 
-        <a href="history.html" class="module-card">
+        <a
+            href="history.html"
+            class="module-card"
+        >
 
-            <div class="module-top">
+            <div class="module-icon">
 
-                <div class="module-icon">
-
-                    <i class="fa-solid fa-clock-rotate-left"></i>
-
-                </div>
-
-                <span class="module-status status-live">
-
-                    Live
-
-                </span>
+                <i class="fa-solid fa-clock-rotate-left"></i>
 
             </div>
 
+            <i class="fa-solid fa-arrow-up-right-from-square module-arrow"></i>
+
             <h3>
-
                 Deployment History
-
             </h3>
 
             <p>
-
-                Review deployment records, manpower movement history and previous site assignments.
-
+                Review historical manpower movements,
+                deployment actions and recall activities.
             </p>
 
-            <div class="module-footer">
+        </a>
 
-                Open Module
+    </section>
+
+
+
+    <!-- =====================================================
+         EMPLOYEE DATA MANAGEMENT
+    ===================================================== -->
+
+    <div class="section-title">
+
+        <h2>
+            Employee Data Management
+        </h2>
+
+        <span>
+            Employee Master Data
+        </span>
+
+    </div>
+
+
+    <section class="data-management-section">
+
+        <a
+            href="data-management.html"
+            class="data-management-card"
+        >
+
+            <div class="data-management-left">
+
+
+                <!-- Excel/Data Icon -->
+
+                <div class="data-management-icon">
+
+                    <i class="fa-solid fa-file-excel"></i>
+
+                </div>
+
+
+                <!-- Content -->
+
+                <div class="data-management-content">
+
+                    <h3>
+                        EMPLOYEE DATA MANAGEMENT
+                    </h3>
+
+                    <p>
+                        Upload & update Wind and Solar employee
+                        master data for the site manpower management system.
+                    </p>
+
+                    <span class="data-management-badge">
+
+                        <i class="fa-solid fa-database"></i>
+
+                        Employee Master Database
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- CTA -->
+
+            <div class="data-management-action">
 
                 <span>
-
-                    <i class="fa-solid fa-arrow-right"></i>
-
+                    UPLOAD / MANAGE DATA
                 </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
 
             </div>
 
         </a>
 
-    </div>
+    </section>
 
-</section>
-<!--=====================================================
 
-LIVE OPERATIONS DASHBOARD
 
-======================================================-->
+    <!-- =====================================================
+         LIVE OPERATIONS DASHBOARD
+    ===================================================== -->
 
-<section class="dashboard-panels">
-
-<!--=====================================================
-
-PENDING ACTIONS
-
-======================================================-->
-
-<div class="panel">
-
-    <h2>
-
-        Pending Actions
-
-    </h2>
-
-    <div
-    class="activity-list"
-    id="pendingActions">
-
-        <div class="empty-state">
-
-            <i class="fa-solid fa-spinner"></i>
-
-            <h3>
-
-                Waiting for Operational Data
-
-            </h3>
-
-            <p>
-
-                Pending deployment approvals, manpower shortages,
-                recall requests, deployment requests and other
-                operational activities will automatically appear
-                here as updates are made from the Employee,
-                Deploy, Recall and History modules.
-
-            </p>
-
-        </div>
-
-    </div>
-
-</div>
-
-    <!-- Recent Activity -->
-
-    <div class="panel">
+    <div class="section-title">
 
         <h2>
-<!--=====================================================
+            Live Operations Dashboard
+        </h2>
 
-RECENT ACTIVITY
-
-======================================================-->
-
-<div class="panel">
-
-    <h2>
-
-        Recent Activity
-
-    </h2>
-
-    <div
-    class="activity-list"
-    id="recentActivity">
-
-        <div class="empty-state">
-
-            <i class="fa-solid fa-database"></i>
-
-            <h3>
-
-                No Activity Available
-
-            </h3>
-
-            <p>
-
-                Employee deployment history, manpower movement,
-                profile updates, approval activities, deployment
-                requests and recall records will automatically
-                appear here as users perform operations in the
-                system.
-
-            </p>
-
-        </div>
+        <span>
+            Operational Visibility
+        </span>
 
     </div>
 
+
+    <section class="dashboard-grid">
+
+
+        <!-- =================================================
+             PENDING ACTIONS
+        ================================================= -->
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <h3>
+                    Pending Actions
+                </h3>
+
+                <i class="fa-solid fa-bell"></i>
+
+            </div>
+
+
+            <div class="action-item">
+
+                <div class="action-left">
+
+                    <div class="small-icon">
+
+                        <i class="fa-solid fa-user-plus"></i>
+
+                    </div>
+
+                    <div class="action-text">
+
+                        <strong>
+                            Deployment Requests
+                        </strong>
+
+                        <span>
+                            Pending confirmation
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <span class="status-badge status-pending">
+                    Pending
+                </span>
+
+            </div>
+
+
+
+            <div class="action-item">
+
+                <div class="action-left">
+
+                    <div class="small-icon">
+
+                        <i class="fa-solid fa-user-clock"></i>
+
+                    </div>
+
+                    <div class="action-text">
+
+                        <strong>
+                            Employees Awaiting Deployment
+                        </strong>
+
+                        <span>
+                            Ready for next assignment
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <span class="status-badge status-info">
+                    Monitor
+                </span>
+
+            </div>
+
+
+
+            <div class="action-item">
+
+                <div class="action-left">
+
+                    <div class="small-icon">
+
+                        <i class="fa-solid fa-file-circle-check"></i>
+
+                    </div>
+
+                    <div class="action-text">
+
+                        <strong>
+                            Data Updates
+                        </strong>
+
+                        <span>
+                            Employee master data
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <span class="status-badge status-info">
+                    Available
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             RECENT ACTIVITY
+        ================================================= -->
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <h3>
+                    Recent Activity
+                </h3>
+
+                <i class="fa-solid fa-chart-line"></i>
+
+            </div>
+
+
+            <div class="activity-item">
+
+                <div class="activity-dot"></div>
+
+                <div class="activity-text">
+
+                    <strong>
+                        Workforce dashboard loaded
+                    </strong>
+
+                    <span>
+                        System activity
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="activity-item">
+
+                <div class="activity-dot"></div>
+
+                <div class="activity-text">
+
+                    <strong>
+                        Employee deployment module available
+                    </strong>
+
+                    <span>
+                        Operations Control Centre
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="activity-item">
+
+                <div class="activity-dot"></div>
+
+                <div class="activity-text">
+
+                    <strong>
+                        Employee data management available
+                    </strong>
+
+                    <span>
+                        Employee Master Database
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
 </div>
 
-<!--=====================================================
 
-RETURN TO LOGIN
 
-======================================================-->
+<!-- =====================================================
+     RETURN TO LOGIN
+===================================================== -->
 
 <a
-href="index.html"
-class="floating-return"
-id="returnLogin"
-title="Return to Login">
+    href="index.html"
+    class="return-login"
+    id="returnLogin"
+    title="Return to Login"
+>
 
-    <i class="fa-solid fa-right-from-bracket"></i>
+    <i class="fa-solid fa-house"></i>
 
 </a>
- <script>
 
-/*=====================================================
 
-LOGIN SESSION
 
-=====================================================*/
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
-const currentUser = JSON.parse(localStorage.getItem("loggedUser"));
+<script>
 
-if(!currentUser){
 
-    window.location.href = "index.html";
+    /* =====================================================
+       USER SESSION
+    ===================================================== */
 
-}
+    const currentUser =
+        JSON.parse(
+            localStorage.getItem("loggedUser")
+        );
 
-/*=====================================================
 
-LOAD USER INFORMATION
-
-=====================================================*/
-
-document.getElementById("userName").textContent = currentUser.name;
-
-document.getElementById("employeeId").textContent =
-"Login ID : " + currentUser.username;
-
-document.getElementById("userRole").textContent =
-currentUser.role;
-
-/*=====================================================
-
-WELCOME GREETING
-
-=====================================================*/
-
-const currentHour = new Date().getHours();
-
-let greeting = "Good Evening";
-
-if(currentHour < 12){
-
-    greeting = "Good Morning";
-
-}
-else if(currentHour < 17){
-
-    greeting = "Good Afternoon";
-
-}
-
-document.getElementById("welcomeGreeting").textContent =
-greeting + ", " + currentUser.name;
-
-/*=====================================================
-
-LIVE DATE & TIME
-
-=====================================================*/
-
-function updateClock(){
-
-    const now = new Date();
-
-    document.getElementById("currentDate").textContent =
-    now.toLocaleDateString("en-GB",{
-        weekday:"long",
-        day:"2-digit",
-        month:"long",
-        year:"numeric"
-    });
-
-    document.getElementById("currentTime").textContent =
-    now.toLocaleTimeString("en-GB");
-
-}
-
-updateClock();
-
-setInterval(updateClock,1000);
-
-/*=====================================================
-
-LIVE DASHBOARD
-
-These values will automatically
-come from employee.html,
-deploy.html,
-recall.html,
-history.html
-
-=====================================================*/
-
-document.getElementById("totalEmployees").textContent = "--";
-
-document.getElementById("readyEmployees").textContent = "--";
-
-document.getElementById("deployedEmployees").textContent = "--";
-
-document.getElementById("openTasks").textContent = "--";
-ROLE BASED ACCESS
-
-=====================================================*/
-
-if(currentUser.role === "Team Lead"){
-
-    console.log("Team Lead Login");
-
-}
-
-if(currentUser.role === "Project Manager"){
-
-    console.log("Project Manager Login");
-
-}
-
-if(currentUser.role === "Admin"){
-
-    console.log("Administrator Login");
-
-}
-
-/*=====================================================
-
-LOGOUT
-
-=====================================================*/
-
-document.getElementById("logoutBtn").addEventListener("click",function(e){
-
-    e.preventDefault();
-
-    if(confirm("Are you sure you want to logout?")){
-
-        localStorage.removeItem("loggedUser");
+    if (!currentUser) {
 
         window.location.href = "index.html";
 
     }
 
-});
 
-/*=====================================================
 
-RETURN TO LOGIN
+    /* =====================================================
+       USER DETAILS
+    ===================================================== */
 
-=====================================================*/
+    document.getElementById("userName").textContent =
+        currentUser.name || "User";
 
-document.getElementById("returnLogin").addEventListener("click",function(e){
 
-    e.preventDefault();
+    document.getElementById("employeeId").textContent =
+        "Login ID : " +
+        (currentUser.username || "--");
 
-    if(confirm("Return to the login page?")){
 
-        localStorage.removeItem("loggedUser");
+    document.getElementById("userRole").textContent =
+        currentUser.role || "User";
 
-        window.location.href = "index.html";
+
+
+    /* =====================================================
+       WELCOME GREETING
+    ===================================================== */
+
+    const currentHour =
+        new Date().getHours();
+
+
+    let greeting =
+        "Good Evening";
+
+
+    if (currentHour < 12) {
+
+        greeting =
+            "Good Morning";
+
+    }
+    else if (currentHour < 17) {
+
+        greeting =
+            "Good Afternoon";
 
     }
 
-});
 
-/*=====================================================
+    document.getElementById(
+        "welcomeGreeting"
+    ).textContent =
+        greeting +
+        ", " +
+        (currentUser.name || "User");
 
-SYSTEM INFORMATION
 
-=====================================================*/
 
-console.clear();
+    /* =====================================================
+       DATE & TIME
+    ===================================================== */
 
-console.log("========================================");
+    function updateClock() {
 
-console.log("Serentica Site Manpower Management System");
+        const now =
+            new Date();
 
-console.log("Welcome Dashboard Loaded Successfully");
 
-console.log("Version 3.0");
+        document.getElementById(
+            "currentDate"
+        ).textContent =
+            now.toLocaleDateString(
+                "en-GB",
+                {
+                    weekday: "long",
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric"
+                }
+            );
 
-console.log("========================================");
+
+        document.getElementById(
+            "currentTime"
+        ).textContent =
+            now.toLocaleTimeString(
+                "en-GB"
+            );
+
+    }
+
+
+    updateClock();
+
+
+    setInterval(
+        updateClock,
+        1000
+    );
+
+
+
+    /* =====================================================
+       INITIAL DASHBOARD VALUES
+       These will be connected to EmployeeDatabase later.
+    ===================================================== */
+
+    document.getElementById(
+        "totalEmployees"
+    ).textContent = "--";
+
+
+    document.getElementById(
+        "readyEmployees"
+    ).textContent = "--";
+
+
+    document.getElementById(
+        "deployedEmployees"
+    ).textContent = "--";
+
+
+    document.getElementById(
+        "openTasks"
+    ).textContent = "--";
+
+
+
+    /* =====================================================
+       ROLE DETECTION
+    ===================================================== */
+
+    if (
+        currentUser.role === "Team Lead"
+    ) {
+
+        console.log(
+            "Team Lead Login"
+        );
+
+    }
+
+
+    if (
+        currentUser.role === "Project Manager"
+    ) {
+
+        console.log(
+            "Project Manager Login"
+        );
+
+    }
+
+
+    if (
+        currentUser.role === "Admin"
+    ) {
+
+        console.log(
+            "Administrator Login"
+        );
+
+    }
+
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    document
+        .getElementById("logoutBtn")
+        .addEventListener(
+            "click",
+            function (e) {
+
+                e.preventDefault();
+
+
+                if (
+                    confirm(
+                        "Are you sure you want to logout?"
+                    )
+                ) {
+
+                    localStorage.removeItem(
+                        "loggedUser"
+                    );
+
+                    window.location.href =
+                        "index.html";
+
+                }
+
+            }
+        );
+
+
+
+    /* =====================================================
+       RETURN TO LOGIN
+    ===================================================== */
+
+    document
+        .getElementById("returnLogin")
+        .addEventListener(
+            "click",
+            function (e) {
+
+                e.preventDefault();
+
+
+                if (
+                    confirm(
+                        "Return to the login page?"
+                    )
+                ) {
+
+                    localStorage.removeItem(
+                        "loggedUser"
+                    );
+
+                    window.location.href =
+                        "index.html";
+
+                }
+
+            }
+        );
+
+
+
+    /* =====================================================
+       CONSOLE INFORMATION
+    ===================================================== */
+
+    console.clear();
+
+    console.log(
+        "========================================"
+    );
+
+    console.log(
+        "Serentica Site Manpower Management System"
+    );
+
+    console.log(
+        "Welcome Dashboard Loaded Successfully"
+    );
+
+    console.log(
+        "Version 3.0"
+    );
+
+    console.log(
+        "========================================"
+    );
 
 </script>
 
 </body>
-
 </html>
 
  
