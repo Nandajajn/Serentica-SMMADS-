@@ -7491,14 +7491,62 @@ color:var(--text-light);
 const loggedUser =
     JSON.parse(localStorage.getItem("loggedUser") || "null") || {};
 
-function dbEmployees(){
+function dbEmployees() {
 
     if (
-        typeof EmployeeManager !== "undefined" &&
-        Array.isArray(EmployeeManager.getAll())
-    ){
-        return EmployeeManager.getAll();
+        typeof EmployeeManager === "undefined"
+    ) {
+
+        console.error(
+            "EmployeeManager is not available."
+        );
+
+        return [];
+
     }
+
+
+    if (
+        typeof EmployeeManager.getAllEmployees ===
+        "function"
+    ) {
+
+        const employees =
+            EmployeeManager.getAllEmployees();
+
+        return Array.isArray(employees)
+            ? employees
+            : [];
+
+    }
+
+
+    /*
+    Fallback for compatibility
+    */
+
+    if (
+        typeof EmployeeManager.getAll ===
+        "function"
+    ) {
+
+        const employees =
+            EmployeeManager.getAll();
+
+        return Array.isArray(employees)
+            ? employees
+            : [];
+
+    }
+
+
+    console.error(
+        "No employee retrieval function available."
+    );
+
+    return [];
+
+}
 
     if (
         typeof EmployeeDatabase !== "undefined" &&
