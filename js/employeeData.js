@@ -495,6 +495,476 @@ const EmployeeManager = {
         const existingEmployee =
             this.getEmployeeByID(employeeID);
 
+      /*==========================================================
+BULK EMPLOYEE IMPORT
+==========================================================*/
+
+bulkAddEmployees(employeeList) {
+
+    if (!Array.isArray(employeeList)) {
+
+        return {
+            success: false,
+            added: 0,
+            updated: 0,
+            failed: 0,
+            totalProcessed: 0,
+            message: "Invalid employee list."
+        };
+
+    }
+
+
+    let added = 0;
+    let updated = 0;
+    let failed = 0;
+
+
+    /*======================================================
+    PROCESS EACH EMPLOYEE
+    ======================================================*/
+
+    employeeList.forEach(employeeData => {
+
+        try {
+
+            if (!employeeData) {
+
+                failed++;
+                return;
+
+            }
+
+
+            const employeeID =
+                String(
+                    employeeData.employeeID || ""
+                ).trim();
+
+
+            if (!employeeID) {
+
+                failed++;
+                return;
+
+            }
+
+
+            /*================================================
+            CHECK WHETHER EMPLOYEE ALREADY EXISTS
+            ================================================*/
+
+            const existingIndex =
+                EmployeeDatabase.employees.findIndex(
+                    employee =>
+                        String(
+                            employee.employeeID || ""
+                        ).trim() === employeeID
+                );
+
+
+            /*================================================
+            UPDATE EXISTING EMPLOYEE
+            ================================================*/
+
+            if (existingIndex !== -1) {
+
+                const existingEmployee =
+                    EmployeeDatabase
+                        .employees[existingIndex];
+
+
+                /*
+                Preserve existing information
+                that may not be present in Excel.
+                */
+
+                const updatedEmployee = {
+
+                    ...existingEmployee,
+
+                    ...employeeData,
+
+                    employeeID:
+                        existingEmployee.employeeID,
+
+                    company:
+                        employeeData.company ||
+                        existingEmployee.company ||
+                        "Serentica Renewables",
+
+                    status:
+                        employeeData.status ||
+                        existingEmployee.status ||
+                        "Active"
+
+                };
+
+
+                /*
+                Re-apply role template if
+                role information is available.
+                */
+
+                if (
+                    updatedEmployee.role &&
+                    typeof this.applyRoleTemplate ===
+                    "function"
+                ) {
+
+                    this.applyRoleTemplate(
+                        updatedEmployee
+                    );
+
+                }
+
+
+                EmployeeDatabase
+                    .employees[existingIndex] =
+                    updatedEmployee;
+
+
+                updated++;
+
+            }
+
+
+            /*================================================
+            ADD NEW EMPLOYEE
+            ================================================*/
+
+            else {
+
+                const newEmployee = {
+
+                    employeeID:
+                        employeeID,
+
+                    employeeName:
+                        employeeData.employeeName ||
+                        "",
+
+                    profilePhoto:
+                        employeeData.profilePhoto ||
+                        "",
+
+                    department:
+                        employeeData.department ||
+                        "",
+
+                    role:
+                        employeeData.role ||
+                        "",
+
+                    designation:
+                        employeeData.designation ||
+                        "",
+
+                    reportingManager:
+                        employeeData.reportingManager ||
+                        "",
+
+                    teamLead:
+                        employeeData.teamLead ||
+                        "",
+
+                    clusterHead:
+                        employeeData.clusterHead ||
+                        "",
+
+                    projectManager:
+                        employeeData.projectManager ||
+                        "",
+
+                    email:
+                        employeeData.email ||
+                        "",
+
+                    phone:
+                        employeeData.phone ||
+                        "",
+
+                    gender:
+                        employeeData.gender ||
+                        "",
+
+                    DOB:
+                        employeeData.DOB ||
+                        "",
+
+                    bloodGroup:
+                        employeeData.bloodGroup ||
+                        "",
+
+                    address:
+                        employeeData.address ||
+                        "",
+
+                    emergencyContact:
+                        employeeData.emergencyContact ||
+                        "",
+
+                    company:
+                        employeeData.company ||
+                        "Serentica Renewables",
+
+                    currentSite:
+                        employeeData.currentSite ||
+                        "",
+
+                    currentProject:
+                        employeeData.currentProject ||
+                        "",
+
+                    employmentType:
+                        employeeData.employmentType ||
+                        "",
+
+                    deploymentStatus:
+                        employeeData.deploymentStatus ||
+                        "Available",
+
+                    status:
+                        employeeData.status ||
+                        "Active",
+
+                    joiningDate:
+                        employeeData.joiningDate ||
+                        "",
+
+                    experience:
+                        employeeData.experience ||
+                        "",
+
+                    shift:
+                        employeeData.shift ||
+                        "",
+
+                    jobDescription:
+                        employeeData.jobDescription ||
+                        "",
+
+                    roleKPIs:
+                        employeeData.roleKPIs ||
+                        [],
+
+                    performance:
+                        employeeData.performance ||
+                        {},
+
+                    attendance:
+                        employeeData.attendance ||
+                        {},
+
+                    leave:
+                        employeeData.leave ||
+                        {},
+
+                    documents:
+                        employeeData.documents ||
+                        [],
+
+                    training:
+                        employeeData.training ||
+                        [],
+
+                    achievements:
+                        employeeData.achievements ||
+                        [],
+
+                    lifecycleHistory:
+                        employeeData.lifecycleHistory ||
+                        [],
+
+                    createdAt:
+                        new Date().toISOString(),
+
+                    updatedAt:
+                        new Date().toISOString()
+
+                };
+
+
+                /*
+                Apply role-based template.
+                */
+
+                if (
+                    newEmployee.role &&
+                    typeof this.applyRoleTemplate ===
+                    "function"
+                ) {
+
+                    this.applyRoleTemplate(
+                        newEmployee
+                    );
+
+                }
+
+
+                EmployeeDatabase
+                    .employees
+                    .push(newEmployee);
+
+
+                added++;
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Employee import error:",
+                error,
+                employeeData
+            );
+
+            failed++;
+
+        }
+
+    });
+
+
+    /*======================================================
+    UPDATE DATABASE METADATA
+    ======================================================*/
+
+    EmployeeDatabase.updatedAt =
+        new Date().toISOString();
+
+
+    EmployeeDatabase.lastModified =
+        new Date().toISOString();
+
+
+    /*======================================================
+    SAVE DATABASE
+    ======================================================*/
+
+    try {
+
+        localStorage.setItem(
+            "EmployeeDatabase",
+            JSON.stringify(
+                EmployeeDatabase
+            )
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unable to save EmployeeDatabase:",
+            error
+        );
+
+    }
+
+
+    /*======================================================
+    REFRESH SYSTEM MODULES
+    ======================================================*/
+
+    try {
+
+        if (
+            typeof this.updateDepartmentStats ===
+            "function"
+        ) {
+
+            this.updateDepartmentStats();
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Department statistics refresh skipped.",
+            error
+        );
+
+    }
+
+
+    try {
+
+        if (
+            typeof this.refreshDecisionEngine ===
+            "function"
+        ) {
+
+            this.refreshDecisionEngine();
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Decision engine refresh skipped.",
+            error
+        );
+
+    }
+
+
+    try {
+
+        if (
+            typeof this.refreshEfficiencyScores ===
+            "function"
+        ) {
+
+            this.refreshEfficiencyScores();
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Efficiency score refresh skipped.",
+            error
+        );
+
+    }
+
+
+    /*======================================================
+    RETURN IMPORT RESULT
+    ======================================================*/
+
+    return {
+
+        success: true,
+
+        added:
+            added,
+
+        updated:
+            updated,
+
+        failed:
+            failed,
+
+        totalProcessed:
+            added +
+            updated,
+
+        totalReceived:
+            employeeList.length
+
+    };
+
+},
 
         /*==================================================
         UPDATE EXISTING EMPLOYEE
