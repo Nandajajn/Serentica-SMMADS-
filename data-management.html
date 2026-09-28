@@ -29,7 +29,7 @@
          EXCEL READER - SHEETJS
     ================================================== -->
 
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 
     <!-- ==================================================
@@ -1289,6 +1289,19 @@
    GLOBAL VARIABLES
 ======================================================== */
 
+window.importResults = {
+
+    fileName: "",
+
+    records: [],
+
+    errors: [],
+
+    sheetResults: []
+
+};
+
+
 let selectedFiles = [];
 
 let previewBatches = [];
@@ -1296,7 +1309,6 @@ let previewBatches = [];
 let previewRecords = [];
 
 let previewErrors = [];
-
 
 
 /* ========================================================
@@ -1695,7 +1707,23 @@ async function previewExcelFiles() {
 
     }
 
+window.importResults = {
 
+    fileName:
+        selectedFiles.length === 1
+            ? selectedFiles[0].name
+            : "Multiple Excel Files",
+
+    records:
+        previewRecords,
+
+    errors:
+        previewErrors,
+
+    sheetResults:
+        previewBatches
+
+};
     document.getElementById(
         "sheetCount"
     ).textContent =
@@ -2016,18 +2044,33 @@ function commitImport() {
                 );
 
 
-            if (result.success) {
+          if (result.success) {
 
-                totalAdded +=
-                    result.added || 0;
+    totalAdded +=
+        result.added || 0;
 
-                totalUpdated +=
-                    result.updated || 0;
+    totalUpdated +=
+        result.updated || 0;
 
-                totalFailed +=
-                    result.failed || 0;
+    totalFailed +=
+        result.failed || 0;
 
-            }
+}
+
+else {
+
+    totalFailed +=
+        result.failed ||
+        batch.records.length;
+
+    console.error(
+        "Import failed for:",
+        batch.fileName,
+        batch.sheetName,
+        result.message || ""
+    );
+
+}
 
         }
     );
@@ -2037,9 +2080,23 @@ function commitImport() {
         previewErrors.length;
 
 
+    if (
+    totalAdded === 0 &&
+    totalUpdated === 0
+) {
+
     showToast(
-        `Import completed: ${totalAdded} added, ${totalUpdated} updated, ${totalFailed} failed.`
+        "No employee records were imported. Please check the error messages."
     );
+
+    return;
+
+}
+
+
+showToast(
+    `Import completed: ${totalAdded} added, ${totalUpdated} updated, ${totalFailed} failed.`
+);
 
 
     loadImportHistory();
