@@ -494,76 +494,8 @@ const EmployeeManager = {
 
         const existingEmployee =
             this.getEmployeeByID(employeeID);
-
-      /*==========================================================
-BULK EMPLOYEE IMPORT
-==========================================================*/
-
-bulkAddEmployees(employeeList) {
-
-    if (!Array.isArray(employeeList)) {
-
-        return {
-            success: false,
-            added: 0,
-            updated: 0,
-            failed: 0,
-            totalProcessed: 0,
-            message: "Invalid employee list."
-        };
-
-    }
-
-
-    let added = 0;
-    let updated = 0;
-    let failed = 0;
-
-
-    /*======================================================
-    PROCESS EACH EMPLOYEE
-    ======================================================*/
-
-    employeeList.forEach(employeeData => {
-
-        try {
-
-            if (!employeeData) {
-
-                failed++;
-                return;
-
-            }
-
-
-            const employeeID =
-                String(
-                    employeeData.employeeID || ""
-                ).trim();
-
-
-            if (!employeeID) {
-
-                failed++;
-                return;
-
-            }
-
-
-            /*================================================
-            CHECK WHETHER EMPLOYEE ALREADY EXISTS
-            ================================================*/
-
-            const existingIndex =
-                EmployeeDatabase.employees.findIndex(
-                    employee =>
-                        String(
-                            employee.employeeID || ""
-                        ).trim() === employeeID
-                );
-
-
-            /*================================================
+          
+          /*================================================
             UPDATE EXISTING EMPLOYEE
             ================================================*/
 
@@ -1112,18 +1044,23 @@ bulkAddEmployees(employeeList) {
         this.saveDatabase();
 
 
-        return {
+     return {
 
-            added: added,
+    success: true,
 
-            updated: updated,
+    added: added,
 
-            failed: failed,
+    updated: updated,
 
-            totalProcessed:
-                added + updated + failed
+    failed: failed,
 
-        };
+    totalProcessed:
+        added + updated,
+
+    totalReceived:
+        employeeList.length
+
+};
 
     },
 
