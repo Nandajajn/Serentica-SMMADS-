@@ -3,7 +3,7 @@ SERENTICA SITE MANPOWER MANAGEMENT SYSTEM
 EXCEL IMPORT ENGINE
 excelImporter.js
 
-VERSION : 1.0
+VERSION : 2.0
 
 PURPOSE:
 - Import employee data from Excel
@@ -15,18 +15,6 @@ PURPOSE:
 - Update existing employees
 - Generate import summary
 - Maintain import history
-
-DATA FLOW:
-
-Excel
-  ↓
-ExcelImporter
-  ↓
-Validation & Mapping
-  ↓
-EmployeeManager.bulkAddEmployees()
-  ↓
-EmployeeDatabase
 ==========================================================*/
 
 "use strict";
@@ -38,12 +26,7 @@ EmployeeDatabase
 
 const ExcelImporter = {
 
-
-    /*======================================================
-    CONFIGURATION
-    ======================================================*/
-
-    version: "1.0",
+    version: "2.0",
 
     supportedExtensions: [
         ".xlsx",
@@ -52,7 +35,7 @@ const ExcelImporter = {
 
 
     /*======================================================
-    EXPECTED EXCEL COLUMNS
+    2. EXCEL COLUMN MAPPING
     ======================================================*/
 
     columnMapping: {
@@ -72,7 +55,19 @@ const ExcelImporter = {
 
         designation: [
             "Designation",
-            "Job Title"
+            "Job Title",
+            "Job Designation"
+        ],
+
+        role: [
+            "Job Role",
+            "Role",
+            "Employee Role"
+        ],
+
+        department: [
+            "Department",
+            "Dept"
         ],
 
         phone: [
@@ -89,10 +84,12 @@ const ExcelImporter = {
         ],
 
         employmentType: [
+            "Employment Type",
+            "EmploymentType",
             "Onroll / Off-role",
             "Onroll/Off-role",
-            "Employment Type",
-            "EmploymentType"
+            "On-roll / Off-role",
+            "On-roll/Off-role"
         ],
 
         address: [
@@ -106,31 +103,34 @@ const ExcelImporter = {
             "Employee Status"
         ],
 
-        department: [
-            "Department",
-            "Dept"
-        ],
-
-        role: [
-            "Role",
-            "Employee Role"
-        ],
-
         currentProject: [
-            "Project",
-            "Current Project"
+            "Current Project",
+            "CurrentProject",
+            "Project"
         ],
 
         currentSite: [
-            "Site",
-            "Current Site"
+            "Current Site",
+            "CurrentSite",
+            "Site"
+        ],
+
+        reportingManager: [
+            "Reporting Manager",
+            "ReportingManager",
+            "Manager"
+        ],
+
+        deploymentStatus: [
+            "Deployment Status",
+            "DeploymentStatus"
         ]
 
     },
 
 
     /*======================================================
-    2. NORMALIZE COLUMN NAME
+    3. NORMALIZE COLUMN NAME
     ======================================================*/
 
     normalizeColumnName(value) {
@@ -138,17 +138,23 @@ const ExcelImporter = {
         return String(value || "")
             .trim()
             .toLowerCase()
-            .replace(/\s+/g, " ")
-            .replace(/[_-]/g, " ");
+            .replace(/[_-]/g, " ")
+            .replace(/\s+/g, " ");
 
     },
 
 
     /*======================================================
-    3. FIND MATCHING COLUMN
+    4. FIND MATCHING COLUMN
     ======================================================*/
 
     findColumn(headers, possibleNames) {
+
+        if (!Array.isArray(headers)) {
+
+            return null;
+
+        }
 
         const normalizedHeaders =
             headers.map(header => ({
@@ -191,7 +197,7 @@ const ExcelImporter = {
 
 
     /*======================================================
-    4. DETECT COLUMN MAPPING
+    5. DETECT COLUMN MAPPING
     ======================================================*/
 
     detectColumnMapping(headers) {
@@ -218,7 +224,108 @@ const ExcelImporter = {
 
 
     /*======================================================
-    5. CONVERT EXCEL ROW TO EMPLOYEE DATA
+    6. GET CELL VALUE
+    ======================================================*/
+
+    getCellValue(row, column) {
+
+        if (!column) {
+
+            return "";
+
+        }
+
+        if (!row) {
+
+            return "";
+
+        }
+
+        const value = row[column];
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+
+        }
+
+        return String(value).trim();
+
+    },
+
+
+    /*======================================================
+    7. DETERMINE PROJECT FROM SHEET
+    ======================================================*/
+
+    determineProject(
+        explicitProject,
+        sheetName
+    ) {
+
+        if (explicitProject) {
+
+            return explicitProject;
+
+        }
+
+        const sheet =
+            String(sheetName || "")
+                .trim()
+                .toLowerCase();
+
+
+        if (sheet === "wind") {
+
+            return "Wind";
+
+        }
+
+
+        if (sheet === "solar") {
+
+            return "Solar";
+
+        }
+
+
+        return "";
+
+    },
+
+
+    /*======================================================
+    8. DETERMINE SITE
+    ======================================================*/
+
+    determineSite(
+        explicitSite
+    ) {
+
+        if (explicitSite) {
+
+            return explicitSite;
+
+        }
+
+        /*
+        Current prototype default.
+
+        If the Excel file contains
+        Current Site, that value always
+        takes priority.
+        */
+
+        return "Koppal";
+
+    },
+
+
+    /*======================================================
+    9. MAP EXCEL ROW TO EMPLOYEE
     ======================================================*/
 
     mapRowToEmployee(
@@ -227,65 +334,26 @@ const ExcelImporter = {
         sheetName
     ) {
 
-        const getValue = field => {
-
-            const column =
-                mapping[field];
-
-            if (!column) {
-
-                return "";
-
-            }
-
-            return row[column] ?? "";
-
-        };
+        const getValue =
+            field =>
+                this.getCellValue(
+                    row,
+                    mapping[field]
+                );
 
 
-        /*==================================================
-        DETERMINE PROJECT FROM SHEET
-        ==================================================*/
+        const project =
+            this.determineProject(
+                getValue("currentProject"),
+                sheetName
+            );
 
-        let project =
-            getValue("currentProject");
-
-
-        if (!project) {
-
-            const sheet =
-                String(sheetName || "")
-                    .trim()
-                    .toLowerCase();
-
-
-            if (sheet === "wind") {
-
-                project = "Wind";
-
-            }
-
-            else if (sheet === "solar") {
-
-                project = "Solar";
-
-            }
-
-        }
-
-
-        /*==================================================
-        DETERMINE SITE
-        ==================================================*/
 
         const site =
-            getValue("currentSite") ||
-            "Koppal";
+            this.determineSite(
+                getValue("currentSite")
+            );
 
-
-        /*==================================================
-        DEFAULT STATUS
-        ==================================================*/
 
         const status =
             getValue("status") ||
@@ -295,48 +363,47 @@ const ExcelImporter = {
         return {
 
             employeeID:
-                String(
-                    getValue("employeeID")
-                ).trim(),
+                getValue("employeeID"),
 
             employeeName:
-                String(
-                    getValue("employeeName")
-                ).trim(),
+                getValue("employeeName"),
 
             designation:
-                String(
-                    getValue("designation")
-                ).trim(),
+                getValue("designation"),
+
+            role:
+                getValue("role"),
+
+            department:
+                getValue("department"),
 
             phone:
-                String(
-                    getValue("phone")
-                ).trim(),
+                getValue("phone"),
 
             email:
-                String(
-                    getValue("email")
-                ).trim(),
+                getValue("email"),
 
             employmentType:
-                String(
-                    getValue("employmentType")
-                ).trim(),
+                getValue("employmentType"),
 
             address:
-                String(
-                    getValue("address")
-                ).trim(),
+                getValue("address"),
 
             status:
                 status,
 
+            currentProject:
+                project,
+
             currentSite:
                 site,
 
-            currentProject:
-                project,
+            reportingManager:
+                getValue("reportingManager"),
+
+            deploymentStatus:
+                getValue("deploymentStatus") ||
+                "Available",
 
             company:
                 "Serentica Renewables"
@@ -347,7 +414,7 @@ const ExcelImporter = {
 
 
     /*======================================================
-    6. VALIDATE ROW
+    10. VALIDATE EMPLOYEE ROW
     ======================================================*/
 
     validateRow(employeeData) {
@@ -373,6 +440,24 @@ const ExcelImporter = {
         }
 
 
+        if (!employeeData.department) {
+
+            errors.push(
+                "Department is missing."
+            );
+
+        }
+
+
+        if (!employeeData.role) {
+
+            errors.push(
+                "Job Role is missing."
+            );
+
+        }
+
+
         return {
 
             valid:
@@ -387,7 +472,7 @@ const ExcelImporter = {
 
 
     /*======================================================
-    7. VALIDATE UNIQUE EMPLOYEE IDS
+    11. VALIDATE UNIQUE EMPLOYEE IDS
     ======================================================*/
 
     validateUniqueIDs(employeeList) {
@@ -435,7 +520,11 @@ const ExcelImporter = {
                 duplicateIDs.length === 0,
 
             duplicateIDs:
-                [...new Set(duplicateIDs)]
+                [
+                    ...new Set(
+                        duplicateIDs
+                    )
+                ]
 
         };
 
@@ -443,7 +532,95 @@ const ExcelImporter = {
 
 
     /*======================================================
-    8. PROCESS SINGLE SHEET
+    12. CHECK EXISTING EMPLOYEE IDs
+    ======================================================*/
+
+    getExistingEmployeeIDs() {
+
+        const existingIDs =
+            new Set();
+
+
+        try {
+
+            if (
+                typeof EmployeeManager !==
+                "undefined"
+            ) {
+
+                let employees = [];
+
+
+                if (
+                    typeof EmployeeManager
+                        .getAllEmployees ===
+                    "function"
+                ) {
+
+                    employees =
+                        EmployeeManager
+                            .getAllEmployees();
+
+                }
+
+
+                else if (
+                    typeof EmployeeManager
+                        .getAll ===
+                    "function"
+                ) {
+
+                    employees =
+                        EmployeeManager
+                            .getAll();
+
+                }
+
+
+                if (Array.isArray(employees)) {
+
+                    employees.forEach(
+                        employee => {
+
+                            if (
+                                employee &&
+                                employee.employeeID
+                            ) {
+
+                                existingIDs.add(
+                                    String(
+                                        employee.employeeID
+                                    ).trim()
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Unable to read existing employee IDs:",
+                error
+            );
+
+        }
+
+
+        return existingIDs;
+
+    },
+
+
+    /*======================================================
+    13. PROCESS SINGLE SHEET
     ======================================================*/
 
     processSheet(
@@ -460,7 +637,9 @@ const ExcelImporter = {
 
                 records: [],
 
-                errors: []
+                errors: [],
+
+                mapping: {}
 
             };
 
@@ -476,7 +655,9 @@ const ExcelImporter = {
 
                 records: [],
 
-                errors: []
+                errors: [],
+
+                mapping: {}
 
             };
 
@@ -484,7 +665,7 @@ const ExcelImporter = {
 
 
         const headers =
-            Object.keys(rows[0]);
+            Object.keys(rows[0] || {});
 
 
         const mapping =
@@ -497,6 +678,72 @@ const ExcelImporter = {
 
         const errors = [];
 
+
+        /*
+        Required Excel fields
+        */
+
+        const requiredFields = [
+            "employeeID",
+            "employeeName",
+            "department",
+            "role"
+        ];
+
+
+        requiredFields.forEach(
+            field => {
+
+                if (!mapping[field]) {
+
+                    errors.push({
+
+                        row:
+                            "Header",
+
+                        employeeID:
+                            "",
+
+                        errors: [
+
+                            `Required column missing: ${field}`
+
+                        ]
+
+                    });
+
+                }
+
+            }
+        );
+
+
+        /*
+        Stop processing if required
+        columns are missing.
+        */
+
+        if (errors.length > 0) {
+
+            return {
+
+                sheetName:
+                    sheetName,
+
+                records: [],
+
+                errors: errors,
+
+                mapping: mapping
+
+            };
+
+        }
+
+
+        /*==================================================
+        PROCESS ROWS
+        ==================================================*/
 
         rows.forEach(
             (row, index) => {
@@ -522,6 +769,9 @@ const ExcelImporter = {
                         row:
                             index + 2,
 
+                        employeeID:
+                            employee.employeeID,
+
                         employee:
                             employee,
 
@@ -543,6 +793,10 @@ const ExcelImporter = {
         );
 
 
+        /*==================================================
+        CHECK DUPLICATE IDs INSIDE SHEET
+        ==================================================*/
+
         const uniqueCheck =
             this.validateUniqueIDs(
                 records
@@ -563,7 +817,9 @@ const ExcelImporter = {
                             id,
 
                         errors: [
+
                             "Duplicate Employee ID found in uploaded sheet."
+
                         ]
 
                     });
@@ -593,13 +849,32 @@ const ExcelImporter = {
 
 
     /*======================================================
-    9. IMPORT PROCESSED RECORDS
+    14. IMPORT RECORDS
     ======================================================*/
 
     importRecords(
         records,
         metadata = {}
     ) {
+
+        if (!Array.isArray(records)) {
+
+            return {
+
+                success: false,
+
+                added: 0,
+
+                updated: 0,
+
+                failed: 0,
+
+                totalProcessed: 0
+
+            };
+
+        }
+
 
         if (
             typeof EmployeeManager ===
@@ -610,6 +885,7 @@ const ExcelImporter = {
                 "EmployeeManager is not available."
             );
 
+
             return {
 
                 success: false,
@@ -618,69 +894,160 @@ const ExcelImporter = {
 
                 updated: 0,
 
-                failed: records.length
+                failed: records.length,
+
+                totalProcessed: 0,
+
+                message:
+                    "EmployeeManager is not available."
 
             };
 
         }
 
 
-        const result =
-            EmployeeManager.bulkAddEmployees(
-                records
+        /*
+        EmployeeManager must provide
+        bulkAddEmployees().
+        */
+
+        if (
+            typeof EmployeeManager
+                .bulkAddEmployees !==
+            "function"
+        ) {
+
+            console.error(
+                "EmployeeManager.bulkAddEmployees() is not available."
             );
 
 
-        EmployeeManager.addImportHistory({
+            return {
 
-            fileName:
-                metadata.fileName || "",
+                success: false,
 
-            sheetName:
-                metadata.sheetName || "",
+                added: 0,
 
-            totalRows:
-                metadata.totalRows ||
-                records.length,
+                updated: 0,
 
-            added:
-                result.added,
+                failed: records.length,
 
-            updated:
-                result.updated,
+                totalProcessed: 0,
 
-            failed:
-                (
-                    result.failed ||
-                    0
-                )
+                message:
+                    "EmployeeManager.bulkAddEmployees() is not available. Please update employeeData.js."
 
-        });
+            };
+
+        }
 
 
-        return {
+        try {
 
-            success: true,
+            const result =
+                EmployeeManager
+                    .bulkAddEmployees(
+                        records
+                    );
 
-            added:
-                result.added,
 
-            updated:
-                result.updated,
+            /*
+            Add import history only if
+            the function exists.
+            */
 
-            failed:
-                result.failed || 0,
+            if (
+                typeof EmployeeManager
+                    .addImportHistory ===
+                "function"
+            ) {
 
-            totalProcessed:
-                result.totalProcessed
+                EmployeeManager
+                    .addImportHistory({
 
-        };
+                        fileName:
+                            metadata.fileName ||
+                            "",
+
+                        sheetName:
+                            metadata.sheetName ||
+                            "",
+
+                        totalRows:
+                            metadata.totalRows ||
+                            records.length,
+
+                        added:
+                            result.added ||
+                            0,
+
+                        updated:
+                            result.updated ||
+                            0,
+
+                        failed:
+                            result.failed ||
+                            0
+
+                    });
+
+            }
+
+
+            return {
+
+                success:
+                    result.success !== false,
+
+                added:
+                    result.added || 0,
+
+                updated:
+                    result.updated || 0,
+
+                failed:
+                    result.failed || 0,
+
+                totalProcessed:
+                    result.totalProcessed ||
+                    records.length
+
+            };
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Excel import failed:",
+                error
+            );
+
+
+            return {
+
+                success: false,
+
+                added: 0,
+
+                updated: 0,
+
+                failed: records.length,
+
+                totalProcessed: 0,
+
+                message:
+                    error.message
+
+            };
+
+        }
 
     },
 
 
     /*======================================================
-    10. IMPORT WORKBOOK
+    15. IMPORT WORKBOOK
     ======================================================*/
 
     importWorkbook(
@@ -709,16 +1076,6 @@ const ExcelImporter = {
         const allErrors = [];
 
 
-        /*
-        workbookData format:
-
-        {
-            "Wind": [...rows],
-            "Solar": [...rows]
-        }
-        */
-
-
         Object.keys(
             workbookData
         ).forEach(sheetName => {
@@ -726,9 +1083,7 @@ const ExcelImporter = {
             const result =
                 this.processSheet(
                     sheetName,
-                    workbookData[
-                        sheetName
-                    ]
+                    workbookData[sheetName]
                 );
 
 
@@ -747,6 +1102,44 @@ const ExcelImporter = {
             );
 
         });
+
+
+        /*
+        Check duplicate IDs
+        across ALL sheets/files.
+        */
+
+        const globalUniqueCheck =
+            this.validateUniqueIDs(
+                allRecords
+            );
+
+
+        if (!globalUniqueCheck.valid) {
+
+            globalUniqueCheck
+                .duplicateIDs
+                .forEach(id => {
+
+                    allErrors.push({
+
+                        row:
+                            "Multiple Sheets",
+
+                        employeeID:
+                            id,
+
+                        errors: [
+
+                            "Duplicate Employee ID found across uploaded sheets."
+
+                        ]
+
+                    });
+
+                });
+
+        }
 
 
         return {
@@ -774,7 +1167,7 @@ const ExcelImporter = {
 
 
     /*======================================================
-    11. GET IMPORT PREVIEW
+    16. IMPORT PREVIEW
     ======================================================*/
 
     getImportPreview(
@@ -792,31 +1185,37 @@ const ExcelImporter = {
             employee => ({
 
                 employeeID:
-                    employee.employeeID,
+                    employee.employeeID || "",
 
                 employeeName:
-                    employee.employeeName,
+                    employee.employeeName || "",
 
                 designation:
-                    employee.designation,
+                    employee.designation || "",
 
                 department:
-                    employee.department,
+                    employee.department || "",
 
                 role:
-                    employee.role,
+                    employee.role || "",
 
                 currentProject:
-                    employee.currentProject,
+                    employee.currentProject || "",
 
                 currentSite:
-                    employee.currentSite,
+                    employee.currentSite || "",
 
                 employmentType:
-                    employee.employmentType,
+                    employee.employmentType || "",
+
+                reportingManager:
+                    employee.reportingManager || "",
+
+                deploymentStatus:
+                    employee.deploymentStatus || "",
 
                 status:
-                    employee.status
+                    employee.status || ""
 
             })
         );
@@ -825,7 +1224,7 @@ const ExcelImporter = {
 
 
     /*======================================================
-    12. COMMIT IMPORT
+    17. COMMIT IMPORT
     ======================================================*/
 
     commitImport(
@@ -843,7 +1242,13 @@ const ExcelImporter = {
                 success: false,
 
                 message:
-                    "No valid employee records to import."
+                    "No valid employee records to import.",
+
+                added: 0,
+
+                updated: 0,
+
+                failed: 0
 
             };
 
@@ -859,7 +1264,7 @@ const ExcelImporter = {
 
 
     /*======================================================
-    13. IMPORT SUMMARY
+    18. IMPORT SUMMARY
     ======================================================*/
 
     generateSummary(
@@ -876,23 +1281,31 @@ const ExcelImporter = {
         return {
 
             fileName:
-                importResult.fileName || "",
+                importResult.fileName ||
+                "",
 
             totalRecords:
-                importResult.totalRecords || 0,
+                importResult.totalRecords ||
+                0,
 
             validRecords:
-                importResult.records
+                Array.isArray(
+                    importResult.records
+                )
                     ? importResult.records.length
                     : 0,
 
             errorRecords:
-                importResult.errors
+                Array.isArray(
+                    importResult.errors
+                )
                     ? importResult.errors.length
                     : 0,
 
             sheets:
-                importResult.sheetResults
+                Array.isArray(
+                    importResult.sheetResults
+                )
                     ? importResult.sheetResults.length
                     : 0
 
@@ -902,7 +1315,7 @@ const ExcelImporter = {
 
 
     /*======================================================
-    14. CLEAR IMPORT PREVIEW
+    19. CLEAR IMPORT PREVIEW
     ======================================================*/
 
     clearPreview() {
@@ -917,7 +1330,7 @@ const ExcelImporter = {
 
 
 /*==========================================================
-15. GLOBAL ACCESS
+20. GLOBAL ACCESS
 ==========================================================*/
 
 window.ExcelImporter =
@@ -925,7 +1338,7 @@ window.ExcelImporter =
 
 
 /*==========================================================
-16. SYSTEM READY
+21. SYSTEM READY
 ==========================================================*/
 
 console.log(
@@ -947,6 +1360,30 @@ console.log(
 
 console.log(
     "Employee ID Validation: READY"
+);
+
+console.log(
+    "Department Mapping: READY"
+);
+
+console.log(
+    "Role Mapping: READY"
+);
+
+console.log(
+    "Employment Type Mapping: READY"
+);
+
+console.log(
+    "Site Mapping: READY"
+);
+
+console.log(
+    "Reporting Manager Mapping: READY"
+);
+
+console.log(
+    "Deployment Status Mapping: READY"
 );
 
 console.log(
