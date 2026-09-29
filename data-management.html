@@ -1271,8 +1271,7 @@
 <!-- ======================================================
      SYSTEM JAVASCRIPT
 ====================================================== -->
-
-<script src="js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <script src="js/employeeData.js"></script>
 
@@ -1543,163 +1542,386 @@ previewBtn.addEventListener(
 /* ========================================================
    PREVIEW EXCEL FILES
 ======================================================== */
-
 async function previewExcelFiles() {
 
-    if (
-        selectedFiles.length === 0
-    ) {
+    console.log("====================================");
+    console.log("EXCEL IMPORT STARTED");
+    console.log("====================================");
+
+    if (!selectedFiles || selectedFiles.length === 0) {
+
+        showToast("Please select an Excel file first.");
+
+        return;
+    }
+
+    /* -----------------------------------------
+       CHECK SHEETJS
+    ----------------------------------------- */
+
+    if (typeof XLSX === "undefined") {
+
+        console.error("SheetJS / XLSX library is NOT loaded.");
 
         showToast(
-            "Please select an Excel file first."
+            "Excel reader is not loaded. Please refresh the page."
         );
 
         return;
-
     }
 
+    console.log("SheetJS loaded successfully.");
 
-    if (
-        typeof XLSX ===
-        "undefined"
-    ) {
-
-        showToast(
-            "Excel reader could not be loaded."
-        );
-
-        return;
-
-    }
-
+    /* -----------------------------------------
+       RESET PREVIOUS PREVIEW
+    ----------------------------------------- */
 
     previewBatches = [];
-
     previewRecords = [];
-
     previewErrors = [];
 
+    /* -----------------------------------------
+       PROCESS EACH EXCEL FILE
+    ----------------------------------------- */
 
-    let sheetsDetected = 0;
+    for (const file of selectedFiles) {
 
-
-    for (
-        const file of selectedFiles
-    ) {
+        console.log(
+            "Reading Excel file:",
+            file.name
+        );
 
         try {
 
             const arrayBuffer =
                 await file.arrayBuffer();
 
-
             const workbook =
                 XLSX.read(
                     arrayBuffer,
                     {
-                        type: "array",
-                        cellDates: true
+                        type: "array"
                     }
                 );
 
+            console.log(
+                "Workbook loaded:",
+                workbook.SheetNames
+            );
 
-            for (
-                const sheetName
-                of workbook.SheetNames
-            ) {
+            /* -------------------------------------
+               PROCESS EACH SHEET
+            ------------------------------------- */
 
-                sheetsDetected++;
+            workbook.SheetNames.forEach(
+                sheetName => {
 
-
-                const worksheet =
-                    workbook.Sheets[
+                    console.log(
+                        "Reading sheet:",
                         sheetName
-                    ];
-
-
-                const rows =
-                    XLSX.utils.sheet_to_json(
-                        worksheet,
-                        {
-                            defval: "",
-                            raw: false
-                        }
                     );
 
+                    const worksheet =
+                        workbook.Sheets[
+                            sheetName
+                        ];
 
-                const result =
-                    ExcelImporter.processSheet(
-                        sheetName,
-                        rows
+                    if (!worksheet) {
+
+                        console.warn(
+                            "Worksheet not found:",
+                            sheetName
+                        );
+
+                        return;
+                    }
+
+                    const rows =
+                        XLSX.utils.sheet_to_json(
+                            worksheet,
+                            {
+                                defval: "",
+                                raw: false
+                            }
+                        );
+
+                    console.log(
+                        "Rows detected:",
+                        rows.length
                     );
 
+                    /*
+                    Ignore empty sheets.
+                    */
 
-                const batch = {
+                    if (
+                        !rows ||
+                        rows.length === 0
+                    ) {
 
-                    fileName:
-                        file.name,
+                        console.warn(
+                            "Empty sheet:",
+                            sheetName
+                        );
 
-                    sheetName:
-                        sheetName,
+                        return;
+                    }
 
-                    totalRows:
-                        rows.length,
+                    /*
+                    Show the actual Excel
+                    column names in console.
+                    */
 
-                    records:
-                        result.records,
+                    console.log(
+                        "Excel columns:",
+                        Object.keys(rows[0])
+                    );
 
-                    errors:
-                        result.errors
+                    /* ---------------------------------
+                       EMPLOYEE SHEET DETECTION
+                    --------------------------------- */
 
-                };
+                    const employeeRows =
+                        rows.filter(row => {
 
-
-                previewBatches.push(
-                    batch
-                );
-
-
-                previewRecords.push(
-                    ...result.records
-                );
-
-
-                result.errors.forEach(
-                    error => {
-
-                        previewErrors.push({
-
-                            fileName:
-                                file.name,
-
-                            sheetName:
-                                sheetName,
-
-                            ...error
+                            return (
+                                row["Emp Code"] ||
+                                row["Employee ID"] ||
+                                row["Employee Code"] ||
+                                row["Emp Name"] ||
+                                row["Employee Name"]
+                            );
 
                         });
 
-                    }
-                );
+                    console.log(
+                        "Employee rows detected:",
+                        employeeRows.length
+                    );
 
-            }
+                    /* ---------------------------------
+                       PROCESS EMPLOYEE RECORDS
+                    --------------------------------- */
+
+                    const records = [];
+                    const errors = [];
+
+                    employeeRows.forEach(
+                        (row, index) => {
+
+                            try {
+
+                                const employeeID =
+                                    String(
+                                        row["Emp Code"] ||
+                                        row["Employee ID"] ||
+                                        row["Employee Code"] ||
+                                        row["Emp ID"] ||
+                                        ""
+                                    ).trim();
+
+                                const employeeName =
+                                    String(
+                                        row["Emp Name"] ||
+                                        row["Employee Name"] ||
+                                        row["Name"] ||
+                                        ""
+                                    ).trim();
+
+                                if (
+                                    !employeeID ||
+                                    !employeeName
+                                ) {
+
+                                    errors.push({
+                                        row:
+                                            index + 2,
+                                        message:
+                                            "Employee ID or Employee Name is missing."
+                                    });
+
+                                    return;
+                                }
+
+                                const record = {
+
+                                    employeeID:
+                                        employeeID,
+
+                                    employeeName:
+                                        employeeName,
+
+                                    designation:
+                                        row["Designation"] ||
+                                        row["Job Title"] ||
+                                        "",
+
+                                    phone:
+                                        row["Contact"] ||
+                                        row["Contact Number"] ||
+                                        row["Phone"] ||
+                                        row["Mobile"] ||
+                                        "",
+
+                                    email:
+                                        row["Email ID"] ||
+                                        row["Email"] ||
+                                        row["Email Address"] ||
+                                        "",
+
+                                    employmentType:
+                                        row["Employment Type"] ||
+                                        row["Onroll / Off-role"] ||
+                                        row["Onroll/Off-role"] ||
+                                        "",
+
+                                    address:
+                                        row["Residential District"] ||
+                                        row["Address"] ||
+                                        row["District"] ||
+                                        "",
+
+                                    currentSite:
+                                        row["Current Site"] ||
+                                        row["Site"] ||
+                                        "",
+
+                                    department:
+                                        row["Department"] ||
+                                        row["Dept"] ||
+                                        "",
+
+                                    role:
+                                        row["Job Role"] ||
+                                        row["Role"] ||
+                                        row["Employee Role"] ||
+                                        "",
+
+                                    reportingManager:
+                                        row["Reporting Manager"] ||
+                                        row["ReportingManager"] ||
+                                        row["Manager"] ||
+                                        "",
+
+                                    status:
+                                        row["Status"] ||
+                                        row["Employee Status"] ||
+                                        "Active",
+
+                                    currentProject:
+                                        row["Project"] ||
+                                        row["Current Project"] ||
+                                        "",
+
+                                    dateOfJoining:
+                                        row["Joining Date"] ||
+                                        "",
+
+                                    experience:
+                                        Number(
+                                            row["Experience (Years)"] ||
+                                            row["Experience"] ||
+                                            0
+                                        ),
+
+                                    shift:
+                                        row["Shift"] ||
+                                        "",
+
+                                    deploymentStatus:
+                                        row["Deployment Status"] ||
+                                        "Available",
+
+                                    company:
+                                        "Serentica Renewables"
+
+                                };
+
+                                records.push(record);
+
+                            }
+
+                            catch (error) {
+
+                                console.error(
+                                    "Row processing error:",
+                                    error
+                                );
+
+                                errors.push({
+                                    row:
+                                        index + 2,
+                                    message:
+                                        error.message ||
+                                        "Unable to process row."
+                                });
+
+                            }
+
+                        }
+                    );
+
+                    /* ---------------------------------
+                       STORE BATCH
+                    --------------------------------- */
+
+                    const batch = {
+
+                        fileName:
+                            file.name,
+
+                        sheetName:
+                            sheetName,
+
+                        totalRows:
+                            employeeRows.length,
+
+                        records:
+                            records,
+
+                        errors:
+                            errors
+
+                    };
+
+                    previewBatches.push(batch);
+
+                    previewRecords.push(
+                        ...records
+                    );
+
+                    previewErrors.push(
+                        ...errors
+                    );
+
+                    console.log(
+                        "Processed:",
+                        sheetName,
+                        records.length,
+                        "employees"
+                    );
+
+                }
+            );
 
         }
 
         catch (error) {
 
+            console.error(
+                "Excel file reading failed:",
+                file.name,
+                error
+            );
+
             previewErrors.push({
 
-                fileName:
+                file:
                     file.name,
 
-                sheetName:
-                    "-",
-
-                errors: [
+                message:
                     error.message ||
                     "Unable to read Excel file."
-                ]
 
             });
 
@@ -1707,46 +1929,115 @@ async function previewExcelFiles() {
 
     }
 
-window.importResults = {
+    /* -----------------------------------------
+       UPDATE GLOBAL IMPORT RESULTS
+    ----------------------------------------- */
 
-    fileName:
-        selectedFiles.length === 1
-            ? selectedFiles[0].name
-            : "Multiple Excel Files",
+    window.importResults = {
 
-    records:
-        previewRecords,
+        fileName:
+            selectedFiles.length === 1
+                ? selectedFiles[0].name
+                : "Multiple Excel Files",
 
-    errors:
-        previewErrors,
+        records:
+            previewRecords,
 
-    sheetResults:
-        previewBatches
+        errors:
+            previewErrors,
 
-};
-    document.getElementById(
-        "sheetCount"
-    ).textContent =
-        sheetsDetected;
+        sheetResults:
+            previewBatches
 
+    };
 
-    document.getElementById(
-        "validCount"
-    ).textContent =
-        previewRecords.length;
+    /* -----------------------------------------
+       UPDATE COUNTERS
+    ----------------------------------------- */
 
+    const sheetCount =
+        document.getElementById(
+            "sheetCount"
+        );
 
-    document.getElementById(
-        "errorCount"
-    ).textContent =
-        previewErrors.length;
+    const validCount =
+        document.getElementById(
+            "validCount"
+        );
 
+    const errorCount =
+        document.getElementById(
+            "errorCount"
+        );
+
+    if (sheetCount) {
+
+        sheetCount.textContent =
+            previewBatches.length;
+
+    }
+
+    if (validCount) {
+
+        validCount.textContent =
+            previewRecords.length;
+
+    }
+
+    if (errorCount) {
+
+        errorCount.textContent =
+            previewErrors.length;
+
+    }
+
+    /* -----------------------------------------
+       RENDER PREVIEW
+    ----------------------------------------- */
 
     renderPreview();
 
+    renderErrors();
+
+    console.log(
+        "===================================="
+    );
+
+    console.log(
+        "EXCEL IMPORT PREVIEW COMPLETE"
+    );
+
+    console.log(
+        "Employees found:",
+        previewRecords.length
+    );
+
+    console.log(
+        "Errors:",
+        previewErrors.length
+    );
+
+    console.log(
+        "===================================="
+    );
+
+    if (previewRecords.length > 0) {
+
+        showToast(
+            `${previewRecords.length} employee records detected successfully.`
+        );
+
+    }
+
+    else {
+
+        showToast(
+            "No employee records were detected in the Excel file."
+        );
+
+    }
+
 }
-
-
 
 /* ========================================================
    RENDER PREVIEW
