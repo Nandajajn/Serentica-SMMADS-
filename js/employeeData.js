@@ -3179,4 +3179,5 @@ console.log(
 console.log(
     "=========================================="
 );
+window.EmployeeDatabase = EmployeeDatabase;
 window.EmployeeManager = EmployeeManager;
