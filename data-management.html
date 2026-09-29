@@ -1267,12 +1267,13 @@
 ====================================================== -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-<script src="js/employeeData.js"></script>
-
-<script src="js/excelImporter.js"></script>
-
-
-
+<script src="./js/employeeData.js"></script>
+<script src="./js/excelImporter.js"></script>
+<script>
+    console.log("XLSX loaded:", typeof XLSX);
+    console.log("EmployeeManager:", typeof EmployeeManager);
+    console.log("ExcelImporter:", typeof ExcelImporter);
+</script>
 <script>
 
 "use strict";
