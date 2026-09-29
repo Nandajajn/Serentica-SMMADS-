@@ -463,87 +463,84 @@ const EmployeeManager = {
     ======================================================*/
 
 
-    addEmployee(employeeData) {
+    
+addEmployee(employeeData) {
+    if (!employeeData || typeof employeeData !== "object") {
+        console.error("Employee data is missing or invalid.");
+        return false;
+    }
 
-        if (!employeeData) {
-            console.error("Employee data is missing.");
-            return false;
+    const employeeID = String(employeeData.employeeID || "").trim();
+
+    if (!employeeID) {
+        console.error("Employee ID is required.");
+        return false;
+    }
+
+    if (!Array.isArray(EmployeeDatabase.employees)) {
+        EmployeeDatabase.employees = [];
+    }
+
+    const existingEmployee = this.getEmployeeByID(employeeID);
+    let employee;
+
+    if (existingEmployee) {
+        // Update the existing record without discarding
+        // fields that were not supplied.
+        Object.assign(existingEmployee, employeeData);
+
+        existingEmployee.employeeID = employeeID;
+        existingEmployee.updatedAt = new Date().toISOString();
+        existingEmployee.lastUpdated = new Date().toISOString();
+
+        employee = existingEmployee;
+    } else {
+        // Create a new employee record.
+        employee = new Employee({
+            ...employeeData,
+            employeeID: employeeID
+        });
+
+        EmployeeDatabase.employees.push(employee);
+    }
+
+    // Apply related employee-system updates when available.
+    if (typeof this.applyRoleTemplate === "function") {
+        this.applyRoleTemplate(employee);
+    }
+
+    if (typeof this.updateReportingHierarchy === "function") {
+        this.updateReportingHierarchy(employee);
+    }
+
+    if (typeof this.initializeKPIs === "function") {
+        this.initializeKPIs(employee);
+    }
+
+    if (typeof this.updateDepartmentStatistics === "function") {
+        this.updateDepartmentStatistics();
+    } else if (typeof this.updateDepartmentStats === "function") {
+        this.updateDepartmentStats();
+    }
+
+    EmployeeDatabase.updatedAt = new Date().toISOString();
+    EmployeeDatabase.lastModified = new Date().toISOString();
+
+    if (typeof this.saveDatabase === "function") {
+        this.saveDatabase();
+    } else {
+        try {
+            localStorage.setItem(
+                "EmployeeDatabase",
+                JSON.stringify(EmployeeDatabase)
+            );
+        } catch (error) {
+            console.error("Unable to save EmployeeDatabase:", error);
         }
+    }
 
-        const employeeID =
-            String(employeeData.employeeID || "").trim();
-
-        if (!employeeID) {
-            console.error("Employee ID is required.");
-            return false;
-        }
-
-        const existingEmployee =
-            this.getEmployeeByID(employeeID);
-
-        let employee;
-
-        if (existingEmployee) {
-
-            // Update existing employee without losing
-            // information omitted from the Excel file.
-            Object.assign(existingEmployee, employeeData);
-
-            existingEmployee.employeeID = employeeID;
-
-            existingEmployee.lastUpdated =
-                new Date().toISOString();
-
-            employee = existingEmployee;
-
-        } else {
-
-            // Create a new employee record.
-            employee = new Employee({
-                ...employeeData,
-                employeeID: employeeID
-            });
-
-            EmployeeDatabase.employees.push(employee);
-        }
-
-        // Apply role-related information when available.
-        if (
-            employee.role &&
-            typeof this.applyRoleTemplate === "function"
-        ) {
-            this.applyRoleTemplate(employee);
-        }
-
-        if (
-            typeof this.updateReportingHierarchy === "function"
-        ) {
-            this.updateReportingHierarchy(employee);
-        }
-
-        if (
-            typeof this.initializeKPIs === "function"
-        ) {
-            this.initializeKPIs(employee);
-        }
-
-        employee.lastUpdated = new Date().toISOString();
-
-        // Refresh statistics and save the database.
-        if (
-            typeof this.updateDepartmentStatistics === "function"
-        ) {
-            this.updateDepartmentStatistics();
-        }
-
-        if (typeof this.saveDatabase === "function") {
-            this.saveDatabase();
-        }
-
-        return employee;
-
-    },
-
+    return employee;
+},
 
     /*======================================================
     BULK ADD / UPDATE
@@ -3182,3 +3179,4 @@ console.log(
 console.log(
     "=========================================="
 );
+window.EmployeeManager = EmployeeManager;
