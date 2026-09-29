@@ -1874,3 +1874,4 @@ console.log("Deployment Manager");
 console.log("Version : 1.0");
 console.log("Status : Ready");
 console.log("========================================");
+window.DeploymentManager = DeploymentManager;
