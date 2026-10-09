@@ -2937,66 +2937,54 @@ function deploySafeText(
    NORMALIZE EMPLOYEE
 ============================================================ */
 
-function normalizeDeployEmployee(
-    employee
-){
+function normalizeDeployEmployee(employee) {
 
-    if(
+    if (
         !employee ||
         typeof employee !== "object"
-    ){
-
+    ) {
         return null;
-
     }
 
-
     const normalized = {
-
         ...employee,
 
-        id:
-            String(
-                employee.id ??
-                employee.employeeId ??
-                employee.empId ??
-                ""
-            ),
+        id: String(
+            employee.id ??
+            employee.employeeID ??
+            employee.employeeId ??
+            employee.empId ??
+            ""
+        ),
 
-        name:
-            String(
-                employee.name ??
-                employee.employeeName ??
-                ""
-            ),
+        name: String(
+            employee.name ??
+            employee.employeeName ??
+            ""
+        ),
 
-        department:
-            String(
-                employee.department ??
-                employee.departmentName ??
-                ""
-            ),
+        department: String(
+            employee.department ??
+            employee.departmentName ??
+            ""
+        ),
 
-        cluster:
-            String(
-                employee.cluster ??
-                employee.clusterName ??
-                ""
-            ),
+        cluster: String(
+            employee.cluster ??
+            employee.clusterName ??
+            employee.site ??
+            employee.currentSite ??
+            ""
+        ),
 
-        status:
-            String(
-                employee.status ??
-                employee.deploymentStatus ??
-                "AVAILABLE"
-            )
-            .toUpperCase()
-
+        status: String(
+            employee.status ??
+            employee.deploymentStatus ??
+            "AVAILABLE"
+        ).toUpperCase()
     };
 
-
     return normalized;
-
 }
 
 
