@@ -11551,25 +11551,68 @@ function finalizeDeployPageState() {
    FINAL INITIALIZATION
 ============================================================ */
 
+javascript
 function initializeFinalDeployPage() {
 
     runFinalDeployValidation();
 
+    // Load employees into the deployment page state.
+    if (
+        window.deployEmployeeState &&
+        typeof getDeployAvailableEmployees === "function"
+    ) {
+
+        window.deployEmployeeState.employees =
+            getDeployAvailableEmployees();
+
+        window.deployEmployeeState.filteredEmployees = [
+            ...window.deployEmployeeState.employees
+        ];
+
+        if (
+            !(window.deployEmployeeState.selectedEmployeeIds instanceof Set)
+        ) {
+            window.deployEmployeeState.selectedEmployeeIds = new Set();
+        }
+
+        if (typeof renderDeployFilterOptions === "function") {
+            renderDeployFilterOptions();
+        }
+
+        if (typeof applyDeployEmployeeFilters === "function") {
+            applyDeployEmployeeFilters();
+        }
+    }
+
+    // Refresh the remaining deployment sections.
     finalizeDeployPageState();
 
+    // Expose a refresh method for other scripts.
+    window.refreshSerenticaDeployPage = function() {
 
-    /*
-     * Expose a controlled refresh method for
-     * other pages/scripts in the system.
-     */
+        if (
+            window.deployEmployeeState &&
+            typeof getDeployAvailableEmployees === "function"
+        ) {
 
-    window.refreshSerenticaDeployPage =
-        function() {
+            window.deployEmployeeState.employees =
+                getDeployAvailableEmployees();
 
-            finalizeDeployPageState();
+            window.deployEmployeeState.filteredEmployees = [
+                ...window.deployEmployeeState.employees
+            ];
 
-        };
+            if (typeof renderDeployFilterOptions === "function") {
+                renderDeployFilterOptions();
+            }
 
+            if (typeof applyDeployEmployeeFilters === "function") {
+                applyDeployEmployeeFilters();
+            }
+        }
+
+        finalizeDeployPageState();
+    };
 
     console.log(
         "================================================"
@@ -11590,9 +11633,7 @@ function initializeFinalDeployPage() {
     console.log(
         "================================================"
     );
-
 }
-
 
 if (
     document.readyState ===
