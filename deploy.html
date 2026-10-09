@@ -3004,215 +3004,44 @@ function normalizeDeployEmployee(
    GET AVAILABLE EMPLOYEES
 ============================================================ */
 
-function getDeployAvailableEmployees(){
+javascript
+function getDeployAvailableEmployees() {
 
-    /*
-     * First use a project-level function if one already
-     * exists. This allows the page to work with the existing
-     * deployment JS without creating duplicate data.
-     */
+    try {
 
-    const possibleFunctions = [
+        // Use the existing deployment manager first.
+        if (
+            window.DeploymentManager &&
+            typeof window.DeploymentManager.getAvailableEmployees === "function"
+        ) {
 
-        "getAvailableEmployees",
+            const result =
+                window.DeploymentManager.getAvailableEmployees();
 
-        "getReadyForDeploymentEmployees",
+            if (Array.isArray(result)) {
 
-        "getAvailableManpower",
-
-        "getDeployableEmployees"
-
-    ];
-
-
-    for(
-        const functionName of possibleFunctions
-    ){
-
-        if(
-            typeof window[
-                functionName
-            ] ===
-            "function"
-        ){
-
-            try{
-
-                const result =
-                    window[
-                        functionName
-                    ]();
-
-
-                if(
-                    Array.isArray(
-                        result
-                    )
-                ){
-
-                    return result
-                        .map(
-                            normalizeDeployEmployee
-                        )
-                        .filter(
-                            Boolean
-                        );
-
-                }
-
-            }
-            catch(
-                error
-            ){
-
-                console.warn(
-                    `${functionName}() failed:`,
-                    error
-                );
+                return result
+                    .map(normalizeDeployEmployee)
+                    .filter(employee => employee && employee.id);
 
             }
 
         }
 
-    }
+        console.warn(
+            "DeploymentManager.getAvailableEmployees() is unavailable."
+        );
 
+    } catch (error) {
 
-    /*
-     * Fallback: inspect existing localStorage data.
-     * No new database is created here.
-     */
-
-    const storageKeys = [
-
-        "serenticaSiteManpowerData",
-
-        "serenticaManpowerData",
-
-        "siteManpowerData",
-
-        "manpowerData",
-
-        "employees",
-
-        "serenticaEmployees"
-
-    ];
-
-
-    for(
-        const key of storageKeys
-    ){
-
-        try{
-
-            const stored =
-                localStorage.getItem(
-                    key
-                );
-
-
-            if(
-                !stored
-            ){
-
-                continue;
-
-            }
-
-
-            const parsed =
-                JSON.parse(
-                    stored
-                );
-
-
-            let employees = [];
-
-
-            if(
-                Array.isArray(
-                    parsed
-                )
-            ){
-
-                employees =
-                    parsed;
-
-            }
-            else if(
-                Array.isArray(
-                    parsed.employees
-                )
-            ){
-
-                employees =
-                    parsed.employees;
-
-            }
-            else if(
-                Array.isArray(
-                    parsed.data
-                )
-            ){
-
-                employees =
-                    parsed.data;
-
-            }
-            else if(
-                Array.isArray(
-                    parsed.manpower
-                )
-            ){
-
-                employees =
-                    parsed.manpower;
-
-            }
-
-
-            if(
-                employees.length
-            ){
-
-                return employees
-                    .map(
-                        normalizeDeployEmployee
-                    )
-                    .filter(
-                        employee =>
-                            employee &&
-                            (
-                                employee.status ===
-                                "AVAILABLE" ||
-                                employee.status ===
-                                "READY" ||
-                                employee.status ===
-                                "READY FOR DEPLOYMENT" ||
-                                employee.deploymentStatus ===
-                                "AVAILABLE"
-                            )
-                    );
-
-            }
-
-        }
-        catch(
+        console.error(
+            "Unable to load available employees:",
             error
-        ){
-
-            console.warn(
-                `Unable to read ${key}:`,
-                error
-            );
-
-        }
+        );
 
     }
-
 
     return [];
-
 }
 
 
