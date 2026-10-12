@@ -11584,8 +11584,13 @@ function initializeFinalDeployPage() {
         }
     }
 
-    // Refresh the remaining deployment sections.
-    finalizeDeployPageState();
+    // Ensure the employee list is loaded before rendering.
+if (typeof loadDeployEmployees === "function") {
+    loadDeployEmployees();
+}
+
+// Refresh the remaining deployment sections.
+finalizeDeployPageState();
 
     // Expose a refresh method for other scripts.
     window.refreshSerenticaDeployPage = function() {
