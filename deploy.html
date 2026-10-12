@@ -11662,14 +11662,70 @@ else {
 <!-- ============================================================
      END OF DEPLOY.HTML
 ============================================================ -->
+
 <script>
 window.addEventListener("load", function () {
-    if (typeof initializeDeployPartTwo === "function") {
-        initializeDeployPartTwo();
-    } else {
-        console.error(
-            "Part 2 initialization function is unavailable."
+    try {
+        // Ensure employee data is loaded first.
+        if (typeof initializeDeployPartTwo === "function") {
+            initializeDeployPartTwo();
+        }
+
+        const state = window.deployEmployeeState;
+
+        const employees =
+            state && Array.isArray(state.employees) && state.employees.length
+                ? state.employees
+                : typeof getDeployAvailableEmployees === "function"
+                    ? getDeployAvailableEmployees()
+                    : [];
+
+        const departmentSelect =
+            document.getElementById("deployAssignmentDepartment");
+
+        const clusterSelect =
+            document.getElementById("deployAssignmentCluster");
+
+        function populateDropdown(select, placeholder, values) {
+            if (!select) return;
+
+            select.replaceChildren();
+
+            const firstOption = document.createElement("option");
+            firstOption.value = "";
+            firstOption.textContent = placeholder;
+            select.appendChild(firstOption);
+
+            [...new Set(values.map(value => String(value || "").trim())
+                .filter(Boolean))]
+                .sort((a, b) => a.localeCompare(b))
+                .forEach(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+                    select.appendChild(option);
+                });
+        }
+
+        populateDropdown(
+            departmentSelect,
+            "Select Department",
+            employees.map(employee => employee.department)
         );
+
+        populateDropdown(
+            clusterSelect,
+            "Select Cluster",
+            employees.map(employee => employee.cluster)
+        );
+
+        console.log("Assignment dropdowns populated:", {
+            departments: departmentSelect?.options.length - 1,
+            clusters: clusterSelect?.options.length - 1
+        });
+
+    } catch (error) {
+        console.error("Assignment dropdown initialization failed:", error);
     }
 });
 </script>
