@@ -3441,7 +3441,10 @@ function renderDeployEmployeeTable(){
 
     tableBody.innerHTML =
         "";
-
+if (!state || !Array.isArray(state.filteredEmployees)) {
+    console.error("Deployment employee state is not initialized.");
+    return;
+}
 
     if(
         visibleCount
