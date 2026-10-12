@@ -4169,12 +4169,12 @@ window.addEventListener(
    INITIALIZE PART 2
 ============================================================ */
 
+
 function initializeDeployPartTwo(){
 
     initializeDeployEmployeeControls();
 
     loadDeployEmployees();
-
 
     console.log(
         "Deploy.html Part 2 loaded successfully."
@@ -4182,26 +4182,7 @@ function initializeDeployPartTwo(){
 
 }
 
-
-if(
-    document.readyState ===
-    "loading"
-){
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        initializeDeployPartTwo,
-        {
-            once:true
-        }
-    );
-
-}
-else{
-
-    initializeDeployPartTwo();
-
-}
+initializeDeployPartTwo();
 
 </script>
 <!-- ============================================================
