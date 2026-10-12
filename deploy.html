@@ -11662,7 +11662,20 @@ else {
 <!-- ============================================================
      END OF DEPLOY.HTML
 ============================================================ -->
+<script>
+window.addEventListener("load", function () {
+    if (typeof initializeDeployPartTwo === "function") {
+        initializeDeployPartTwo();
+    } else {
+        console.error(
+            "Part 2 initialization function is unavailable."
+        );
+    }
+});
+</script>
 
+</body>
+</html>
 </body>
 
 </html>
