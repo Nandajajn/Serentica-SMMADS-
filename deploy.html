@@ -10675,6 +10675,64 @@ window.addEventListener(
 );
 
 
+function refreshDeployTopKPIs() {
+    const employees = window.EmployeeDatabase?.employees || [];
+
+    const getStatus = employee =>
+        String(employee.deploymentStatus || "")
+            .trim()
+            .toLowerCase();
+
+    const deployed = employees.filter(
+        employee => getStatus(employee) === "deployed"
+    ).length;
+
+    const pending = employees.filter(
+        employee =>
+            getStatus(employee) === "pending" ||
+            getStatus(employee) === "pending deployment"
+    ).length;
+
+    const available = employees.filter(
+        employee =>
+            getStatus(employee) !== "deployed" &&
+            String(employee.status || "Active")
+                .trim()
+                .toLowerCase() === "active"
+    ).length;
+
+    const availableElement =
+        document.getElementById("deployAvailableCount");
+    const deployedElement =
+        document.getElementById("deployDeployedCount");
+    const pendingElement =
+        document.getElementById("deployPendingCount");
+
+    if (availableElement) {
+        availableElement.textContent = available;
+    }
+
+    if (deployedElement) {
+        deployedElement.textContent = deployed;
+    }
+
+    if (pendingElement) {
+        pendingElement.textContent = pending;
+    }
+
+    console.log("Deployment KPIs refreshed:", {
+        available,
+        deployed,
+        pending
+    });
+}
+
+window.addEventListener(
+    "serenticaDeploymentRefresh",
+    refreshDeployTopKPIs
+);
+
+window.addEventListener("load", refreshDeployTopKPIs);
 /* ============================================================
    REFRESH DEPLOYMENT STATUS
 ============================================================ */
