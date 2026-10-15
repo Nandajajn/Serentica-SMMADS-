@@ -10454,153 +10454,221 @@ function renderDeployStatusEmployees() {
    HANDLE CONFIRMED DEPLOYMENT
 ============================================================ */
 
+
 window.addEventListener(
     "serenticaConfirmDeployment",
     function(event) {
 
-        const deployment =
-            event.detail;
-
+        const deployment = event.detail;
 
         if (!deployment) {
-
             return;
-
         }
 
-
-        addDeployHistoryRecord(
-            deployment
+        const employeeIds = new Set(
+            (deployment.employeeIds || [])
+                .map(id => String(id).trim())
+                .filter(Boolean)
         );
 
+        if (employeeIds.size === 0) {
+            alert("No employees were selected for deployment.");
+            return;
+        }
 
         /*
-         * Update the local employee state.
-         *
-         * This intentionally checks several possible
-         * field names so it can work with the employee
-         * data structure already used by deploy.html.
+         * STEP 1: Verify the master database.
          */
+        if (
+            !window.EmployeeDatabase ||
+            !window.EmployeeManager ||
+            !Array.isArray(window.EmployeeDatabase.employees)
+        ) {
+            console.error("Master employee database is unavailable.");
+            alert(
+                "Deployment could not be saved. " +
+                "Please reload the page and try again."
+            );
+            return;
+        }
 
-        const employeeIds =
-            new Set(
-                (
-                    deployment.employeeIds ||
-                    []
-                ).map(
-                    id =>
-                        String(id)
+        /*
+         * STEP 2: Find the selected employees
+         * using their unique employeeID.
+         */
+        const masterEmployees =
+            window.EmployeeDatabase.employees;
+
+        const matchedEmployees = masterEmployees.filter(
+            employee =>
+                employeeIds.has(
+                    String(employee.employeeID || "").trim()
                 )
+        );
+
+        if (matchedEmployees.length !== employeeIds.size) {
+            console.error(
+                "Some selected employees were not found in the master database.",
+                {
+                    selectedIds: Array.from(employeeIds),
+                    matchedIds: matchedEmployees.map(
+                        employee => employee.employeeID
+                    )
+                }
             );
 
+            alert(
+                "Deployment was not saved because one or more " +
+                "selected employees could not be matched to the master database. " +
+                "Please check the employee IDs."
+            );
+            return;
+        }
+
+        const deployedAt =
+            deployment.deployedAt || new Date().toISOString();
+
+        /*
+         * STEP 3: Update the master employee records.
+         */
+        matchedEmployees.forEach(employee => {
+
+            employee.deploymentStatus = "Deployed";
+            employee.lastDeployment = deployedAt;
+            employee.lastUpdated = deployedAt;
+
+            if (deployment.cluster) {
+                employee.currentSite = deployment.cluster;
+            }
+
+            if (!Array.isArray(employee.deploymentHistory)) {
+                employee.deploymentHistory = [];
+            }
+
+            employee.deploymentHistory.push({
+                deploymentID:
+                    deployment.id ||
+                    deployment.deploymentID ||
+                    "",
+
+                department: deployment.department || "",
+                cluster: deployment.cluster || "",
+                type: deployment.type || "",
+                requirement: deployment.requirement || "",
+                startDate: deployment.startDate || "",
+                duration: deployment.duration || "",
+                remarks: deployment.remarks || "",
+                deployedAt: deployedAt
+            });
+
+        });
+
+        /*
+         * STEP 4: Record the deployment in master history.
+         */
+        if (
+            !Array.isArray(
+                window.EmployeeDatabase.deploymentHistory
+            )
+        ) {
+            window.EmployeeDatabase.deploymentHistory = [];
+        }
+
+        window.EmployeeDatabase.deploymentHistory.push({
+            deploymentID:
+                deployment.id ||
+                deployment.deploymentID ||
+                "",
+
+            department: deployment.department || "",
+            cluster: deployment.cluster || "",
+            type: deployment.type || "",
+            requirement: deployment.requirement || "",
+            startDate: deployment.startDate || "",
+            duration: deployment.duration || "",
+            remarks: deployment.remarks || "",
+            employeeIds: Array.from(employeeIds),
+            deployedAt: deployedAt
+        });
+
+        /*
+         * STEP 5: Save the master database.
+         */
+        const saved =
+            window.EmployeeManager.saveDatabase();
+
+        if (!saved) {
+            console.error("Unable to save the master employee database.");
+
+            alert(
+                "The deployment update could not be saved. " +
+                "Please check the browser console before retrying."
+            );
+            return;
+        }
+
+        /*
+         * STEP 6: Update the deployment page's local state.
+         */
+        addDeployHistoryRecord(deployment);
 
         if (
             window.deployEmployeeState &&
-            Array.isArray(
-                window.deployEmployeeState.employees
-            )
+            Array.isArray(window.deployEmployeeState.employees)
         ) {
+            window.deployEmployeeState.employees.forEach(employee => {
 
-            window.deployEmployeeState
-                .employees
-                .forEach(
-                    employee => {
+                if (
+                    employeeIds.has(
+                        String(employee.id || "").trim()
+                    ) ||
+                    employeeIds.has(
+                        String(employee.employeeID || "").trim()
+                    )
+                ) {
+                    employee.status = "DEPLOYED";
+                    employee.deployed = true;
+                    employee.isDeployed = true;
+                    employee.deployedFrom =
+                        deployment.department;
+                    employee.deployedCluster =
+                        deployment.cluster;
+                    employee.deploymentType =
+                        deployment.type;
+                    employee.deploymentRequirement =
+                        deployment.requirement;
+                    employee.deploymentStartDate =
+                        deployment.startDate;
+                }
 
-                        if (
-                            employeeIds.has(
-                                String(
-                                    employee.id
-                                )
-                            )
-                        ) {
-
-                            employee.status =
-                                "DEPLOYED";
-
-                            employee.deployed =
-                                true;
-
-                            employee.isDeployed =
-                                true;
-
-                            employee.deployedFrom =
-                                deployment.department;
-
-                            employee.deployedCluster =
-                                deployment.cluster;
-
-                            employee.deploymentType =
-                                deployment.type;
-
-                            employee.deploymentRequirement =
-                                deployment.requirement;
-
-                            employee.deploymentStartDate =
-                                deployment.startDate;
-
-                        }
-
-                    }
-                );
-
+            });
         }
 
-
+        /*
+         * STEP 7: Refresh the existing interface.
+         */
         renderDeployHistory();
-
         renderDeployStatusEmployees();
 
-
         showDeploySuccessToast(
-            (
-                deployment.employeeIds?.length ||
-                0
-            ) +
+            employeeIds.size +
             " employee" +
-            (
-                (
-                    deployment.employeeIds?.length ||
-                    0
-                ) === 1
-                    ? ""
-                    : "s"
-            ) +
+            (employeeIds.size === 1 ? "" : "s") +
             " successfully marked as deployed."
         );
 
-
-        /*
-         * Refresh the employee table if the
-         * existing function is available.
-         */
-
-        if (
-            typeof renderDeployEmployeeTable ===
-            "function"
-        ) {
-
+        if (typeof renderDeployEmployeeTable === "function") {
             renderDeployEmployeeTable();
-
         }
 
-
         if (
-            typeof renderDeploySelectedEmployeePreview ===
-            "function"
+            typeof renderDeploySelectedEmployeePreview === "function"
         ) {
-
             renderDeploySelectedEmployeePreview();
-
         }
 
-
-        if (
-            typeof updateDeployReview ===
-            "function"
-        ) {
-
+        if (typeof updateDeployReview === "function") {
             updateDeployReview();
-
         }
 
     }
